@@ -1,23 +1,25 @@
+import s from './nav.module.css'
+
 const Nav = () => {
-    return (<nav className='nav'>
-        <ul className='nav__list'>
-            <li className='nav__item'>
-                <button className='nav__link'>Profile</button>
+    return (<nav className={s.nav}>
+        <ul className={s.ul}>
+            <li className={s.item}>
+                <button className={s.link}>Profile</button>
             </li>
-            <li className='nav__item'>
-                <button className='nav__link'>Popular</button>
+            <li className={s.item}>
+                <button className={s.link}>Popular</button>
             </li>
-            <li className='nav__item'>
-                <button className='nav__link'>News Feed</button>
+            <li className={s.item}>
+                <button className={s.link}>News Feed</button>
             </li>
-            <li className='nav__item'>
-                <button className='nav__link'>Messages</button>
+            <li className={s.item}>
+                <button className={s.link}>Messages</button>
             </li>
-            <li className='nav__item'>
-                <button className='nav__link'>Post Editor</button>
+            <li className={s.item}>
+                <button className={s.link}>Post Editor</button>
             </li>
-            <li className='nav__item'>
-                <button className='nav__link'>Music</button>
+            <li className={s.item}>
+                <button className={s.link}>Music</button>
             </li>
         </ul>
     </nav>)

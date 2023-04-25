@@ -41,97 +41,14 @@
   font-family: 'Lato';
   font-weight: 400;
 }
-ul{
-  margin: 0;
-}
 .wrapper{
   width: 100%;
   background: linear-gradient(180.95deg, #000000cc 0%, #100c3ac9 100%);
 }   
-.header{
-  width: 100%;
-  height: 60px;
-  background: linear-gradient(180.95deg, #000000cc 0%, #100c3ac9 100%);
-  font-size: 24px;
-  font-weight: 900;
-  position: sticky;
-  top: 0;
-  color: #fff;
-  border-bottom: #fff solid 3px;
-}
-.header__inner{
-  display: flex;
-  align-items: center;
-}
-.header img{
-  width: 60px;
-  height: 60px;
-}
-.main{
-  display: flex;
-  background: linear-gradient(180.95deg, #100c3ac9 0%, #000000c9 100%);
-}
-.main .content{
-margin: 10px auto 0 auto ;
-
-}
-.content{
-  display: flex;
-  flex-direction: column;
-}
 .container{
   max-width: 1030px;
   border-right: #0000006e solid 1px;
   border-left: #0000006e solid 1px;
-}
-.nav{
-  position: fixed;
-  top: 60px;
-  left: 0;
-  bottom: 100%;
-  width: 2%;
-  height: 100vh;
-  background: linear-gradient(60.95deg, #000000cc 0%, #100c3ac9 100%);
-  border-right: #ffffff double 10px;
-  /* transform: translateX(-80%); */
-  transition: 1s;
-}
-.nav__item{
-  margin-left: 10px;
-  width: 80%;
-}
-.nav__item:hover .nav__link{
-  text-shadow: 0 -5px 10px #ffffff;
-}
-.nav .nav__link{
-  font-size: 24px;
-  font-weight: 700;
-  margin-left: 20px;
-  color: #ffffff00;
-  transition: color 1.2s, text-shadow 0.3s;
-}
-.nav .nav__link:first-child{
-  margin-top: 30px;
-}
-.nav__list{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.nav:hover{
-  transform: translateX(0%);
-  width: 18%;
-}
-.nav:hover .nav__link{
-  color: #ffffff;
-}
-.profile__header{
-  margin-bottom: 30px;
-  border-radius: 4px;
-}
-.profile_info-block{
-  display: flex;
-  align-items: center;
 }
 .page-block{
 margin: 30px 30px;
@@ -139,33 +56,6 @@ background-color: #e8e8e8;
 padding-top: 20px;
 padding-bottom: 20px;
 border-radius: 6px;
-}
-.profile__avatar{
-  width: 250px;height: 250px;
-}
-.profile_info-inf{
-margin-left: 40px;
-}
-.profile__name{
-  font-size: 32px;
-  margin-bottom: 30px;
-  border-bottom: #000000 solid 3px;
-  text-align: center;
-}
-.profile__desc-block{
-  display: flex;
-  line-height: 20px;
-  letter-spacing: 1px;
-}
-.profile__question{
-  margin-top: 10px;
-  font-size: 20px;
-  font-weight: 700;
-}
-.profile__answer{
-  margin-top: 10px;
-  font-size: 20px;
-  margin-left: 10px;
 }
 .quick-posting{
   text-align: center;

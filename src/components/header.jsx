@@ -1,9 +1,10 @@
+import s from './header.module.css'
 import logo from './../img/shit_icon.png'
 const Header = () => {
-    return (<header className='header'>
-        <div className="header__inner">
-            <div className="header__logo">
-                <img src={logo} alt='logotip'></img>
+    return (<header className={s.header}>
+        <div className={s.inner}>
+            <div>
+                <img className={s.logo} src={logo} alt='logotip'></img>
             </div>
             <div className='header__title'>
                 ShitPoster

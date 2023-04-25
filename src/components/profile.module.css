@@ -1,0 +1,45 @@
+.header {
+    margin-bottom: 30px;
+    border-radius: 4px;
+}
+
+.info_block {
+    display: flex;
+    align-items: center;
+
+}
+
+.avatar {
+    width: 250px;
+    height: 250px;
+}
+
+.info_inf {
+    margin-left: 40px;
+}
+
+.name {
+    font-size: 32px;
+    margin-bottom: 30px;
+    border-bottom: #000000 solid 3px;
+    text-align: center;
+}
+
+.desc_block {
+    display: flex;
+    line-height: 20px;
+    letter-spacing: 1px;
+}
+
+.question {
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.answer {
+    margin-top: 10px;
+    font-size: 20px;
+    margin-left: 10px;
+    color: #3a3a3a;
+}

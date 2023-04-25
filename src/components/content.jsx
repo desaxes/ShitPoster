@@ -1,6 +1,7 @@
 import Profile from './profile'
+import s from './content.module.css'
 const Content = () => {
-    return (<section className='content'>
+    return (<section className={s.content}>
         <div className='container'>
             <div className='content__inner'>
                 <Profile />

@@ -6,6 +6,7 @@
 .info_block {
     display: flex;
     align-items: center;
+    margin-left: 8%;
 
 }
 
@@ -20,6 +21,7 @@
 
 .name {
     font-size: 32px;
+    font-weight: 700;
     margin-bottom: 30px;
     border-bottom: #000000 solid 3px;
     text-align: center;
@@ -41,5 +43,5 @@
     margin-top: 10px;
     font-size: 20px;
     margin-left: 10px;
-    color: #3a3a3a;
+    color: #527070;
 }

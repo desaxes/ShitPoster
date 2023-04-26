@@ -1,5 +1,5 @@
-import Content from "./content";
-import Nav from "./nav";
+import Content from "../content/content";
+import Nav from "../nav/nav";
 import s from './main.module.css'
 
 const Main = () =>{

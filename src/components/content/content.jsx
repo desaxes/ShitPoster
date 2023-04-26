@@ -1,4 +1,4 @@
-import Profile from './profile'
+import Profile from '../profile/profile'
 import s from './content.module.css'
 const Content = () => {
     return (<section className={s.content}>

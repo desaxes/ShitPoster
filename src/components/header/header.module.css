@@ -13,9 +13,24 @@
 .inner {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }   
 
 .logo {
     width: 60px;
     height: 60px;
+}
+.title{
+    margin-right: auto;
+    margin-left: 10px;
+}
+.avatar{
+    width: 60px;
+    height: 60px;
+}
+.settings{
+    margin-right: 2%;
+}
+.set_btn{
+    color: #fff;
 }

@@ -65,20 +65,24 @@ border-radius: 6px;
   align-items: center;
   flex-direction: column;
 }
+.quick-posting-btnbox{
+  width: 180px;
+  height: 40px;
+}
 .quick-posting__btn{
   font-size: 20px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   border: #000000 solid 2px;
-  height: 20%;
+  width: 100%;
+  height: 100%;
   padding: 0 15px;
   background: linear-gradient(60.95deg, #000000cc 0%, #100c3ac9 100%);
   color: #fff;
-  border-radius: 25%;
+  border-radius: 15px;
   font-weight: bold;
   transition: 0.5s;
 }
 .quick-posting__btn:hover{
-  height: 25%;
   box-shadow: 4px 6px 20px #000;
 }
 .quick-posting-field{

@@ -8,7 +8,7 @@
     left: 0;
     bottom: 100%;
     width: 2%;
-    height: 100vh;
+    height: 100%;
     background: linear-gradient(60.95deg, #000000cc 0%, #100c3ac9 100%);
     border-right: #ffffff double 10px;
     /* transform: translateX(-80%); */
@@ -16,7 +16,7 @@
 }
 
 .item {
-    margin-left: 10px;
+    margin-left: 30px;
     width: 80%;
 }
 
@@ -24,14 +24,20 @@
     text-shadow: 0 -5px 10px #ffffff;
 }
 
-.nav .link {
+.link {
     font-size: 24px;
     font-weight: 700;
-    margin-left: 20px;
     color: #ffffff00;
     transition: color 1.2s, text-shadow 0.3s;
 }
-
+.nav:hover .link .active{
+    color: aquamarine;
+    transition: color 1.2s;
+}
+.link .active{
+    transition: color 1.2s;
+    color: #ffffff00;
+}
 .nav .link:first-child {
     margin-top: 30px;
 }

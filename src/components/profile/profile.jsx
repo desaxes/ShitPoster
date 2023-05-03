@@ -29,7 +29,18 @@ const Profile = () => {
                             </div>
                             <div className={s.desc_block}>
                                 <p className={s.question}>Posts Counter:</p>
-                                <p className={s.answer}></p>
+                                <p className={s.answer}>3</p>
+                            </div>
+                        </div>
+                        <div className={s.btn_block}>
+                            <div className='quick-posting-btnbox'>
+                                <button className='quick-posting__btn'>Send Message</button>
+                            </div>
+                            <div className='quick-posting-btnbox'>
+                                <button className='quick-posting__btn'>Subscribe</button>
+                            </div>
+                            <div className='quick-posting-btnbox'>
+                                <button className='quick-posting__btn'>Show Subs</button>
                             </div>
                         </div>
                     </div>
@@ -39,7 +50,9 @@ const Profile = () => {
                 <textarea className='quick-posting-field'>
 
                 </textarea>
-                <button className='quick-posting__btn'>Quick Post</button>
+                <div className='quick-posting-btnbox'>
+                    <button className='quick-posting__btn'>Quick Post</button>
+                </div>
             </div>
             <div className="page-block">
                 <Post name='Shitposter' avatar={avatar} time='10 minutes ago'

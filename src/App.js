@@ -1,3 +1,4 @@
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import Header from './components/header/header';
 import Main from './components/main/main';
@@ -6,13 +7,14 @@ import Main from './components/main/main';
 
 const App = () => {
   return (
-    <div className="App">
-      <div className='wrapper'>
-        <Header />
-        <Main/>
+    <BrowserRouter>
+      <div className="App">
+        <div className='wrapper'>
+          <Header />
+          <Main />
+        </div>
       </div>
-    </div>
-  );
+    </BrowserRouter>)
 }
 
 export default App;

@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     margin-left: 8%;
-
+    justify-content: space-between;
 }
 
 .avatar {
@@ -44,4 +44,12 @@
     font-size: 20px;
     margin-left: 10px;
     color: #527070;
+}
+.btn_block{
+    margin-right: auto;
+    margin-left: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }

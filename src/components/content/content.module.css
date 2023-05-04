@@ -3,3 +3,7 @@
     flex-direction: column;
     margin: 10px auto 0 auto;
 }
+.content__inner{
+    width: 100%;
+    height: 100%;
+}

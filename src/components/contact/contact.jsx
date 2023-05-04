@@ -1,15 +1,16 @@
 import s from './contact.module.css'
 
+
 const Contact = (props) => {
     return (
-        <li className={s.contact_item}>
+        <a href='#' className={s.contact_item}>
             <div className={s.contact_avatar}>
-
+                <img src={props.avatar} alt="" />
             </div>
             <div className={s.contact_name}>
-                
+                <p>{props.username}</p> 
             </div>
-        </li>
+        </a>
     )
 }
 export default Contact;

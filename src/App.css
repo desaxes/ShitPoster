@@ -46,6 +46,7 @@
   background: linear-gradient(180.95deg, #000000cc 0%, #100c3ac9 100%);
 }   
 .container{
+  width: 1030px;
   max-width: 1030px;
   border-right: #0000006e solid 1px;
   border-left: #0000006e solid 1px;

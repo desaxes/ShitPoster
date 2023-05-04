@@ -1,0 +1,20 @@
+.contact_avatar img{
+width: 60px;height: 60px;
+}
+.contact_item{
+    display: flex;
+    align-items: center;
+    padding: 5px 20px;
+}
+.contact_item:hover{
+    transform: scaleY(110%);
+}
+.contact_item:hover .contact_name{
+    text-shadow: 0 -5px 10px #ffffff;
+}
+.contact_avatar{
+    margin-right: 20px;
+}
+.contact_name{
+    color: #fff; font-weight: 900;font-size: 20px;
+}

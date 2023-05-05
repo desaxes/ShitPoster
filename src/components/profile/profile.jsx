@@ -6,6 +6,34 @@ import avatar from './../../img/shit_icon.svg'
 import postimage from './../../img/jsgif.gif'
 import postimage2 from './../../img/effy.gif'
 const Profile = () => {
+    let postData = [
+        {
+            name: 'Shitposter',
+            avatar: avatar,
+            time: '10 minutes ago',
+            postimage: postimage,
+            posttext: 'I hate TV',
+            com_count: '34',
+            like_count: '954'
+        },
+        {
+            name: 'Shitposter',
+            avatar: avatar,
+            time: 'Yesterday',
+            posttext: 'We updated the header of our profile',
+            com_count: '57',
+            like_count: '408'
+        },
+        {
+            name: 'Shitposter',
+            avatar: avatar,
+            time: '128 April 2023',
+            postimage: postimage2,
+            posttext: 'Friday',
+            com_count: '233',
+            like_count: '91'
+        }
+    ]
     return (
         <div className={s.profile}>
             <div className={s.head}>
@@ -55,12 +83,12 @@ const Profile = () => {
                 </div>
             </div>
             <div className="page-block">
-                <Post name='Shitposter' avatar={avatar} time='10 minutes ago'
-                    postimage={postimage} posttext='I hate TV' com_count='34' like_count='954' />
-                <Post name='Shitposter' avatar={avatar} time='Yesterday'
-                    posttext='We updated the header of our profile' com_count='57' like_count='408' />
-                <Post name='Shitposter' avatar={avatar} time='28 April 2023'
-                    postimage={postimage2} posttext='Friday' com_count='233' like_count='91' />
+                <Post name={postData[0].name} avatar={postData[0].avatar} time={postData[0].time}
+                    postimage={postData[0].postimage} posttext={postData[0].posttext} com_count={postData[0].com_count} like_count={postData[0].like_count} />
+                <Post name={postData[1].name} avatar={postData[1].avatar} time={postData[1].time}
+                    posttext={postData[1].posttext} com_count={postData[1].com_count} like_count={postData[1].like_count} />
+                <Post name={postData[2].name} avatar={postData[2].avatar} time={postData[2].time}
+                    postimage={postData[2].postimage} posttext={postData[2].posttext} com_count={postData[2].com_count} like_count={postData[2].like_count} />
             </div>
         </div>
     )

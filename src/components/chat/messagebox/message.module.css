@@ -1,0 +1,7 @@
+.message{
+    min-height: 40px;
+    border: #100c3ac9 solid 2px;
+    border-radius: 6px;
+    color: #fff;
+    padding: 10px 10px;
+}

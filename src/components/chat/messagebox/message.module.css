@@ -5,3 +5,13 @@
     color: #fff;
     padding: 10px 10px;
 }
+.in{
+    align-self: flex-start;
+    background-color: #100c3a6e;
+    margin-left: 5%;
+}
+.out{
+    align-self: flex-end;
+    background-color: #040219c9;
+    margin-right: 5%;
+}

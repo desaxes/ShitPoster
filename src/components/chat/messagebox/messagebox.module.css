@@ -26,13 +26,3 @@
     overflow: scroll;
     overflow-x: hidden;
 }
-.in{
-    align-self: flex-start;
-    background-color: #100c3a6e;
-    margin-left: 5%;
-}
-.out{
-    align-self: flex-end;
-    background-color: #040219c9;
-    margin-right: 5%;
-}

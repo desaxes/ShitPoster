@@ -1,6 +1,6 @@
 import Message from './message';
 import s from './messagebox.module.css'
-import {messages} from './../../../index'
+import { userData } from '../../../redux/userdata'
 
 const Messagebox = (props) => {
     return (
@@ -11,7 +11,7 @@ const Messagebox = (props) => {
             </div>
             <div className={s.message_box}>
                 <div className={s.messages}>
-                    {messages}
+                    {userData.messages}
                 </div>
             </div>
         </div>)

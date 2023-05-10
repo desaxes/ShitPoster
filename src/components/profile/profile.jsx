@@ -5,7 +5,7 @@ import Post from './../posts/post'
 import avatar from './../../img/shit_icon.svg'
 import postimage from './../../img/jsgif.gif'
 import postimage2 from './../../img/effy.gif'
-import {posts} from './../../index.js'
+import {userData} from '../../redux/userdata'
 const Profile = () => {
 
     return (
@@ -57,7 +57,7 @@ const Profile = () => {
                 </div>
             </div>
             <div className="page-block">
-                {posts}
+                {userData.posts}
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 import Contact from '../contact/contact';
 import s from './messages.module.css'
 // import avatar from './../../img/shit_icon.png'
-import {dialogs} from './../../index'
+import {userData} from '../../redux/userdata'
 import Chat from './../chat/chat';
 const Messages = (props) => {
     
@@ -11,7 +11,7 @@ const Messages = (props) => {
                 <div className={s.contacts}>
                     <button className='quick-posting__btn'>▼ CONTACTS</button>
                     <ul className={s.contact_list}>
-                        {dialogs}
+                        {userData.dialogs}
                     </ul>
                 </div>
                 <Chat />

@@ -2,9 +2,9 @@ import Content from "../content/content";
 import Nav from "../nav/nav";
 import s from './main.module.css'
 
-const Main = () =>{
+const Main = (props) =>{
 return(<main className={s.main}>
     <Nav />
-    <Content />
+    <Content uD={props.uD}/>
 </main>)}
 export default Main;

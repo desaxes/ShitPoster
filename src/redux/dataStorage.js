@@ -36,10 +36,10 @@ let dataStorage = {
   },
   messagesPage: {
     dialogsData: [
-      { id: '/1', name: 'James' },
-      { id: '/2', name: 'John' },
-      { id: '/3', name: 'Josie' },
-      { id: '/4', name: 'Jamie' }
+      { id: '1', name: 'James' },
+      { id: '2', name: 'John' },
+      { id: '3', name: 'Josie' },
+      { id: '4', name: 'Jamie' }
     ],
 
     messagesData: [

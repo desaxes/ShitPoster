@@ -5,7 +5,7 @@ import s from './contact.module.css'
 const Contact = (props) => {
 
     return (
-        <NavLink to={props.dialogId}>
+        <NavLink to={'/messages/' + props.dialogId}>
             <div className={s.contact_item}>
                 {/* <div className={s.contact_avatar}>
                     <img src={props.avatar} alt="" />

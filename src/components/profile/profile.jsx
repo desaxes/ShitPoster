@@ -1,13 +1,13 @@
+import React from 'react';
 import profile_head_img from './../../img/profile_head.png'
 import logo from './../../img/shit_icon.png'
 import s from './profile.module.css'
-import Post from './../posts/post'
-import avatar from './../../img/shit_icon.svg'
-import postimage from './../../img/jsgif.gif'
-import postimage2 from './../../img/effy.gif'
-import {userData} from '../../redux/userdata'
-const Profile = () => {
-
+const Profile = (props) => {
+    let newPostElement = React.createRef();
+    let addQuickPost = () =>{
+        let text = newPostElement.current.value;
+        alert(text)
+    }
     return (
         <div className={s.profile}>
             <div className={s.head}>
@@ -48,16 +48,16 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <div className='quick-posting page-block'>
-                <textarea className='quick-posting-field'>
+            <form className='quick-posting page-block'>
+                <textarea ref={newPostElement} required className='quick-posting-field'>
 
                 </textarea>
                 <div className='quick-posting-btnbox'>
-                    <button className='quick-posting__btn'>Quick Post</button>
+                    <button onClick={addQuickPost} type='submit' className='quick-posting__btn'>Quick Post</button>
                 </div>
-            </div>
+            </form>
             <div className="page-block">
-                {userData.posts}
+                {props.posts}
             </div>
         </div>
     )

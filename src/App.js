@@ -5,16 +5,15 @@ import Main from './components/main/main';
 
 
 
-const App = () => {
+const App = (props) => {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <div className='wrapper'>
-          <Header />
-          <Main />
-        </div>
+    <div className="App">
+      <div className='wrapper'>
+        <Header />
+        <Main uD={props.uD} />
       </div>
-    </BrowserRouter>)
+    </div>
+  )
 }
 
 export default App;

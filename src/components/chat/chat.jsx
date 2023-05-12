@@ -6,7 +6,7 @@ const Chat = (props) => {
         <div className={s.chat_block}>
             <div className="page-block">
                 <div className={s.chat_window}>
-                    <Messagebox />
+                    <Messagebox messages={props.messages}/>
                     <Mes_textbox/>
                 </div>
             </div>

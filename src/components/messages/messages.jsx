@@ -1,7 +1,4 @@
-import Contact from '../contact/contact';
 import s from './messages.module.css'
-// import avatar from './../../img/shit_icon.png'
-import {userData} from '../../redux/userdata'
 import Chat from './../chat/chat';
 const Messages = (props) => {
     
@@ -9,12 +6,12 @@ const Messages = (props) => {
         <div className={s.messages}>
             <div className={s.inner}>
                 <div className={s.contacts}>
-                    <button className='quick-posting__btn'>▼ CONTACTS</button>
+                    <button className='quick-posting__btn'><p>CONTACTS</p></button>
                     <ul className={s.contact_list}>
-                        {userData.dialogs}
+                        {props.contacts}
                     </ul>
                 </div>
-                <Chat />
+                <Chat messages={props.messages}/>
             </div>
         </div>
     )

@@ -10,7 +10,7 @@ const App = (props) => {
     <div className="App">
       <div className='wrapper'>
         <Header />
-        <Main uD={props.uD} />
+        <Main uD={props.uD}/>
       </div>
     </div>
   )

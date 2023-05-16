@@ -2,6 +2,7 @@ import avatar from './../img/shit_icon.svg'
 import postimage from './../img/jsgif.gif'
 import postimage2 from './../img/effy.gif'
 import mes_style from './../components/chat/messagebox/message.module.css'
+import { renderEntireTree } from '../render'
 
 let dataStorage = {
   profilePage: {
@@ -52,6 +53,19 @@ let dataStorage = {
       { inout: `${mes_style.out}`, text: 'Ok. Bye!' },
       { inout: `${mes_style.in}`, text: 'Ok. Bye!' },
     ]
+  },
+  addPost: (name, avatar,time,posttext,com_count,like_count) => {
+    let newPost = {
+      name: name,
+      avatar: avatar,
+      time: time,
+      posttext: posttext,
+      com_count: com_count,
+      like_count: like_count
+    }
+    dataStorage.profilePage.postData.push(newPost);
+    renderEntireTree(dataStorage);
   }
 }
+
 export { dataStorage };  

@@ -2,12 +2,18 @@ import React from 'react';
 import profile_head_img from './../../img/profile_head.png'
 import logo from './../../img/shit_icon.png'
 import s from './profile.module.css'
+import Post from './../posts/post'
+import avatar from './../../img/shit_icon.svg'
 const Profile = (props) => {
     let newPostElement = React.createRef();
-    let addQuickPost = () =>{
+    let addQuickPost = (e) => {
+        e.preventDefault();
         let text = newPostElement.current.value;
-        alert(text)
+        props.uD.addPost('Shitposter', avatar,'Yesterday',text,'57','408');
     }
+    let posts = props.uD.profilePage.postData.map(p => <Post name={p.name} avatar={p.avatar} time={p.time}
+        postimage={p.postimage} posttext={p.posttext} com_count={p.com_count} like_count={p.like_count} />
+    )
     return (
         <div className={s.profile}>
             <div className={s.head}>
@@ -57,7 +63,7 @@ const Profile = (props) => {
                 </div>
             </form>
             <div className="page-block">
-                {props.posts}
+                {posts}
             </div>
         </div>
     )

@@ -10,7 +10,7 @@ const App = (props) => {
     <div className="App">
       <div className='wrapper'>
         <Header />
-        <Main uD={props.uD}/>
+        <Main state={props.state} addPost={props.addPost} updatePostText ={props.updatePostText}/>
       </div>
     </div>
   )

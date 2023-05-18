@@ -4,11 +4,15 @@ import logo from './../../img/shit_icon.png'
 import s from './profile.module.css'
 import Post from './../posts/post'
 import avatar from './../../img/shit_icon.svg'
+import { addPostActionCreator, addUpdatePostTextActionCreator } from '../../redux/dataStorage';
+
+
+
 const Profile = (props) => {
     let newPostElement = React.createRef();
     let addQuickPost = (e) => {
         e.preventDefault();
-        props.addPost('Shitposter', avatar,'Now','0','0');
+        props.dispatch(addPostActionCreator('Shitposter',avatar,'Now','0','0'))
     }
     let posts = props.state.profilePage.postData.map(p => <Post name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} com_count={p.com_count} like_count={p.like_count} />
@@ -16,7 +20,7 @@ const Profile = (props) => {
 
     let onPostChange =()=>{
         let text = newPostElement.current.value;
-        props.updatePostText(text);
+        props.dispatch(addUpdatePostTextActionCreator(text));
     }
     return (
         <div className={s.profile}>

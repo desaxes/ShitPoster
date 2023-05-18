@@ -8,8 +8,8 @@ const Content = (props) => {
                     <div className='container'>
                         <div className='content__inner'>
                             <Routes>
-                                <Route path='/profile' element={<Profile state={props.state} addPost={props.addPost} updatePostText ={props.updatePostText}/>} />
-                                {/* <Route path='/messages' element={<Messages contacts={props.store._state.messagesPage} messages={props.store._state.messages}/>} /> */}
+                                <Route path='/profile' element={<Profile state={props.state} dispatch={props.dispatch}/>} />
+                                <Route path='/messages' element={<Messages state={props.state} dispatch={props.dispatch}/>} />
                             </Routes>
                         </div>
                     </div>

@@ -5,6 +5,6 @@ import s from './main.module.css'
 const Main = (props) =>{
 return(<main className={s.main}>
     <Nav />
-    <Content state={props.state} addPost={props.addPost} updatePostText ={props.updatePostText} />
+    <Content state={props.state} dispatch={props.dispatch} />
 </main>)}
 export default Main;

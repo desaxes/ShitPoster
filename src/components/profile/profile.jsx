@@ -4,7 +4,7 @@ import logo from './../../img/shit_icon.png'
 import s from './profile.module.css'
 import Post from './../posts/post'
 import avatar from './../../img/shit_icon.svg'
-import { addPostActionCreator, addUpdatePostTextActionCreator } from '../../redux/dataStorage';
+import { addPostActionCreator, addUpdatePostTextActionCreator } from '../../redux/profile-reducer';
 
 
 

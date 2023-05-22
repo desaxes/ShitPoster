@@ -12,15 +12,15 @@ const Profile = (props) => {
     let newPostElement = React.createRef();
     let addQuickPost = (e) => {
         e.preventDefault();
-        props.dispatch(addPostActionCreator('Shitposter',avatar,'Now','0','0'))
+        props.addPost('Shitposter',avatar,'Now','0','0')
     }
-    let posts = props.state.profilePage.postData.map(p => <Post name={p.name} avatar={p.avatar} time={p.time}
+    let posts = props.posts.map(p => <Post name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} com_count={p.com_count} like_count={p.like_count} />
     )
 
     let onPostChange =()=>{
         let text = newPostElement.current.value;
-        props.dispatch(addUpdatePostTextActionCreator(text));
+        props.updatePostText(text);
     }
     return (
         <div className={s.profile}>
@@ -63,7 +63,7 @@ const Profile = (props) => {
                 </div>
             </div>
             <form className='quick-posting page-block'>
-                <textarea onChange={onPostChange} ref={newPostElement} placeholder='Enter Text' className='quick-posting-field' value={props.state.profilePage.newPostText}>
+                <textarea onChange={onPostChange} ref={newPostElement} placeholder='Enter Text' className='quick-posting-field' value={props.newPostText}>
 
                 </textarea>
                 <div className='quick-posting-btnbox'>

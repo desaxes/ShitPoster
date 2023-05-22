@@ -1,5 +1,5 @@
-import Profile from '../profile/profile'
-import Messages from '../messages/messages'
+import ProfileContainer from '../profile/profile-container'
+import MessagesContainer from '../messages/messages-container'
 import s from './content.module.css'
 import { Route, Routes } from 'react-router-dom'
 const Content = (props) => {
@@ -8,8 +8,8 @@ const Content = (props) => {
                     <div className='container'>
                         <div className='content__inner'>
                             <Routes>
-                                <Route path='/profile' element={<Profile state={props.state} dispatch={props.dispatch}/>} />
-                                <Route path='/messages' element={<Messages state={props.state} dispatch={props.dispatch}/>} />
+                                <Route path='/profile' element={<ProfileContainer store={props.store}/>} />
+                                <Route path='/messages' element={<MessagesContainer store={props.store}/>} />
                             </Routes>
                         </div>
                     </div>

@@ -10,7 +10,7 @@ const App = (props) => {
     <div className="App">
       <div className='wrapper'>
         <Header />
-        <Main state={props.state} dispatch={props.dispatch}/>
+        <Main store={props.store}/>
       </div>
     </div>
   )

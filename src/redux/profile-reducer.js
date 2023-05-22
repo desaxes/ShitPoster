@@ -7,7 +7,34 @@ const addPostActionCreator = (name, avatar, time, com_count, like_count) => (
 const addUpdatePostTextActionCreator = (text) =>
     ({ type: UPDATE_POST_TEXT, text: text })
 
-const profileReducer = (state, action) => {
+let initialState = {
+    postData: [
+        {
+            name: 'Shitposter',
+            time: '10 minutes ago',
+            posttext: 'I hate TV',
+            com_count: '34',
+            like_count: '954'
+        },
+        {
+            name: 'Shitposter',
+            time: 'Yesterday',
+            posttext: 'We updated the header of our profile',
+            com_count: '57',
+            like_count: '408'
+        },
+        {
+            name: 'Shitposter',
+            time: '128 April 2023',
+            posttext: 'Friday',
+            com_count: '233',
+            like_count: '91'
+        }
+    ],
+        newPostText: ''
+}
+
+const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             if (state.newPostText == '') { }

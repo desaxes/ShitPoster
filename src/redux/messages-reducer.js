@@ -31,20 +31,23 @@ let initialState = {
 
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
-        case UPDATE_MESSAGE_AREA:
-            state.newMessageText = action.text;
-            return state;
-        case SEND_MESSAGE:
-            if (state.newMessageText == '') { }
+        case UPDATE_MESSAGE_AREA:{
+            let stateCopy = {...state};
+            stateCopy.newMessageText = action.text;
+            return stateCopy;}
+        case SEND_MESSAGE:{
+            let stateCopy = {...state}; 
+            if (stateCopy.newMessageText == '') { }
             else {
                 let message = {
                     inout: `${mes_style.out}`,
                     text: state.newMessageText
                 }
-                state.messagesData.push(message);
-                state.newMessageText = '';
+                stateCopy.messagesData = [...state.messagesData];
+                stateCopy.messagesData.push(message);
+                stateCopy.newMessageText = '';
             }
-            return state;
+            return stateCopy;}
         default: return state;
     }
 }

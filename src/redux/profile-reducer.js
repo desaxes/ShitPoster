@@ -36,8 +36,9 @@ let initialState = {
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_POST:
-            if (state.newPostText == '') { }
+        case ADD_POST:{
+            let stateCopy = {...state};
+            if (stateCopy.newPostText == '') { }
             else {
                 let newPost = {
                     name: action.name,
@@ -47,13 +48,15 @@ const profileReducer = (state = initialState, action) => {
                     com_count: action.com_count,
                     like_count: action.like_count
                 }
-                state.postData.push(newPost);
-                state.newPostText = '';
+                stateCopy.postData = [...state.postData]; 
+                stateCopy.postData.push(newPost);
+                stateCopy.newPostText = '';
             }
-            return state;
-        case UPDATE_POST_TEXT:
-            state.newPostText = action.text;
-            return state;
+            return stateCopy;}
+        case UPDATE_POST_TEXT:{
+            let stateCopy = {...state};
+            stateCopy.newPostText = action.text;
+            return stateCopy;}
         default: return state;
     }
 }

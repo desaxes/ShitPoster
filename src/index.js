@@ -7,14 +7,15 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import StoreContext from './redux/store-context';
+import { Provider } from 'react-redux';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 let renderEntireTree = () => {
     root.render(
         <BrowserRouter>
             <React.StrictMode>
-                <StoreContext.Provider value={store}>
+                <Provider store={store}>
                     <App/>
-                </StoreContext.Provider>
+                </Provider>
             </React.StrictMode>
         </BrowserRouter>
     );

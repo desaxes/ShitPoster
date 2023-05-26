@@ -17,37 +17,34 @@ let initialState = {
     ],
 
     messagesData: [
-        { inout: `${mes_style.in}`, text: 'HI' },
-        { inout: `${mes_style.out}`, text: 'Hi, John' },
-        { inout: `${mes_style.in}`, text: 'How are you' },
-        { inout: `${mes_style.out}`, text: 'Im fine' },
-        { inout: `${mes_style.out}`, text: 'And You?' },
-        { inout: `${mes_style.in}`, text: 'Im too. Sorry, but i should go. My wife come home. Talk later.' },
-        { inout: `${mes_style.out}`, text: 'Ok. Bye!' },
-        { inout: `${mes_style.in}`, text: 'Ok. Bye!' },
+        { id: 1, inout: `${mes_style.in}`, text: 'HI' },
+        { id: 2, inout: `${mes_style.out}`, text: 'Hi, John' },
+        { id: 3, inout: `${mes_style.in}`, text: 'How are you' },
+        { id: 4, inout: `${mes_style.out}`, text: 'Im fine' },
+        { id: 5, inout: `${mes_style.out}`, text: 'And You?' },
+        { id: 6, inout: `${mes_style.in}`, text: 'Im too. Sorry, but i should go. My wife come home. Talk later.' },
+        { id: 7, inout: `${mes_style.out}`, text: 'Ok. Bye!' },
+        { id: 8, inout: `${mes_style.in}`, text: 'Ok. Bye!' },
     ],
     newMessageText: ''
 }
 
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
-        case UPDATE_MESSAGE_AREA:{
-            let stateCopy = {...state};
-            stateCopy.newMessageText = action.text;
-            return stateCopy;}
-        case SEND_MESSAGE:{
-            let stateCopy = {...state}; 
-            if (stateCopy.newMessageText == '') { }
+        case UPDATE_MESSAGE_AREA: {
+            return { ...state, newMessageText: action.text };
+        }
+        case SEND_MESSAGE: {
+            if (state.newMessageText === '') {return state}
             else {
-                let message = {
-                    inout: `${mes_style.out}`,
-                    text: state.newMessageText
+                let mtext = state.newMessageText;
+                return {
+                    ...state, messagesData: [...state.messagesData,
+                    { id: state.messagesData.at(-1).id + 1, inout: `${mes_style.out}`, text: mtext }], 
+                    newMessageText: ''
                 }
-                stateCopy.messagesData = [...state.messagesData];
-                stateCopy.messagesData.push(message);
-                stateCopy.newMessageText = '';
             }
-            return stateCopy;}
+        }
         default: return state;
     }
 }

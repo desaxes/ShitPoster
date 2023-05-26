@@ -2,7 +2,7 @@ import Message from './message';
 import s from './messagebox.module.css'
 
 const Messagebox = (props) => {
-    let messages = props.messages.map (m=><Message inout={m.inout}text={m.text}/>)
+    let messages = props.messages.map (m=><Message key={m.id} inout={m.inout}text={m.text}/>)
     return (
         <div>
             <div className={s.dialog_name}>

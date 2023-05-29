@@ -14,6 +14,7 @@
     color: #fff;
     border-radius: 4px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .sub_list {
@@ -51,7 +52,9 @@
 .desc {
     font-weight: 700;
     opacity: .7;
-    border-bottom: #000 1px solid;
+    /* border-bottom: #000 1px solid; */
+    text-decoration: underline;
+    text-decoration-color: rgb(34, 0, 255);
 }
 
 .btn_box{

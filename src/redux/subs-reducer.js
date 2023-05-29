@@ -53,11 +53,11 @@ const subsReducer = (state = initialState, action) => {
             return {
                 ...state, subsData: state.subsData.map(u => {
                     if (u.id === action.userid) {
-                        if (u.sub === false) {
-                            return { ...u, sub: true }
+                        if (u.followed === false) {
+                            return { ...u, followed: true }
                         }
                         else {
-                            return { ...u, sub: false }
+                            return { ...u, followed: false }
                         }
                     }
                     else {
@@ -67,7 +67,7 @@ const subsReducer = (state = initialState, action) => {
             }
         }
         case SETSUBS:{
-            return {...state,subsData:[...state.subsData,...action.subsData]}
+            return {...state,subsData:[...action.subsData]}
         }
         default: return state
     }

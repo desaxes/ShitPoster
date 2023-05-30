@@ -1,50 +1,24 @@
 const SUBSCRIBE = 'SUBSCRIBE';
 const SETSUBS = 'SETSUBS';
+const SETUSERSNUMBER = 'SET-USERS-NUMBER'
+const SETPAGENUMBER = 'SET-PAGE-NUMBER'
 const subscribeAC = (userid) => (
     { type: SUBSCRIBE, userid: userid })
 const setsubsAC = (subsData) => (
     { type: SETSUBS, subsData:subsData})
+const setUsersNumberAC = (count)=>(
+    {type:SETUSERSNUMBER, count:count}
+)
+const setPageNumberAC = (page)=>(
+    {type:SETPAGENUMBER, page:page}
+)
 
 
 let initialState = {
-    subsData: [
-        // {
-        //     id: 1,
-        //     name: 'John',
-        //     desc: 'Beginner Shitposter',
-        //     sub: false
-        // },
-        // {
-        //     id: 2,
-        //     name: 'James',
-        //     desc: 'I love dogs. I can post dogs all day. Dogs Dogs DOGS!',
-        //     sub: false
-        // },
-        // {
-        //     id: 3,
-        //     name: 'Jenny',
-        //     desc: 'My name is Jenny.',
-        //     sub: false
-        // },
-        // {
-        //     id: 4,
-        //     name: 'Jeff',
-        //     desc: 'Crazy Guy',
-        //     sub: false
-        // },
-        // {
-        //     id: 5,
-        //     name: 'Julie',
-        //     desc: 'Give me money, plz. My cat is sick.',
-        //     sub: false
-        // },
-        // {
-        //     id: 6,
-        //     name: 'Jessy',
-        //     desc: 'Jessy!',
-        //     sub: false
-        // }
-    ]
+    subsData: [],
+    pageSize:5,
+    totalCount: 0,
+    pageNumber:1
 }
 
 const subsReducer = (state = initialState, action) => {
@@ -69,7 +43,17 @@ const subsReducer = (state = initialState, action) => {
         case SETSUBS:{
             return {...state,subsData:[...action.subsData]}
         }
+        case SETUSERSNUMBER:{
+            return {
+                ...state, totalCount:action.count
+            }
+        }
+        case SETPAGENUMBER:{
+            return {
+                ...state, pageNumber:action.page
+            }
+        }
         default: return state
     }
 }
-export { subsReducer, setsubsAC,subscribeAC }
+export { subsReducer, setsubsAC,subscribeAC,setUsersNumberAC,setPageNumberAC }

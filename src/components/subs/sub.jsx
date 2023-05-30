@@ -7,6 +7,7 @@ const Sub = (props) => {
         e.preventDefault();
         props.onSub(props.id);
     }
+    
     return (
         <li className={s.sub}>
             <img className={s.avatar} src={props.avatar === null ? avatar:props.avatar } alt="" />

@@ -14,7 +14,6 @@
     color: #fff;
     border-radius: 4px;
     margin-bottom: 20px;
-    margin-top: 20px;
 }
 
 .sub_list {
@@ -60,4 +59,22 @@
 .btn_box{
     width: 200px;
     height: 30px;
+}
+.counter{
+    margin-top: 20px;
+}
+.pageNumber{
+font-size: 20px;
+font-weight: 700;
+margin: 0 5px;
+}
+.selectedPage{
+    color:  rgb(34, 0, 255);
+    text-decoration: underline #000;
+    font-weight: 900;
+    font-size: 22px;
+}
+.pageNumber:hover{
+    box-shadow: 0 0 18px 4px #000;
+    cursor: pointer;
 }

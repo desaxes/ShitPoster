@@ -2,23 +2,28 @@ const SUBSCRIBE = 'SUBSCRIBE';
 const SETSUBS = 'SETSUBS';
 const SETUSERSNUMBER = 'SET-USERS-NUMBER'
 const SETPAGENUMBER = 'SET-PAGE-NUMBER'
+const SETLOADER = 'SET-LOADER'
 const subscribeAC = (userid) => (
     { type: SUBSCRIBE, userid: userid })
 const setsubsAC = (subsData) => (
-    { type: SETSUBS, subsData:subsData})
-const setUsersNumberAC = (count)=>(
-    {type:SETUSERSNUMBER, count:count}
+    { type: SETSUBS, subsData: subsData })
+const setUsersNumberAC = (count) => (
+    { type: SETUSERSNUMBER, count: count }
 )
-const setPageNumberAC = (page)=>(
-    {type:SETPAGENUMBER, page:page}
+const setPageNumberAC = (page) => (
+    { type: SETPAGENUMBER, page: page }
+)
+const setLoaderAC = (isFetching) => (
+    { type: SETLOADER, isFetching: isFetching }
 )
 
 
 let initialState = {
     subsData: [],
-    pageSize:5,
+    pageSize: 5,
     totalCount: 0,
-    pageNumber:1
+    pageNumber: 1,
+    isFetching: false
 }
 
 const subsReducer = (state = initialState, action) => {
@@ -40,20 +45,25 @@ const subsReducer = (state = initialState, action) => {
                 })
             }
         }
-        case SETSUBS:{
-            return {...state,subsData:[...action.subsData]}
+        case SETSUBS: {
+            return { ...state, subsData: [...action.subsData] }
         }
-        case SETUSERSNUMBER:{
+        case SETUSERSNUMBER: {
             return {
-                ...state, totalCount:action.count
+                ...state, totalCount: action.count
             }
         }
-        case SETPAGENUMBER:{
+        case SETPAGENUMBER: {
             return {
-                ...state, pageNumber:action.page
+                ...state, pageNumber: action.page
+            }
+        }
+        case SETLOADER: {
+            return {
+                ...state, isFetching: action.isFetching
             }
         }
         default: return state
     }
 }
-export { subsReducer, setsubsAC,subscribeAC,setUsersNumberAC,setPageNumberAC }
+export { subsReducer, setsubsAC, subscribeAC, setUsersNumberAC, setPageNumberAC, setLoaderAC }

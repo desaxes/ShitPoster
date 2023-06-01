@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 class ProfilePage extends React.Component {
 
     componentDidMount() {
-        debugger
         let userid = this.props.match.params.id
         if (!userid){
             userid=2;

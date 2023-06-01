@@ -24,6 +24,16 @@
     margin-right: auto;
     margin-left: 10px;
 }
+.flex{
+    display: flex;
+    align-items: center;
+    margin-right: 2%;
+}
+.login{
+    margin-right: 5%;
+    margin-left: 5%;
+    text-decoration: underline;
+}
 .avatar{
     width: 60px;
     height: 60px;

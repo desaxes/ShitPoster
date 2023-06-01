@@ -3,17 +3,17 @@ const SETSUBS = 'SETSUBS';
 const SETUSERSNUMBER = 'SET-USERS-NUMBER'
 const SETPAGENUMBER = 'SET-PAGE-NUMBER'
 const SETLOADER = 'SET-LOADER'
-const subscribeAC = (userid) => (
+const subscribe = (userid) => (
     { type: SUBSCRIBE, userid: userid })
-const setsubsAC = (subsData) => (
+const setsubs = (subsData) => (
     { type: SETSUBS, subsData: subsData })
-const setUsersNumberAC = (count) => (
+const setUsersNumber = (count) => (
     { type: SETUSERSNUMBER, count: count }
 )
-const setPageNumberAC = (page) => (
+const setPageNumber = (page) => (
     { type: SETPAGENUMBER, page: page }
 )
-const setLoaderAC = (isFetching) => (
+const setLoader = (isFetching) => (
     { type: SETLOADER, isFetching: isFetching }
 )
 
@@ -66,4 +66,4 @@ const subsReducer = (state = initialState, action) => {
         default: return state
     }
 }
-export { subsReducer, setsubsAC, subscribeAC, setUsersNumberAC, setPageNumberAC, setLoaderAC }
+export { subsReducer, setsubs, subscribe, setUsersNumber, setPageNumber, setLoader }

@@ -5,7 +5,7 @@ const Nav = () => {
     return (<nav className={s.nav}>
         <ul className={s.ul}>
             <li className={s.item}>
-                <button className={s.link}><NavLink className={ navData => navData.isActive ? s.active : s.link} to='/profile'>Profile</NavLink></button>
+                <button className={s.link}><NavLink className={ navData => navData.isActive ? s.active : s.link} to='/profile/29179'>Profile</NavLink></button>
             </li>
             <li className={s.item}>
                 <button className={s.link}><NavLink className={ navData => navData.isActive ? s.active : s.link} to='/popular'>Popular</NavLink></button>

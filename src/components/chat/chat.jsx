@@ -8,7 +8,7 @@ const Chat = (props) => {
                 <div className={s.chat_window}>
                     <Messagebox messages={props.messages} />
                     <Mes_textbox newMessageText={props.newMessageText}
-                        sendMessage={props.sendMessage} updateMessageText={props.updateMessageText} />
+                        sendMessage={props.sendMessage} updateMessageArea={props.updateMessageArea} />
                 </div>
             </div>
         </div>

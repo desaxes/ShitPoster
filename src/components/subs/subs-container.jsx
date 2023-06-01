@@ -1,5 +1,5 @@
 import { connect } from "react-redux"
-import { setLoaderAC, setPageNumberAC, setUsersNumberAC, setsubsAC, subscribeAC } from "../../redux/subs-reducer"
+import { setLoader, setPageNumber, setUsersNumber, setsubs, subscribe } from "../../redux/subs-reducer"
 import React from "react";
 import axios from 'axios'
 import { SubsPresentation } from "./subs-presentation";
@@ -11,7 +11,7 @@ class Users extends React.Component {
         axios.get("https://social-network.samuraijs.com/api/1.0/users?count=" +
             this.props.pageSize + "&page=" + this.props.pageNumber).then(response => {
                 this.props.setLoader(false)
-                this.props.setSubs(response.data.items)
+                this.props.setsubs(response.data.items)
                 this.props.setUsersNumber(response.data.totalCount)
             })
     }
@@ -21,7 +21,7 @@ class Users extends React.Component {
         axios.get("https://social-network.samuraijs.com/api/1.0/users?count=" +
             this.props.pageSize + "&page=" + pageNumber).then(response => {
                 this.props.setLoader(false)
-                this.props.setSubs(response.data.items)
+                this.props.setsubs(response.data.items)
             })
         this.props.setLoader(true)
     }
@@ -29,7 +29,7 @@ class Users extends React.Component {
         return <>
             <SubsPresentation subs={this.props.subs} pageNumber={this.props.pageNumber}
                 totalCount={this.props.totalCount} onPageChanged={this.onPageChanged}
-                onSub={this.props.onSub} pageSize={this.props.pageSize} setLoader={this.props.setLoader} 
+                subscribe={this.props.subscribe} pageSize={this.props.pageSize} setLoader={this.props.setLoader}
                 isFetching={this.props.isFetching}/>
         </>
     }
@@ -41,18 +41,26 @@ const mapStateToProps = (state) => {
         pageSize: state.subsPage.pageSize,
         pageNumber: state.subsPage.pageNumber,
         totalCount: state.subsPage.totalCount,
-        isFetching:state.subsPage.isFetching
+        isFetching: state.subsPage.isFetching
     }
 }
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onSub: (id) => { dispatch(subscribeAC(id)) },
-        setSubs: (subsData) => { dispatch(setsubsAC(subsData)) },
-        setUsersNumber: (count) => { dispatch(setUsersNumberAC(count)) },
-        setPageNumber: (page) => { dispatch(setPageNumberAC(page)) },
-        setLoader:(isFetching)=>{dispatch(setLoaderAC(isFetching))}
-    }
-}
-const SubsContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         onSub: (id) => { dispatch(subscribeAC(id)) },
+//         setSubs: (subsData) => { dispatch(setsubsAC(subsData)) },
+//         setUsersNumber: (count) => { dispatch(setUsersNumberAC(count)) },
+//         setPageNumber: (page) => { dispatch(setPageNumberAC(page)) },
+//         setLoader: (isFetching) => { dispatch(setLoaderAC(isFetching)) }
+//     }
+// }
+
+
+const SubsContainer = connect(mapStateToProps, {
+    subscribe,
+    setsubs,
+    setUsersNumber,
+    setPageNumber,
+    setLoader,
+})(Users)
 
 export { SubsContainer }

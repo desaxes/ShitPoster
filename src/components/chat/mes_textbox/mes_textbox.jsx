@@ -4,7 +4,7 @@ const Mes_textbox = (props) =>{
 
     let onMessageAreaChange = (e)=>{
         let text = e.target.value;
-        props.updateMessageText(text)
+        props.updateMessageArea(text)
     }
     let sendMessage = (e)=>{
         e.preventDefault()

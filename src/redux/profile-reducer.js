@@ -1,12 +1,13 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
-
-const addPostActionCreator = (name, avatar, time, com_count, like_count) => (
+const SET_PROFILE_INFO = 'SET-PROFILE-INFO';
+const addPost = (name, avatar, time, com_count, like_count) => (
     { type: ADD_POST, name: name, avatar: avatar, time: time, com_count: com_count, like_count: like_count })
 
-const addUpdatePostTextActionCreator = (text) =>
+const updatePostText = (text) =>
     ({ type: UPDATE_POST_TEXT, text: text })
-
+const setProfileInfo = (data) =>
+    ({ type: SET_PROFILE_INFO, data: data })
 let initialState = {
     postData: [
         {
@@ -34,7 +35,28 @@ let initialState = {
             like_count: '91'
         }
     ],
-    newPostText: ''
+    newPostText: '',
+    profileInfo: {
+        aboutMe: null,
+        contacts: {
+            facebook: null,
+            website: null,
+            vk: null,
+            twitter: null,
+            instagram: null,
+            youtube: null,
+            github: null,
+            mainLink: null
+        },
+        lookingForAJob: false,
+        lookingForAJobDescription: null,
+        fullName: "",
+        userId: 0,
+        photos: {
+            small: null,
+            large: null
+        }
+    }
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -61,7 +83,10 @@ const profileReducer = (state = initialState, action) => {
         case UPDATE_POST_TEXT: {
             return { ...state, newPostText: action.text };
         }
+        case SET_PROFILE_INFO: {
+            return { ...state, profileInfo: { ...action.data } };
+        }
         default: return state;
     }
 }
-export { profileReducer, addPostActionCreator, addUpdatePostTextActionCreator }
+export { profileReducer, addPost, updatePostText, setProfileInfo }

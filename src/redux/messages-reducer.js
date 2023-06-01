@@ -3,10 +3,10 @@ import mes_style from './../components/chat/messagebox/message.module.css'
 const UPDATE_MESSAGE_AREA = 'UPDATE-MESSAGE-AREA';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
-const addUpdateMessageAreaActionCreator = (text) =>
+const updateMessageArea = (text) =>
     ({ type: UPDATE_MESSAGE_AREA, text: text })
 
-const addSendMessageActionCreator = () => ({ type: SEND_MESSAGE })
+const sendMessage = () => ({ type: SEND_MESSAGE })
 
 let initialState = {
     dialogsData: [
@@ -49,4 +49,4 @@ const messagesReducer = (state = initialState, action) => {
     }
 }
 
-export { addUpdateMessageAreaActionCreator, addSendMessageActionCreator, messagesReducer }
+export { updateMessageArea, sendMessage, messagesReducer }

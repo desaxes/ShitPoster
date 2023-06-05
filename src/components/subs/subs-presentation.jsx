@@ -11,7 +11,7 @@ const SubsPresentation = (props) => {
     for (let i = 1; i <= 20; i++) {
         pages.push(i)
     }
-    let pageNumbers = pages.map(p => <span onClick={(e) => { props.onPageChanged(p) }}
+    let pageNumbers = pages.map(p => <span key={p} onClick={(e) => { props.onPageChanged(p) }}
         className={`${props.pageNumber === p && s.selectedPage} ${s.pageNumber}`}>{p}</span>)
     return (
         <div className={s.subs}>

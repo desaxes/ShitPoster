@@ -4,6 +4,7 @@ import Profile from './profile';
 import React from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { userAPI } from '../../api/api';
 class ProfilePage extends React.Component {
 
     componentDidMount() {
@@ -11,8 +12,8 @@ class ProfilePage extends React.Component {
         if (!userid){
             userid=2;
         }
-        axios.get("https://social-network.samuraijs.com/api/1.0/profile/"+userid).then(response => {
-            this.props.setProfileInfo(response.data)
+        userAPI.getUserProfile(userid).then(data => {
+            this.props.setProfileInfo(data)
         })
     }
     render() {

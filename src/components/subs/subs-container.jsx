@@ -1,28 +1,26 @@
 import { connect } from "react-redux"
 import { setLoader, setPageNumber, setUsersNumber, setsubs, subscribe } from "../../redux/subs-reducer"
 import React from "react";
-import axios from 'axios'
 import { SubsPresentation } from "./subs-presentation";
+import { userAPI } from "../../api/api";
 
 
 class Users extends React.Component {
     componentDidMount() {
         this.props.setLoader(true)
-        axios.get("https://social-network.samuraijs.com/api/1.0/users?count=" +
-            this.props.pageSize + "&page=" + this.props.pageNumber).then(response => {
-                this.props.setLoader(false)
-                this.props.setsubs(response.data.items)
-                this.props.setUsersNumber(response.data.totalCount)
-            })
+        userAPI.getUsers(this.props.pageSize, this.props.pageNumber).then(data => {
+            this.props.setLoader(false)
+            this.props.setsubs(data.items)
+            this.props.setUsersNumber(data.totalCount)
+        })
     }
     onPageChanged = (pageNumber) => {
         this.props.setLoader(true)
         this.props.setPageNumber(pageNumber)
-        axios.get("https://social-network.samuraijs.com/api/1.0/users?count=" +
-            this.props.pageSize + "&page=" + pageNumber).then(response => {
-                this.props.setLoader(false)
-                this.props.setsubs(response.data.items)
-            })
+        userAPI.getUsers(this.props.pageSize, pageNumber).then(data => {
+            this.props.setLoader(false)
+            this.props.setsubs(data.items)
+        })
         this.props.setLoader(true)
     }
     render() {
@@ -30,7 +28,7 @@ class Users extends React.Component {
             <SubsPresentation subs={this.props.subs} pageNumber={this.props.pageNumber}
                 totalCount={this.props.totalCount} onPageChanged={this.onPageChanged}
                 subscribe={this.props.subscribe} pageSize={this.props.pageSize} setLoader={this.props.setLoader}
-                isFetching={this.props.isFetching}/>
+                isFetching={this.props.isFetching} />
         </>
     }
 }

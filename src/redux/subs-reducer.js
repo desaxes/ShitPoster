@@ -1,8 +1,11 @@
+import { userAPI } from "../api/api";
+
 const SUBSCRIBE = 'SUBSCRIBE';
 const SETSUBS = 'SETSUBS';
 const SETUSERSNUMBER = 'SET-USERS-NUMBER'
 const SETPAGENUMBER = 'SET-PAGE-NUMBER'
 const SETLOADER = 'SET-LOADER'
+const SUBSCRIBE_IN_PROGRESS = 'SUBSCRIBE-IN-PROGRESS'
 const subscribe = (userid) => (
     { type: SUBSCRIBE, userid: userid })
 const setsubs = (subsData) => (
@@ -16,6 +19,8 @@ const setPageNumber = (page) => (
 const setLoader = (isFetching) => (
     { type: SETLOADER, isFetching: isFetching }
 )
+const subscribeInProgress = (isFetching, userId) => (
+    { type: SUBSCRIBE_IN_PROGRESS, isFetching: isFetching, userId: userId })
 
 
 let initialState = {
@@ -23,7 +28,8 @@ let initialState = {
     pageSize: 5,
     totalCount: 0,
     pageNumber: 1,
-    isFetching: false
+    isFetching: false,
+    subscribeProgress: []
 }
 
 const subsReducer = (state = initialState, action) => {
@@ -63,7 +69,58 @@ const subsReducer = (state = initialState, action) => {
                 ...state, isFetching: action.isFetching
             }
         }
+        case SUBSCRIBE_IN_PROGRESS: {
+            return {
+                ...state, subscribeProgress: action.isFetching
+                    ? [...state.subscribeProgress, action.userId]
+                    : state.subscribeProgress.filter(id => id != action.userId)
+            }
+        }
         default: return state
     }
 }
-export { subsReducer, setsubs, subscribe, setUsersNumber, setPageNumber, setLoader }
+
+const getUsers = (pageSize, pageNumber) => {
+    return (dispatch) => {
+        dispatch(setLoader(true))
+        userAPI.getUsers(pageSize, pageNumber).then(data => {
+            dispatch(setLoader(false))
+            dispatch(setsubs(data.items))
+            dispatch(setUsersNumber(data.totalCount))
+        })
+    }
+}
+const onPageChanged = (pageSize, pageNumber) => {
+    return (dispatch) => {
+        dispatch(setLoader(true))
+        dispatch(setPageNumber(pageNumber))
+        userAPI.getUsers(pageSize, pageNumber).then(data => {
+            dispatch(setLoader(false))
+            dispatch(setsubs(data.items))
+        })
+    }
+}
+const following = (subscribeStatus, userId) => {
+    return (dispatch) => {
+        if (subscribeStatus === false) {
+            dispatch(subscribeInProgress(true, userId))
+            userAPI.subUser(userId).then(resultCode => {
+                if (resultCode == 0) {
+                    dispatch(subscribe(userId));
+                }
+                dispatch(subscribeInProgress(false, userId))
+            })
+        }
+        else {
+            dispatch(subscribeInProgress(true, userId))
+            userAPI.unsubUser(userId).then(resultCode => {
+                if (resultCode == 0) {
+                    dispatch(subscribe(userId));
+                }
+                dispatch(subscribeInProgress(false, userId))
+            })
+        }
+    }
+}
+
+export { subsReducer, getUsers, onPageChanged, following }

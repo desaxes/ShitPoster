@@ -12,15 +12,19 @@ const Profile = (props) => {
     let newPostElement = React.createRef();
     let addQuickPost = (e) => {
         e.preventDefault();
-        props.addPost('Shitposter',avatar,'Now','0','0')
+        props.addPost('Shitposter', avatar, 'Now', '0', '0')
     }
     let posts = props.posts.map(p => <Post key={p.id} name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} com_count={p.com_count} like_count={p.like_count} />
     )
 
-    let onPostChange =()=>{
+    let onPostChange = () => {
         let text = newPostElement.current.value;
         props.updatePostText(text);
+    }
+    let onSubClick = (e) => {
+        e.preventDefault();
+        props.following(props.profileInfo.followed, props.profileInfo.userId)
     }
     return (
         <div className={s.profile}>
@@ -28,7 +32,7 @@ const Profile = (props) => {
                 <img className={s.header} src={profile_head_img} alt='profile__header'></img>
                 <div className='page-block'>
                     <div className={s.info_block}>
-                        <img className={s.avatar} src={props.profileInfo.photos.large === null ?logo:props.profileInfo.photos.large} alt='avatar'></img>
+                        <img className={s.avatar} src={props.profileInfo.photos.large === null ? logo : props.profileInfo.photos.large} alt='avatar'></img>
                         <div className={s.info_inf}>
                             <div className={s.name}>{props.profileInfo.fullName}</div>
                             <div className={s.desc_block}>
@@ -45,7 +49,8 @@ const Profile = (props) => {
                                 <button className='quick-posting__btn'>Send Message</button>
                             </div>
                             <div className='quick-posting-btnbox'>
-                                <button className='quick-posting__btn'>Subscribe</button>
+                                <button disabled={props.subscribeProgress.some(id => id === props.profileInfo.userId)} onClick={onSubClick} className={`${'quick-posting__btn'} ${props.profileInfo.followed && s.f_color}`}>
+                                    {props.profileInfo.followed ? 'Unsubscribe' : 'Subscribe'}</button>
                             </div>
                             <div className='quick-posting-btnbox'>
                                 <button className='quick-posting__btn'>Show Subs</button>

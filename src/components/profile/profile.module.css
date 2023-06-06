@@ -54,3 +54,6 @@
     align-items: center;
     gap: 20px;
 }
+.f_color{
+    background: linear-gradient(60.95deg, #000000cc 0%, #901111c9 100%);
+}

@@ -1,13 +1,18 @@
+import { userAPI } from "../api/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_PROFILE_INFO = 'SET-PROFILE-INFO';
+const SET_FOLLOWED_INFO = 'SET-FOLLOWED-INFO'
 const addPost = (name, avatar, time, com_count, like_count) => (
     { type: ADD_POST, name: name, avatar: avatar, time: time, com_count: com_count, like_count: like_count })
-
 const updatePostText = (text) =>
     ({ type: UPDATE_POST_TEXT, text: text })
 const setProfileInfo = (data) =>
     ({ type: SET_PROFILE_INFO, data: data })
+const setFollowedInfo = (followed)=>({
+    type: SET_FOLLOWED_INFO, followed:followed
+})
 let initialState = {
     postData: [
         {
@@ -48,6 +53,7 @@ let initialState = {
             github: null,
             mainLink: null
         },
+        followed:null,
         lookingForAJob: false,
         lookingForAJobDescription: null,
         fullName: "",
@@ -86,7 +92,18 @@ const profileReducer = (state = initialState, action) => {
         case SET_PROFILE_INFO: {
             return { ...state, profileInfo: { ...action.data } };
         }
+        case SET_FOLLOWED_INFO: {
+            return { ...state, profileInfo: { ...state.profileInfo, followed:action.followed } };
+        }
         default: return state;
     }
 }
-export { profileReducer, addPost, updatePostText, setProfileInfo }
+
+const getUserProfile = (userid) => {
+    return (dispatch) => {
+        userAPI.getUserProfile(userid).then(data => {
+            dispatch(setProfileInfo(data))
+        })
+    }
+}
+export { profileReducer, addPost, updatePostText, getUserProfile, setFollowedInfo }

@@ -5,7 +5,8 @@ import React from 'react'
 import { Preloader } from '../common_components/preloader'
 const SubsPresentation = (props) => {
     let subs = props.subs.map(p => <Sub key={p.id} id={p.id} name={p.name} status={p.status}
-        followed={p.followed} avatar={p.photos.small} subscribe={props.subscribe}/>)
+        followed={p.followed} avatar={p.photos.small} subscribeProgress={props.subscribeProgress}
+        following={props.following} />)
     let pageCount = Math.ceil(props.totalCount / props.pageSize);
     let pages = [];
     for (let i = 1; i <= 20; i++) {

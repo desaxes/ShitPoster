@@ -6,8 +6,8 @@
 .info_block {
     display: flex;
     align-items: center;
-    margin-left: 8%;
-    justify-content: space-between;
+    /* margin-left: 8%; */
+    justify-content: center;
 }
 
 .avatar {
@@ -46,14 +46,44 @@
     margin-left: 10px;
     color: #527070;
 }
-.btn_block{
-    margin-right: auto;
+
+.btn_block {
+    margin-right: 30px;
     margin-left: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
 }
-.f_color{
+
+.f_color {
     background: linear-gradient(60.95deg, #000000cc 0%, #901111c9 100%);
+}
+
+.status_field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 700;
+    width: 400px;
+    color: blue;
+}
+
+.status_input {
+    width: 400px;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 700;
+    text-align: center;
+}
+
+.pencil_box img {
+    width: 40px;
+    border-radius: 20%;
+}
+.pencil_box img:active{
+    box-shadow: 0px 0px 30px 2px rgb(20, 16, 68);
 }

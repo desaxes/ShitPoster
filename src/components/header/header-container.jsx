@@ -1,15 +1,11 @@
 import { connect } from "react-redux";
 import React from "react";
 import Header from "./header";
-import { authtorize } from "../../redux/auth-reducer";
 
 class HeaderAPI extends React.Component {
-    authorize = () => {
-        this.props.authtorize();
-    }
     render() {
         return (
-            <Header {...this.props} authorize={this.authorize} />
+            <Header {...this.props}/>
         )
     }
 }
@@ -18,8 +14,7 @@ const mapStateToProps = (state) => {
     return {
         auth: state.auth
     }
-
 }
-const HeaderContainer = connect(mapStateToProps, { authtorize })(HeaderAPI)
+const HeaderContainer = connect(mapStateToProps, { })(HeaderAPI)
 
 export { HeaderContainer }

@@ -5,6 +5,8 @@ import s from './profile.module.css'
 import Post from './../posts/post'
 import avatar from './../../img/shit_icon.svg'
 import { addPostActionCreator, addUpdatePostTextActionCreator } from '../../redux/profile-reducer';
+import { Navigate } from 'react-router-dom';
+import ProfileStatus from './profile-status';
 
 
 
@@ -26,6 +28,7 @@ const Profile = (props) => {
         e.preventDefault();
         props.following(props.profileInfo.followed, props.profileInfo.userId)
     }
+
     return (
         <div className={s.profile}>
             <div className={s.head}>
@@ -35,6 +38,7 @@ const Profile = (props) => {
                         <img className={s.avatar} src={props.profileInfo.photos.large === null ? logo : props.profileInfo.photos.large} alt='avatar'></img>
                         <div className={s.info_inf}>
                             <div className={s.name}>{props.profileInfo.fullName}</div>
+                            <ProfileStatus status={'React-Redux'}/>
                             <div className={s.desc_block}>
                                 <p className={s.question}>Rating:</p>
                                 <p className={s.answer}>10000</p>
@@ -44,7 +48,7 @@ const Profile = (props) => {
                                 <p className={s.answer}>3</p>
                             </div>
                         </div>
-                        <div className={s.btn_block}>
+                        {props.profileInfo.userId != props.auth.id && <div className={s.btn_block}>
                             <div className='quick-posting-btnbox'>
                                 <button className='quick-posting__btn'>Send Message</button>
                             </div>
@@ -55,18 +59,18 @@ const Profile = (props) => {
                             <div className='quick-posting-btnbox'>
                                 <button className='quick-posting__btn'>Show Subs</button>
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>
-            <form className='quick-posting page-block'>
+            {props.profileInfo.userId === props.auth.id &&<form className='quick-posting page-block'>
                 <textarea onChange={onPostChange} ref={newPostElement} placeholder='Enter Text' className='quick-posting-field' value={props.newPostText}>
 
                 </textarea>
                 <div className='quick-posting-btnbox'>
                     <button onClick={addQuickPost} type='submit' className='quick-posting__btn'>Quick Post</button>
                 </div>
-            </form>
+            </form>}
             <div className="page-block">
                 {posts}
             </div>

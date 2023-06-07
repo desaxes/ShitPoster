@@ -1,8 +1,9 @@
-import {ProfileContainer} from '../profile/profile-container'
+import ProfileContainer from '../profile/profile-container'
 import MessagesContainer from '../messages/messages-container'
 import s from './content.module.css'
 import { Route, Routes } from 'react-router-dom'
-import { SubsContainer } from '../subs/subs-container'
+import SubsContainer from '../subs/subs-container'
+import { LoginConatainer } from '../login/login-container'
 const Content = (props) => {
     return (
                 <section className={s.content}>
@@ -12,6 +13,7 @@ const Content = (props) => {
                                 <Route path='/profile/:id?' element={<ProfileContainer/>} />
                                 <Route path='/messages' element={<MessagesContainer/>} />
                                 <Route path='/subs' element={<SubsContainer/>} />
+                                <Route path='/login' element={<LoginConatainer/>} />
                             </Routes>
                         </div>
                     </div>

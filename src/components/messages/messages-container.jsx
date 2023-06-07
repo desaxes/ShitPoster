@@ -1,6 +1,17 @@
 import { connect } from 'react-redux';
 import { sendMessage, updateMessageArea } from '../../redux/messages-reducer';
 import Messages from './messages'
+import React from 'react';
+import { AuthRedirect } from '../common_components/hoc-components';
+import { compose } from 'redux';
+
+class MessagesAPI extends React.Component {
+    render() {
+        return (
+            <Messages {...this.props} />
+        )
+    }
+}
 // const MessagesContainerOld = (props) => {
 //     return (
 //         <StoreContext.Consumer>
@@ -19,11 +30,11 @@ import Messages from './messages'
 //         </StoreContext.Consumer>
 //     )
 // }
-const mapStateToProps = (state) =>{
-    return{
-        contacts:state.messagesPage.dialogsData,
-        messages:state.messagesPage.messagesData,
-        newMessageText:state.messagesPage.newMessageText
+const mapStateToProps = (state) => {
+    return {
+        contacts: state.messagesPage.dialogsData,
+        messages: state.messagesPage.messagesData,
+        newMessageText: state.messagesPage.newMessageText
     }
 }
 
@@ -37,10 +48,11 @@ const mapStateToProps = (state) =>{
 //         }
 //     }
 // }
-const MessagesContainer = connect(mapStateToProps, 
-    {
-        sendMessage,
-        updateMessageArea
-    })(Messages)
-
-export default MessagesContainer;
+export default compose(
+    connect(mapStateToProps,
+        {
+            sendMessage,
+            updateMessageArea
+        }),
+    AuthRedirect
+)(MessagesAPI);

@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { userAPI } from "../api/api";
 
 const SET_USER_DATA = "SET-USER-DATA"

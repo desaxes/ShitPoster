@@ -1,0 +1,24 @@
+import { connect } from "react-redux";
+import React from 'react'
+import { Login } from "./login";
+import { authtorize } from "../../redux/auth-reducer";
+class LoginAPI extends React.Component {
+
+    render() {
+        return <>
+            <Login {...this.props} />
+        </>
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+}
+
+const LoginConatainer = connect(mapStateToProps, {
+    authtorize
+})(LoginAPI)
+
+export { LoginConatainer }

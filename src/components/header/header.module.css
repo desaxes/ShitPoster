@@ -1,7 +1,7 @@
 .header {
     width: 100%;
     height: 60px;
-    background: linear-gradient(180.95deg, #000000cc 0%, #100c3ac9 100%);
+    background: linear-gradient(180.95deg, #000000cc 0%, #030109c9 100%);
     font-size: 24px;
     font-weight: 900;
     position: sticky;
@@ -40,7 +40,33 @@
 }
 .settings{
     margin-right: 2%;
+    position: relative;
 }
 .set_btn{
     color: #fff;
+    transition: .3s;
+}
+.set_btn:hover{
+    color: red;
+    font-size: 18px;
+    transition: .3s;
+}
+.sMenu{
+    width: 140px;
+    height: 200px;
+    background: linear-gradient(180.95deg, #cdccdcc9 0%, #413c8dc9 100%);  
+    border: solid 2px #fff;
+    position: absolute;
+    right: 20px;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    justify-content: space-between;
+    border-radius: 6px;
+}
+.btn_box{
+    height: 30px;
+    width: 90%;
 }

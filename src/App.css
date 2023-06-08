@@ -46,14 +46,14 @@
   background: linear-gradient(180.95deg, #000000cc 0%, #100c3ac9 100%);
 }   
 .container{
-  width: 1030px;
-  max-width: 1030px;
+  width: 1200px;
+  max-width: 1200px;
   border-right: #0000006e solid 1px;
   border-left: #0000006e solid 1px;
 }
 .page-block{
 margin: 30px 30px;
-background-color: #e8e8e8;
+background-color: #ffffff;
 padding-top: 20px;
 padding-bottom: 20px;
 border-radius: 6px;
@@ -82,9 +82,14 @@ border-radius: 6px;
   border-radius: 15px;
   font-weight: bold;
   transition: 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 .quick-posting__btn:hover{
   box-shadow: 4px 6px 20px #000;
+  color: aquamarine;
 }
 .quick-posting-field{
   width: 95%;
@@ -95,10 +100,11 @@ border-radius: 6px;
   margin-bottom: 15px;
   background-color: #000000;
   font-size: 18px;
-  color: #fff;
+  color: aquamarine;
   padding: 3px;
   border-radius: 4px;
   resize: none;
+  text-align: center;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

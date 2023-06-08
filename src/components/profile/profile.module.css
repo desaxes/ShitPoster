@@ -1,6 +1,7 @@
 .header {
     margin-bottom: 30px;
     border-radius: 4px;
+    width: 100%;
 }
 
 .info_block {
@@ -26,6 +27,7 @@
     margin-bottom: 30px;
     border-bottom: #000000 solid 3px;
     text-align: center;
+    color: #1f1e37;
 }
 
 .desc_block {

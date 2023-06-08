@@ -1,5 +1,6 @@
 .inner{
     position: relative;
+    width: 100%;
 }
 .contacts{
     position: absolute;

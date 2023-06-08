@@ -1,12 +1,8 @@
-import mes_style from './../components/chat/messagebox/message.module.css'
+import mes_style from './../components/chat/messagebox/messagebox.module.css'
 
-const UPDATE_MESSAGE_AREA = 'UPDATE-MESSAGE-AREA';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
-const updateMessageArea = (text) =>
-    ({ type: UPDATE_MESSAGE_AREA, text: text })
-
-const sendMessage = () => ({ type: SEND_MESSAGE })
+const sendMessage = (newMessageText) => ({ type: SEND_MESSAGE, newMessageText:newMessageText })
 
 let initialState = {
     dialogsData: [
@@ -25,23 +21,17 @@ let initialState = {
         { id: 6, inout: `${mes_style.in}`, text: 'Im too. Sorry, but i should go. My wife come home. Talk later.' },
         { id: 7, inout: `${mes_style.out}`, text: 'Ok. Bye!' },
         { id: 8, inout: `${mes_style.in}`, text: 'Ok. Bye!' },
-    ],
-    newMessageText: ''
+    ]
 }
 
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
-        case UPDATE_MESSAGE_AREA: {
-            return { ...state, newMessageText: action.text };
-        }
         case SEND_MESSAGE: {
-            if (state.newMessageText === '') {return state}
+            if (action.newMessageText === '') {return state}
             else {
-                let mtext = state.newMessageText;
                 return {
                     ...state, messagesData: [...state.messagesData,
-                    { id: state.messagesData.at(-1).id + 1, inout: `${mes_style.out}`, text: mtext }], 
-                    newMessageText: ''
+                    { id: state.messagesData.at(-1).id + 1, inout: `${mes_style.out}`, text: action.newMessageText }], 
                 }
             }
         }
@@ -49,4 +39,4 @@ const messagesReducer = (state = initialState, action) => {
     }
 }
 
-export { updateMessageArea, sendMessage, messagesReducer }
+export { sendMessage, messagesReducer }

@@ -26,3 +26,20 @@
     overflow: scroll;
     overflow-x: hidden;
 }
+.message{
+    min-height: 40px;
+    border: #100c3ac9 solid 2px;
+    border-radius: 6px;
+    color: #fff;
+    padding: 10px 10px;
+}
+.in{
+    align-self: flex-start;
+    background-color: #100c3a6e;
+    margin-left: 5%;
+}
+.out{
+    align-self: flex-end;
+    background-color: #040219c9;
+    margin-right: 5%;
+}

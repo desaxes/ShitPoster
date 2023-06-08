@@ -13,8 +13,7 @@ const Messages = (props) => {
                         {contacts}
                     </ul>
                 </div>
-                <Chat messages={props.messages} newMessageText={props.newMessageText}
-                    sendMessage={props.sendMessage} updateMessageArea={props.updateMessageArea} />
+                <Chat messages={props.messages} sendMessage={props.sendMessage} />
             </div>
         </div>
     )

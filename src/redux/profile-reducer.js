@@ -1,17 +1,17 @@
-import { userAPI } from "../api/api";
-
+import { profileAPI } from "../api/api";
 const ADD_POST = 'ADD-POST';
-const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_PROFILE_INFO = 'SET-PROFILE-INFO';
 const SET_FOLLOWED_INFO = 'SET-FOLLOWED-INFO'
-const addPost = (name, avatar, time, com_count, like_count) => (
-    { type: ADD_POST, name: name, avatar: avatar, time: time, com_count: com_count, like_count: like_count })
-const updatePostText = (text) =>
-    ({ type: UPDATE_POST_TEXT, text: text })
+const SET_PROFILE_STATUS = 'SET-PROFILE-STATUS'
+const addPost = (name, avatar, time, posttext, com_count, like_count) => (
+    { type: ADD_POST, name: name, avatar: avatar, time: time, posttext: posttext, com_count: com_count, like_count: like_count })
 const setProfileInfo = (data) =>
     ({ type: SET_PROFILE_INFO, data: data })
-const setFollowedInfo = (followed)=>({
-    type: SET_FOLLOWED_INFO, followed:followed
+const setFollowedInfo = (followed) => ({
+    type: SET_FOLLOWED_INFO, followed: followed
+})
+const setProfileStatus = (status) => ({
+    type: SET_PROFILE_STATUS, status: status
 })
 let initialState = {
     postData: [
@@ -53,7 +53,7 @@ let initialState = {
             github: null,
             mainLink: null
         },
-        followed:null,
+        followed: null,
         lookingForAJob: false,
         lookingForAJobDescription: null,
         fullName: "",
@@ -61,14 +61,15 @@ let initialState = {
         photos: {
             small: null,
             large: null
-        }
-    }
+        },
+    },
+    status: null
 }
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST: {
-            if (state.newPostText == '') { return state }
+            if (action.posttext == '') { return state }
             else {
                 return {
                     ...state,
@@ -78,22 +79,21 @@ const profileReducer = (state = initialState, action) => {
                         name: action.name,
                         avatar: action.avatar,
                         time: action.time,
-                        posttext: state.newPostText,
+                        posttext: action.posttext,
                         com_count: action.com_count,
                         like_count: action.like_count
-                    }],
-                    newPostText: ''
+                    }]
                 };
             }
-        }
-        case UPDATE_POST_TEXT: {
-            return { ...state, newPostText: action.text };
         }
         case SET_PROFILE_INFO: {
             return { ...state, profileInfo: { ...action.data } };
         }
         case SET_FOLLOWED_INFO: {
-            return { ...state, profileInfo: { ...state.profileInfo, followed:action.followed } };
+            return { ...state, profileInfo: { ...state.profileInfo, followed: action.followed } };
+        }
+        case SET_PROFILE_STATUS: {
+            return { ...state, status: action.status }
         }
         default: return state;
     }
@@ -101,9 +101,24 @@ const profileReducer = (state = initialState, action) => {
 
 const getUserProfile = (userid) => {
     return (dispatch) => {
-        userAPI.getUserProfile(userid).then(data => {
+        profileAPI.getUserProfile(userid).then(data => {
             dispatch(setProfileInfo(data))
+        })
+        profileAPI.getStatus(userid).then(data => {
+            dispatch(setProfileStatus(data))
         })
     }
 }
-export { profileReducer, addPost, updatePostText, getUserProfile, setFollowedInfo }
+const setStatus = (userid, status) => {
+    return (dispatch) => {
+        profileAPI.putStatus(status).then(response => {
+            if (response.resultCode === 0) {
+                profileAPI.getStatus(userid).then(data => {
+                    dispatch(setProfileStatus(data))
+                })
+            }
+        }
+        )
+    }
+}
+export { profileReducer, addPost, getUserProfile, setFollowedInfo, setStatus }

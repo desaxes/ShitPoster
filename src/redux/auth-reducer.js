@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { userAPI } from "../api/api";
+import { authAPI, profileAPI, userAPI } from "../api/api";
 
 const SET_USER_DATA = "SET-USER-DATA"
 const SET_AUTH_INFO = 'SET-AUTH-INFO';
@@ -48,10 +48,10 @@ const authReducer = (state = initialState, action) => {
 
 const authtorize = () => {
     return (dispatch) => {
-        userAPI.auth().then(data => {
+        authAPI.auth().then(data => {
             if (data.resultCode === 0) {
                 dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email))
-                userAPI.getUserProfile(data.data.id).then(
+                profileAPI.getUserProfile(data.data.id).then(
                     data => {
                         dispatch(setUserData(data))
                     }

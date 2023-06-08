@@ -5,19 +5,28 @@ import s from './profile.module.css'
 class ProfileStatus extends React.Component {
     state = {
         editMode: false,
-        pencilMode: false
+        pencilMode: false,
+        newStatusText: ""
     }
     changeImagePC = () => {
-        this.setState({pencilMode:true})
+        this.setState({ pencilMode: true })
     }
     changeImageP = () => {
-        this.setState({pencilMode:false})
+        this.setState({ pencilMode: false })
     }
-    activateEditMode = ()=>{
-        this.setState({editMode:true})
+    activateEditMode = () => {
+        this.setState({ editMode: true })
     }
-    deactivateEditMode = ()=>{
-        this.setState({editMode:false})
+    deactivateEditMode = () => {
+        this.setState({ editMode: false })
+        this.props.setStatus(this.props.authId, this.state.newStatusText)
+        this.resetStatusText()
+    }
+    updateStatusText = (e) => {
+        this.setState({ newStatusText: e.target.value })
+    }
+    resetStatusText = (e) => {
+        this.setState({ newStatusText: "" })
     }
     render() {
         return (
@@ -27,15 +36,15 @@ class ProfileStatus extends React.Component {
                         <q>{this.props.status}</q>
                     </div> :
                     <div>
-                        <input autoFocus onBlur={this.deactivateEditMode} maxLength={25} className={s.status_input} placeholder={this.props.status}></input>
+                        <input onChange={this.updateStatusText} value={this.state.newStatusText} autoFocus onBlur={this.deactivateEditMode} maxLength={25} className={s.status_input} placeholder={this.props.status}></input>
                     </div>
                 }
-                <div className={s.pencil_box}>
+                {this.props.profileId === this.props.authId && <div className={s.pencil_box}>
                     <img onClick={this.activateEditMode}
-                    onMouseLeave={this.changeImageP} onMouseEnter={this.changeImagePC} 
-                    src={this.state.pencilMode ? pencilColor : pencil} 
-                    alt="" />
-                </div>
+                        onMouseLeave={this.changeImageP} onMouseEnter={this.changeImagePC}
+                        src={this.state.pencilMode ? pencilColor : pencil}
+                        alt="" />
+                </div>}
             </div>
         )
     }

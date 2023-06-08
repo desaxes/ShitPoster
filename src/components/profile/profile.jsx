@@ -1,34 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import profile_head_img from './../../img/profile_head.png'
 import logo from './../../img/shit_icon.png'
 import s from './profile.module.css'
 import Post from './../posts/post'
 import avatar from './../../img/shit_icon.svg'
-import { addPostActionCreator, addUpdatePostTextActionCreator } from '../../redux/profile-reducer';
-import { Navigate } from 'react-router-dom';
 import ProfileStatus from './profile-status';
-
-
+import { useForm } from 'react-hook-form';
 
 const Profile = (props) => {
-    let newPostElement = React.createRef();
-    let addQuickPost = (e) => {
-        e.preventDefault();
-        props.addPost('Shitposter', avatar, 'Now', '0', '0')
-    }
+    // const [newPostText, changePostText] = useState('');
+    const { register, handleSubmit, reset } = useForm();
+    // let addQuickPost = (e) => {
+    //     e.preventDefault();
+    //     props.addPost('Shitposter', avatar, 'Now', newPostText, '0', '0')
+    //     changePostText('')
+    // }
     let posts = props.posts.map(p => <Post key={p.id} name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} com_count={p.com_count} like_count={p.like_count} />
     )
-
-    let onPostChange = () => {
-        let text = newPostElement.current.value;
-        props.updatePostText(text);
-    }
+    // let onPostChange = (e) => {
+    //     changePostText(e.target.value);
+    // }
     let onSubClick = (e) => {
         e.preventDefault();
         props.following(props.profileInfo.followed, props.profileInfo.userId)
     }
-
+    let onSubmit = (e) => {
+        props.addPost('Shitposter', avatar, 'Now', e.postText, '0', '0')
+        // changePostText('')
+        reset()
+    }
     return (
         <div className={s.profile}>
             <div className={s.head}>
@@ -38,7 +39,8 @@ const Profile = (props) => {
                         <img className={s.avatar} src={props.profileInfo.photos.large === null ? logo : props.profileInfo.photos.large} alt='avatar'></img>
                         <div className={s.info_inf}>
                             <div className={s.name}>{props.profileInfo.fullName}</div>
-                            <ProfileStatus status={'React-Redux'}/>
+                            {<ProfileStatus setStatus={props.setStatus} profileId={props.profileInfo.userId}
+                                authId={props.auth.id} status={props.status} />}
                             <div className={s.desc_block}>
                                 <p className={s.question}>Rating:</p>
                                 <p className={s.answer}>10000</p>
@@ -63,14 +65,13 @@ const Profile = (props) => {
                     </div>
                 </div>
             </div>
-            {props.profileInfo.userId === props.auth.id &&<form className='quick-posting page-block'>
-                <textarea onChange={onPostChange} ref={newPostElement} placeholder='Enter Text' className='quick-posting-field' value={props.newPostText}>
-
-                </textarea>
-                <div className='quick-posting-btnbox'>
-                    <button onClick={addQuickPost} type='submit' className='quick-posting__btn'>Quick Post</button>
-                </div>
-            </form>}
+            {props.profileInfo.userId === props.auth.id &&
+                <form onSubmit={handleSubmit(onSubmit)} className='quick-posting page-block'>
+                    <input required {...register("postText")} placeholder='Enter Text' className='quick-posting-field' />
+                    <div className='quick-posting-btnbox'>
+                        <input value={'Post'} type='submit' className='quick-posting__btn' />
+                    </div>
+                </form>}
             <div className="page-block">
                 {posts}
             </div>

@@ -15,12 +15,27 @@ const userAPI = {
     },
     unsubUser(id) {
         return (instance.delete("follow/" + id,).then(response => response.data.resultCode))
-    },
-    getUserProfile(userid) {
-        return (instance.get("profile/" + userid).then(response => response.data))
+    }
+}
+
+const authAPI = {
+    login(email, password) {
+        return (instance.post("auth/login", { email, password }).then(response => response.data.resultCode))
     },
     auth() {
         return (instance.get("auth/me",).then(response => response.data))
     }
 }
-export { userAPI }
+
+const profileAPI = {
+    getUserProfile(userid) {
+        return (instance.get("profile/" + userid).then(response => response.data))
+    },
+    getStatus(userid) {
+        return (instance.get("profile/status/" + userid).then(response => response.data))
+    },
+    putStatus(status) {
+        return (instance.put("profile/status", { status: status }).then(response => response.data))
+    }
+}
+export { userAPI, authAPI, profileAPI }

@@ -1,3 +1,4 @@
+import { ErrorField } from '../common_components/error';
 import s from './chat.module.css'
 import Messagebox from './messagebox/messagebox';
 import React from 'react';
@@ -16,15 +17,16 @@ const Chat = (props) => {
 }
 
 const Mes_textbox = (props) => {
-    const { register, reset, handleSubmit } = useForm()
+    const { register, reset, handleSubmit, formState: { errors } } = useForm()
     const onSubmit = (e) => {
         props.sendMessage(e.messageText);
         reset();
     }
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={s.text_box}>
-            <textarea required {...register('messageText')} maxLength={50}>
+            <textarea {...register('messageText', { required: "✎ You must enter the text ⇒" })}>
             </textarea>
+            {errors?.messageText && <ErrorField errorMessage={errors?.messageText.message} />}
             <div className='quick-posting-btnbox'>
                 <input value={'Send Message'} type='submit' className='quick-posting__btn' />
             </div>

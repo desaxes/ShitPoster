@@ -3,3 +3,18 @@
     top: 35%;
     left:40%;
 }
+.error{
+    color:#ffffff;
+    background-color: #510c0c;
+    width: 250px;
+    height: 50px;
+    font-weight: 900;
+    border-radius: 10px;
+    position: absolute;
+    top: 28%;
+    left: -25%;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

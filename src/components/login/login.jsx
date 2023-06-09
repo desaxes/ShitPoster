@@ -2,40 +2,57 @@ import React from 'react'
 import s from "./login.module.css"
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { authAPI } from '../../api/api'
 
 const LoginForm = (props) => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onBlur' });
     const navigate = useNavigate()
     let onSubmit = (e) => {
-        // debugger
-        // authAPI.login(e.email, e.password).then(resultCode => {
-        // alert(resultCode)
-        // if (resultCode === 0) {
-        props.authtorize()
-        navigate('/newsfeed')
-        // }
-        // })
-
+        props.login(e.email, e.password, e.checkbox)
     }
-    return (
-        <form onSubmit={handleSubmit(onSubmit)} className={s.form} action="">
-            <h1>Authorization</h1>
-            <input required {...register("email")} placeholder='Login' className={s.field} type="text" />
-            <input required {...register("password")} placeholder='Password' className={s.field} type="password" />
-            <div className={s.btn_box}>
-                <input value={'Confirm'} type="submit" className='quick-posting__btn' />
-            </div>
-            <NavLink className={s.reg}>Registration</NavLink>
-        </form>
-    )
+    if (props.auth.isAuth === false) {
+        return (
+            <form {...register("form")} onSubmit={handleSubmit(onSubmit)} className={s.form} action="">
+                <h1>Authorization</h1>
+                <div className={s.input_box}>
+                    {errors?.email &&
+                        <div>
+                            <p className={s.error}>{errors?.email?.message}</p>
+                        </div>}
+                    <input {...register("email", { required: "✎ Enter your Email!" })}
+                        placeholder={errors?.email ? "⚠" : 'Login'} className={`${s.field} ${errors?.email && s.field_border}`} />
+                </div>
+                <div className={s.input_box}>
+                    {errors?.password &&
+                        <div>
+                            <p className={s.error}>{errors?.password?.message}</p>
+                        </div>}
+                    <input type='password' {...register("password", { required: "✎ Enter your Password! " })}
+                        placeholder={errors?.password ? "⚠" : 'Password'} className={`${s.field} ${errors?.password && s.field_border}`} />
+                </div>
+                <div className={s.checkbox_box}>
+                    <p className={s.remember}>Remember Me</p>
+                    <input type='checkbox' {...register("checkbox")}
+                        className={s.checkbox} />
+                </div>
+                <div className={s.btn_box}>
+                    <input value={'Confirm'} type="submit" className='quick-posting__btn' />
+                </div>
+                <NavLink className={s.reg}>Registration</NavLink>
+            </form>
+        )
+    }
+    else {
+        return (
+            navigate("/newsfeed")
+        )
+    }
 }
 const Login = (props) => {
     return (
         <div className={s.subs}>
             <div className='page-block'>
                 <div className={s.page_inner}>
-                    <LoginForm authtorize={props.authtorize} />
+                    <LoginForm {...props} />
                 </div>
             </div>
         </div>

@@ -1,9 +1,9 @@
 import s from './messagebox.module.css'
 const Message = (props) => {
     return (
-        <div className={`${s.message} ${props.inout}`}>
+        <p className={`${s.message} ${props.inout}`}>
             {props.text}
-        </div>
+        </p>
     )
 }
 const Messagebox = (props) => {

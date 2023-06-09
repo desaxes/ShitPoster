@@ -6,28 +6,19 @@ import Post from './../posts/post'
 import avatar from './../../img/shit_icon.svg'
 import ProfileStatus from './profile-status';
 import { useForm } from 'react-hook-form';
+import { ErrorField } from '../common_components/error';
 
 const Profile = (props) => {
-    // const [newPostText, changePostText] = useState('');
-    const { register, handleSubmit, reset } = useForm();
-    // let addQuickPost = (e) => {
-    //     e.preventDefault();
-    //     props.addPost('Shitposter', avatar, 'Now', newPostText, '0', '0')
-    //     changePostText('')
-    // }
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit' });
     let posts = props.posts.map(p => <Post key={p.id} name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} com_count={p.com_count} like_count={p.like_count} />
     )
-    // let onPostChange = (e) => {
-    //     changePostText(e.target.value);
-    // }
     let onSubClick = (e) => {
         e.preventDefault();
         props.following(props.profileInfo.followed, props.profileInfo.userId)
     }
     let onSubmit = (e) => {
         props.addPost('Shitposter', avatar, 'Now', e.postText, '0', '0')
-        // changePostText('')
         reset()
     }
     return (
@@ -67,7 +58,9 @@ const Profile = (props) => {
             </div>
             {props.profileInfo.userId === props.auth.id &&
                 <form onSubmit={handleSubmit(onSubmit)} className='quick-posting page-block'>
-                    <input required {...register("postText")} placeholder='Enter Text' className='quick-posting-field' />
+                    <input {...register("postText", { required: "✎ You must enter the text ⇒", minLength: { value: 10, message: "Min length is 10 symbols" } })} placeholder='Enter Text'
+                        className='quick-posting-field' />
+                    {errors?.postText && <ErrorField errorMessage={errors?.postText?.message} />}
                     <div className='quick-posting-btnbox'>
                         <input value={'Post'} type='submit' className='quick-posting__btn' />
                     </div>

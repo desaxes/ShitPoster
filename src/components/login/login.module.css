@@ -1,41 +1,88 @@
-.form{
+.form {
     display: flex;
     flex-direction: column;
     padding: 100px;
     align-items: center;
+    position: relative;
 }
-.form h1{
+
+.form h1 {
     font-size: 36px;
     font-weight: 900;
     margin-bottom: 30px;
     text-decoration: underline;
     text-shadow: 2px -2px 6px #251ea7;
 }
-.field{
+
+.input_box {
+    width: 50%;
+    position: relative;
+}
+
+.field {
     padding: 10px;
     line-height: 28px;
     font-size: 24px;
     border: solid 2px black;
     margin-bottom: 20px;
     text-align: center;
-    width: 50%;
+    width: 100%;
+    position: relative;
 }
-.btn_box{
+
+.btn_box {
     display: flex;
     width: 40%;
     height: 30px;
     margin-top: 20px;
     text-align: center;
     align-items: center;
+    position: relative;
 }
-.link  {
+
+.link {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.reg{
+
+.reg {
     margin-top: 20px;
     font-size: 20px;
     text-decoration: underline;
     color: #251ea7;
+}
+
+.error {
+    color: #ffffff;
+    background-color: #510c0c;
+    width: 250px;
+    height: 50px;
+    font-weight: 900;
+    border-radius: 10px;
+    position: absolute;
+    top: 0%;
+    left: -70%;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.field_border {
+    border: solid 4px red;
+}
+
+.checkbox_box {
+    display: flex;
+    gap: 20px;
+}
+
+.remember {
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.checkbox {
+    width: 30px;
 }

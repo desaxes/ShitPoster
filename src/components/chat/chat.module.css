@@ -15,6 +15,7 @@
     align-items: center;
     margin-top: 80px;
     padding: 0 20px;
+    position: relative;
 }
 .text_box textarea{
     width: 750px;

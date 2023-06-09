@@ -9,8 +9,9 @@ const SubsPresentation = (props) => {
         following={props.following} />)
     let pageCount = Math.ceil(props.totalCount / props.pageSize);
     let pages = [];
-    for (let i = 1; i <= 20; i++) {
-        pages.push(i)
+    for (let i = props.pageNumber - 5; i <= props.pageNumber + 5; i++) {
+        if (i > 0 && i < pageCount)
+            pages.push(i)
     }
     let pageNumbers = pages.map(p => <span key={p} onClick={(e) => { props.onPageChanged(p) }}
         className={`${props.pageNumber === p && s.selectedPage} ${s.pageNumber}`}>{p}</span>)
@@ -25,6 +26,7 @@ const SubsPresentation = (props) => {
                         {subs}
                     </ul>
                     <div className={s.counter}>
+                        {props.pageNumber >= 7 && "..."}
                         {pageNumbers}
                     </div>
                 </div>

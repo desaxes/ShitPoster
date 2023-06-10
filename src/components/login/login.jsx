@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import s from "./login.module.css"
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 
 const LoginForm = (props) => {
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm({ mode: 'onBlur' });
+    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onBlur' });
     const navigate = useNavigate()
     let onSubmit = (e) => {
         props.login(e.email, e.password, e.checkbox)
@@ -19,7 +19,7 @@ const LoginForm = (props) => {
                             <p className={s.error}>{errors?.email?.message}</p>
                         </div>}
                     <input {...register("email", { required: "✎ Enter your Email!" })}
-                        placeholder={errors?.email ? "⚠" : 'Login'} className={`${s.field} ${errors?.email && s.field_border}`} />
+                        placeholder={'Login'} className={`${s.field} ${errors?.email && s.field_border}`} />
                 </div>
                 <div className={s.input_box}>
                     {errors?.password &&
@@ -27,7 +27,7 @@ const LoginForm = (props) => {
                             <p className={s.error}>{errors?.password?.message}</p>
                         </div>}
                     <input type='password' {...register("password", { required: "✎ Enter your Password! " })}
-                        placeholder={errors?.password ? "⚠" : 'Password'} className={`${s.field} ${errors?.password && s.field_border}`} />
+                        placeholder={'Password'} className={`${s.field} ${errors?.password && s.field_border}`} />
                 </div>
                 <div className={s.checkbox_box}>
                     <p className={s.remember}>Remember Me</p>
@@ -35,6 +35,10 @@ const LoginForm = (props) => {
                         className={s.checkbox} />
                 </div>
                 <div className={s.btn_box}>
+                    {props.auth.authError &&
+                        <div>
+                            <p className={s.error}>Wrong Password or Login</p>
+                        </div>}
                     <input value={'Confirm'} type="submit" className='quick-posting__btn' />
                 </div>
                 <NavLink className={s.reg}>Registration</NavLink>
@@ -43,7 +47,7 @@ const LoginForm = (props) => {
     }
     else {
         return (
-            navigate("/newsfeed")
+            navigate("/profile/" + props.auth.id)
         )
     }
 }

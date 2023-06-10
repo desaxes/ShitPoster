@@ -10,9 +10,8 @@ const Sub = (props) => {
         e.preventDefault();
         props.following(props.followed, props.id)
     }
-    let setProfileInfo = (e)=>{
-        axios.get("https://social-network.samuraijs.com/api/1.0/follow/" +props.id, {withCredentials:true}).then(response=>{
-            
+    let setProfileInfo = (e) => {
+        axios.get("https://social-network.samuraijs.com/api/1.0/follow/" + props.id, { withCredentials: true }).then(response => {
         })
     }
     return (

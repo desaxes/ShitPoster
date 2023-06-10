@@ -1,13 +1,17 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import s from './nav.module.css'
 import { connect } from 'react-redux';
+import { getUserProfile } from '../../redux/profile-reducer';
 
 const Nav = (props) => {
+    let toMyProfile = () => {
+        props.getUserProfile(props.auth.id)
+    }
     return (<nav className={s.nav}>
         {props.auth.isAuth ?
             <ul className={s.ul}>
                 <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to={'/profile/' + props.auth.id}>Profile</NavLink></button>
+                    <button onClick={toMyProfile} className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to={'/profile/' + props.auth.id}>Profile</NavLink></button>
                 </li>
                 <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/popular'>Popular</NavLink></button>
@@ -27,7 +31,7 @@ const Nav = (props) => {
                 <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/music'>Music</NavLink></button>
                 </li>
-            </ul> 
+            </ul>
             :
             <ul className={s.ul}>
                 <li className={s.item}>
@@ -48,6 +52,6 @@ const mapStateToProps = (state) => {
     }
 
 }
-const NavContainer = connect(mapStateToProps, {})(Nav)
+const NavContainer = connect(mapStateToProps, { getUserProfile })(Nav)
 
 export default NavContainer;

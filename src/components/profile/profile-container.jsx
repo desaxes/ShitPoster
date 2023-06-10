@@ -11,7 +11,7 @@ class ProfilePage extends React.Component {
     componentDidMount() {
         let userid = this.props.match.params.id
         if (!userid) {
-            userid = 2;
+            userid = this.props.userId;
         }
         this.props.getUserProfile(userid);
         axios.get("https://social-network.samuraijs.com/api/1.0/follow/" + userid, { withCredentials: true }).then(response => {

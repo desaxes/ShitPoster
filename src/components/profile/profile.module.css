@@ -3,18 +3,21 @@
     border-radius: 4px;
     width: 100%;
 }
-
 .info_block {
     display: flex;
     align-items: center;
     /* margin-left: 8%; */
     justify-content: center;
 }
-
+.avatar_box{
+    border-radius: 50%;
+    border: aquamarine solid 5px;
+}
 .avatar {
     width: 200px;
     height: 200px;
     border-radius: 6px;
+    border-radius: 50%;
 }
 
 .info_inf {
@@ -22,11 +25,10 @@
 }
 
 .name {
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 700;
     margin-bottom: 30px;
-    border-bottom: #000000 solid 3px;
-    text-align: center;
+    /* text-align: center; */
     color: #1f1e37;
 }
 
@@ -40,13 +42,14 @@
     margin-top: 10px;
     font-size: 20px;
     font-weight: 700;
+    color: #000000;
 }
 
 .answer {
     margin-top: 10px;
     font-size: 20px;
     margin-left: 10px;
-    color: #527070;
+    color: #000000;
 }
 
 .btn_block {
@@ -71,7 +74,8 @@
     font-style: italic;
     font-weight: 700;
     width: 400px;
-    color: blue;
+    color: rgb(68, 68, 68);
+    text-decoration: underline;
 }
 
 .status_input {

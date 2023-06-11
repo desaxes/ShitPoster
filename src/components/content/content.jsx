@@ -4,19 +4,21 @@ import s from './content.module.css'
 import { Route, Routes } from 'react-router-dom'
 import SubsContainer from '../subs/subs-container'
 import { LoginConatainer } from '../login/login-container'
+import PostEditorContainer from '../editor/editor'
 const Content = (props) => {
     return (
-                <section className={s.content}>
-                    <div className='container'>
-                        <div className='content__inner'>
-                            <Routes>
-                                <Route path='/profile/:id?' element={<ProfileContainer/>} />
-                                <Route path='/messages' element={<MessagesContainer/>} />
-                                <Route path='/subs' element={<SubsContainer/>} />
-                                <Route path='/login' element={<LoginConatainer/>} />
-                            </Routes>
-                        </div>
-                    </div>
-                </section>)
+        <section className={s.content}>
+            <div className='container'>
+                <div className='content__inner'>
+                    <Routes>
+                        <Route path='/profile/:id?' element={<ProfileContainer />} />
+                        <Route path='/messages' element={<MessagesContainer />} />
+                        <Route path='/subs' element={<SubsContainer />} />
+                        <Route path='/login' element={<LoginConatainer />} />
+                        <Route path='/posteditor' element={<PostEditorContainer />} />
+                    </Routes>
+                </div>
+            </div>
+        </section>)
 }
 export default Content;

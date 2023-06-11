@@ -40,7 +40,7 @@ const Header = (props) => {
                         <div className={s.login}>{props.auth.login}</div>
                         <div className={s.settings}>
                             <button onClick={showUserMenu} type='button' className={s.set_btn}>
-                                ▼
+                                {menuSwitch ?'◄':'▼'}
                             </button>
                             {menuSwitch &&
                                 <div className={s.sMenu}>

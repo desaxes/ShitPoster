@@ -1,7 +1,7 @@
 .header {
     width: 100%;
     height: 60px;
-    background: linear-gradient(180.95deg, #000000cc 0%, #030109c9 100%);
+    background: #0d0d0d;
     font-size: 24px;
     font-weight: 900;
     position: sticky;
@@ -52,15 +52,15 @@
     transition: .3s;
 }
 .sMenu{
-    width: 140px;
-    height: 200px;
-    background: linear-gradient(180.95deg, #cdccdcc9 0%, #413c8dc9 100%);  
+    width: 400px;
+    height: 40px;
+    /* background: linear-gradient(180.95deg, #cdccdcc9 0%, #413c8dc9 100%);   */
     border: solid 2px #fff;
-    position: absolute;
-    right: 20px;
-    top: 40px;
+    position: fixed;
+    right: 200px;
+    top: 15px;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
     padding: 10px 0;
     justify-content: space-between;

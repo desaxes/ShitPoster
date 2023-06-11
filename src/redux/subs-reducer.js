@@ -25,7 +25,7 @@ const subscribeInProgress = (isFetching, userId) => (
 
 let initialState = {
     subsData: [],
-    pageSize: 5,
+    pageSize: 8,
     totalCount: 0,
     pageNumber: 1,
     isFetching: false,
@@ -123,4 +123,4 @@ const following = (subscribeStatus, userId) => {
     }
 }
 
-export { subsReducer, getUsers, onPageChanged, following }
+export { subsReducer, getUsers, onPageChanged, following, setUsersNumber }

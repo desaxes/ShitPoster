@@ -1,4 +1,8 @@
 import { profileAPI } from "../api/api";
+import avatar from './../img/shit_icon.png'
+import postimage1 from './../img/jsgif.gif'
+import postimage2 from './../img/profile_head.png'
+import postimage3 from './../img/effy.gif'
 const ADD_POST = 'ADD-POST';
 const SET_PROFILE_INFO = 'SET-PROFILE-INFO';
 const SET_FOLLOWED_INFO = 'SET-FOLLOWED-INFO'
@@ -21,7 +25,9 @@ let initialState = {
             time: '10 minutes ago',
             posttext: 'I hate TV',
             com_count: '34',
-            like_count: '954'
+            like_count: '954',
+            postimage:postimage1,
+            avatar:avatar   
         },
         {
             id: 2,
@@ -29,7 +35,9 @@ let initialState = {
             time: 'Yesterday',
             posttext: 'We updated the header of our profile',
             com_count: '57',
-            like_count: '408'
+            like_count: '408',
+            postimage:postimage2,
+            avatar:avatar   
         },
         {
             id: 3,
@@ -37,7 +45,9 @@ let initialState = {
             time: '128 April 2023',
             posttext: 'Friday',
             com_count: '233',
-            like_count: '91'
+            like_count: '91',
+            postimage:postimage3,
+            avatar:avatar   
         }
     ],
     newPostText: '',

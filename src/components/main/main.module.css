@@ -1,5 +1,23 @@
 .main {
     display: flex;
-    background: linear-gradient(180.95deg, #000000cc 0%, #030109c9 100%);
+    background: #0d0d0d;
     min-height: 100vh;
+    justify-content: space-between;
+}
+.right_panel{
+    position: fixed;
+    top: 60px;
+    right: 0;
+    bottom: 100%;
+    width: 2%;
+    height: 100%;
+    background: #1a1a1a;
+    border-left: #ffffff double 10px;
+    border-top: #ffffff solid 5px;
+    /* transform: translateX(-80%); */
+    transition: 1s;
+}
+.right_panel:hover {
+    transform: translateX(0%);
+    width: 18%;
 }

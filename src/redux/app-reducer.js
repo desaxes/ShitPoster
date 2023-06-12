@@ -18,7 +18,6 @@ const appReducer = (state = initialState, action) => {
 }
 
 const initialize = () => (dispatch) => {
-    debugger
     let promise = dispatch(authtorize())
     promise.then(() => {
         dispatch(setInitialized())

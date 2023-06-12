@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { addPost, getUserProfile, setFollowedInfo, setStatus } from '../../redux/profile-reducer';
 import { following } from "../../redux/subs-reducer"
+import * as profileSelectors from "../../redux/profile-selectors"
+import { getSubscribeProgress } from "../../redux/subs-selectors"
 import Profile from './profile';
 import React from 'react';
 import { useParams } from 'react-router-dom';
@@ -24,11 +26,11 @@ class ProfilePage extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        posts: state.profilePage.postData,
-        profileInfo: state.profilePage.profileInfo,
-        userId: state.profilePage.userId,
-        subscribeProgress: state.subsPage.subscribeProgress,
-        status: state.profilePage.status
+        posts: profileSelectors.getPosts(state),
+        profileInfo: profileSelectors.getProfileInfo(state),
+        userId: profileSelectors.getUserId(state),
+        subscribeProgress: getSubscribeProgress(state),
+        status: profileSelectors.getStatus(state)
     }
 }
 export function withRouter(Children) {
@@ -45,7 +47,7 @@ export default compose(
             getUserProfile,
             setFollowedInfo,
             following,
-            setStatus
+            setStatus,
         }),
     withRouter,
     AuthRedirect

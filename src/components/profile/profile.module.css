@@ -109,3 +109,11 @@
     align-items: center;
     justify-content: center;
 }
+.about{
+    color: #000000;
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

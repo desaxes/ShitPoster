@@ -2,9 +2,9 @@ import { connect } from "react-redux"
 import { following, onPageChanged, getUsers } from "../../redux/subs-reducer"
 import React from "react";
 import { SubsPresentation } from "./subs-presentation";
-import { Navigate } from "react-router-dom";
 import { AuthRedirect } from "../common_components/hoc-components";
 import { compose } from "redux";
+import * as subSelectors from "../../redux/subs-selectors";
 
 class Users extends React.Component {
     componentDidMount() {
@@ -21,12 +21,12 @@ class Users extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        subs: state.subsPage.subsData,
-        pageSize: state.subsPage.pageSize,
-        pageNumber: state.subsPage.pageNumber,
-        totalCount: state.subsPage.totalCount,
-        isFetching: state.subsPage.isFetching,
-        subscribeProgress: state.subsPage.subscribeProgress,
+        users: subSelectors.getUsersArray(state),
+        pageSize: subSelectors.getPageSize(state),
+        pageNumber: subSelectors.getPageNumber(state),
+        totalCount: subSelectors.getTotalCount(state),
+        isFetching: subSelectors.getIsFetching(state),
+        subscribeProgress: subSelectors.getSubscribeProgress(state),
     }
 }
 const SubsContainer = connect(mapStateToProps, {

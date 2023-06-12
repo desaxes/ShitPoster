@@ -5,7 +5,7 @@ import React from 'react'
 import { Preloader } from '../common_components/preloader'
 import { Flex, Pagination } from '@mantine/core'
 const SubsPresentation = (props) => {
-    let subs = props.subs.map(p => <Sub key={p.id} id={p.id} name={p.name} status={p.status}
+    let subs = props.users.map(p => <Sub key={p.id} id={p.id} name={p.name} status={p.status}
         followed={p.followed} avatar={p.photos.small} subscribeProgress={props.subscribeProgress}
         following={props.following} />)
     let pageCount = Math.ceil(props.totalCount / props.pageSize);

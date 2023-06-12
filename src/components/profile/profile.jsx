@@ -6,7 +6,6 @@ import Post from './../posts/post'
 import avatar from './../../img/shit_icon.png'
 import ProfileStatus from './profile-status';
 import { useForm } from 'react-hook-form';
-import { ErrorField } from '../common_components/error';
 import { Tabs, Textarea } from '@mantine/core';
 
 const Profile = (props) => {
@@ -65,6 +64,13 @@ const Profile = (props) => {
                                     </div>
                                 </div>}
                             </div>
+                        </Tabs.Panel>
+                        <Tabs.Panel pt={30} value='About'>
+                            {props.profileInfo.aboutMe === null ? <p className={s.about}>"There could be a description of me here"</p> : <p className={s.about}> {props.profileInfo.aboutMe}</p>}
+                        </Tabs.Panel>
+                        <Tabs.Panel pt={30} value='Subs'>
+                        </Tabs.Panel>
+                        <Tabs.Panel pt={30} value='Comments'>
                         </Tabs.Panel>
                     </Tabs>
 

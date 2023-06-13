@@ -5,6 +5,7 @@ import { subsReducer } from "./subs-reducer";
 import { authReducer } from "./auth-reducer";
 import thunkMiddleware from "redux-thunk";
 import { appReducer } from "./app-reducer";
+import { newsReducer } from "./news-reducer";
 
 
 let reducers = combineReducers({
@@ -12,7 +13,8 @@ let reducers = combineReducers({
     messagesPage:messagesReducer,
     subsPage:subsReducer,
     auth:authReducer,
-    app:appReducer
+    app:appReducer,
+    news:newsReducer
 });
 
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));

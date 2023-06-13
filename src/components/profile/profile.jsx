@@ -10,15 +10,16 @@ import { Tabs, Textarea } from '@mantine/core';
 
 const Profile = (props) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit' });
-    let posts = props.posts.map(p => <Post key={p.id} name={p.name} avatar={p.avatar} time={p.time}
+    let posts = [...props.posts].reverse().map(p => p.userId === props.profileInfo.userId && <Post postId={p.userId} key={p.id} name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} com_count={p.com_count} like_count={p.like_count} />
     )
-    let onSubClick = (e) => {
-        e.preventDefault();
-        props.following(props.profileInfo.followed, props.profileInfo.userId)
-    }
+    // let userPosts = posts.filter(e => e.props.postId === props.profileInfo.userId)
+    // let onSubClick = (e) => {
+    //     e.preventDefault();
+    //     props.following(props.profileInfo.followed, props.profileInfo.userId)
+    // }
     let onSubmit = (e) => {
-        props.addPost('Shitposter', avatar, 'Now', e.postText, '0', '0')
+        props.addPost(props.auth.id, props.profileInfo.fullName, avatar, 'Now', e.postText, '0', '0')
         reset()
     }
     return (
@@ -56,7 +57,9 @@ const Profile = (props) => {
                                         <button className='quick-posting__btn'>Send Message</button>
                                     </div>
                                     <div className='quick-posting-btnbox'>
-                                        <button disabled={props.subscribeProgress.some(id => id === props.profileInfo.userId)} onClick={onSubClick} className={`${'quick-posting__btn'} ${props.profileInfo.followed && s.f_color}`}>
+                                        <button
+                                            // disabled={props.subscribeProgress.some(id => id === props.profileInfo.userId)} onClick={onSubClick} 
+                                            className={`${'quick-posting__btn'} ${props.profileInfo.followed && s.f_color}`}>
                                             {props.profileInfo.followed ? 'Unsubscribe' : 'Subscribe'}</button>
                                     </div>
                                     <div className='quick-posting-btnbox'>

@@ -9,6 +9,7 @@ const SubsPresentation = (props) => {
         followed={p.followed} avatar={p.photos.small} subscribeProgress={props.subscribeProgress}
         following={props.following} />)
     let pageCount = Math.ceil(props.totalCount / props.pageSize);
+
     return (
         <div className={s.subs}>
             <div className='page-block'>

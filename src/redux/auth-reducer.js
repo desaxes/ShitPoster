@@ -64,34 +64,26 @@ const authtorize = () => async (dispatch) => {
         );
     }
 }
-const login = (email, password, checkbox) => (dispatch) => {
-    return authAPI.login(email, password, checkbox).then(resultCode => {
-        if (resultCode === 0) {
-            dispatch(setAuthError(false))
-            authAPI.auth().then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true))
-                    profileAPI.getUserProfile(data.data.id).then(
-                        data => {
-                            dispatch(setUserData(data, data.profileInfo.photo.large))
-                        }
-                    )
-                }
-            })
+const login = (email, password, checkbox) => async (dispatch) => {
+    const resultCode = await authAPI.login(email, password, checkbox);
+    if (resultCode === 0) {
+        dispatch(setAuthError(false));
+        const data = await authAPI.auth()
+        if (data.resultCode === 0) {
+            dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true));
+            const data_1 = await profileAPI.getUserProfile(data.data.id)
+            dispatch(setUserData(data_1, data_1.profileInfo.photo.large));
         }
-        else {
-            dispatch(setAuthError(true))
-        }
-    })
+    }
+    else {
+        dispatch(setAuthError(true));
+    }
 }
-const logout = () => {
-    return (dispatch) => {
-        authAPI.logout().then(resultCode => {
-            if (resultCode === 0) {
-                dispatch(setAuthInfo(null, null, null, false))
-                dispatch(setUserData(null, null))
-            }
-        })
+const logout = () => async (dispatch) => {
+    const resultCode = await authAPI.logout();
+    if (resultCode === 0) {
+        dispatch(setAuthInfo(null, null, null, false));
+        dispatch(setUserData(null, null));
     }
 }
 export { authReducer, authtorize, login, logout }

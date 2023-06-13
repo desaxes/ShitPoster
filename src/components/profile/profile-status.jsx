@@ -8,9 +8,9 @@ const ProfileStatus = (props) => {
     const { register, reset } = useForm()
     const [editMode, setEditMode] = useState(false)
     const [pencilMode, setPencilMode] = useState(false)
-    useEffect(()=>{
-        console.log(pencilMode)
-    },[pencilMode])
+    // useEffect(()=>{
+    //     console.log(pencilMode)
+    // },[pencilMode])
     const changeImage = (mode) => {
         setPencilMode(mode)
     }

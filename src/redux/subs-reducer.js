@@ -80,46 +80,37 @@ const subsReducer = (state = initialState, action) => {
     }
 }
 
-const getUsers = (pageSize, pageNumber) => {
-    return (dispatch) => {
-        dispatch(setLoader(true))
-        userAPI.getUsers(pageSize, pageNumber).then(data => {
-            dispatch(setLoader(false))
-            dispatch(setsubs(data.items))
-            dispatch(setUsersNumber(data.totalCount))
-        })
-    }
+const getUsers = (pageSize, pageNumber) => async (dispatch) => {
+    dispatch(setLoader(true))
+    const data = await userAPI.getUsers(pageSize, pageNumber)
+    dispatch(setLoader(false))
+    dispatch(setsubs(data.items))
+    dispatch(setUsersNumber(data.totalCount))
 }
-const onPageChanged = (pageSize, pageNumber) => {
-    return (dispatch) => {
-        dispatch(setLoader(true))
-        dispatch(setPageNumber(pageNumber))
-        userAPI.getUsers(pageSize, pageNumber).then(data => {
-            dispatch(setLoader(false))
-            dispatch(setsubs(data.items))
-        })
-    }
+const onPageChanged = (pageSize, pageNumber) => async (dispatch) => {
+    dispatch(setLoader(true))
+    dispatch(setPageNumber(pageNumber))
+    const data = await userAPI.getUsers(pageSize, pageNumber)
+    dispatch(setLoader(false))
+    dispatch(setsubs(data.items))
 }
-const following = (subscribeStatus, userId) => {
-    return (dispatch) => {
-        if (subscribeStatus === false) {
-            dispatch(subscribeInProgress(true, userId))
-            userAPI.subUser(userId).then(resultCode => {
-                if (resultCode == 0) {
-                    dispatch(subscribe(userId));
-                }
-                dispatch(subscribeInProgress(false, userId))
-            })
+
+const following = (subscribeStatus, userId) => async (dispatch) => {
+    if (subscribeStatus === false) {
+        dispatch(subscribeInProgress(true, userId))
+        const resultCode = await userAPI.subUser(userId)
+        if (resultCode == 0) {
+            dispatch(subscribe(userId));
         }
-        else {
-            dispatch(subscribeInProgress(true, userId))
-            userAPI.unsubUser(userId).then(resultCode => {
-                if (resultCode == 0) {
-                    dispatch(subscribe(userId));
-                }
-                dispatch(subscribeInProgress(false, userId))
-            })
+        dispatch(subscribeInProgress(false, userId))
+    }
+    else {
+        dispatch(subscribeInProgress(true, userId))
+        const resultCode = await userAPI.unsubUser(userId)
+        if (resultCode == 0) {
+            dispatch(subscribe(userId));
         }
+        dispatch(subscribeInProgress(false, userId))
     }
 }
 

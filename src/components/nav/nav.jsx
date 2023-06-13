@@ -28,9 +28,9 @@ const Nav = (props) => {
                 <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/posteditor'>Post Editor</NavLink></button>
                 </li>
-                <li className={s.item}>
+                {/* <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/music'>Music</NavLink></button>
-                </li>
+                </li> */}
             </ul>
             :
             <ul className={s.ul}>
@@ -40,9 +40,9 @@ const Nav = (props) => {
                 <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/newsfeed'>News Feed</NavLink></button>
                 </li>
-                <li className={s.item}>
+                {/* <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/music'>Music</NavLink></button>
-                </li>
+                </li> */}
             </ul>}
     </nav>)
 }

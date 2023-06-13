@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { addPost, getUserProfile, setFollowedInfo, setStatus } from '../../redux/profile-reducer';
+import { getUserProfile, setFollowedInfo, setStatus } from '../../redux/profile-reducer';
+import { addPost } from '../../redux/news-reducer';
 import { following } from "../../redux/subs-reducer"
 import * as profileSelectors from "../../redux/profile-selectors"
 import { getSubscribeProgress } from "../../redux/subs-selectors"
 import Profile from './profile';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { AuthRedirect } from '../common_components/hoc-components';
 import { compose } from 'redux';
 class ProfilePage extends React.Component {
@@ -16,17 +16,18 @@ class ProfilePage extends React.Component {
             userid = this.props.userId;
         }
         this.props.getUserProfile(userid);
-        axios.get("https://social-network.samuraijs.com/api/1.0/follow/" + userid, { withCredentials: true }).then(response => {
-            this.props.setFollowedInfo(response.data)
-        })
+        // axios.get("https://social-network.samuraijs.com/api/1.0/follow/" + userid, { withCredentials: true }).then(response => {
+        //     // this.props.setFollowedInfo(response.data)
+        // })
     }
     render() {
         return <Profile {...this.props} />
+        
     }
 }
 const mapStateToProps = (state) => {
     return {
-        posts: profileSelectors.getPosts(state),
+        posts: state.news.postData,
         profileInfo: profileSelectors.getProfileInfo(state),
         userId: profileSelectors.getUserId(state),
         subscribeProgress: getSubscribeProgress(state),
@@ -48,7 +49,8 @@ export default compose(
             setFollowedInfo,
             following,
             setStatus,
+            addPost
         }),
     withRouter,
-    AuthRedirect
+    AuthRedirect,
 )(ProfilePage);

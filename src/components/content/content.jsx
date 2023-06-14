@@ -7,6 +7,7 @@ import { LoginConatainer } from '../login/login-container'
 import PostEditorContainer from '../editor/editor'
 import NewsfeedContainer from '../newsfeed/newsfeed'
 import PopularContainer from '../popular/popular/popular'
+import PostPageContainer from './../posts/post-page';
 const Content = (props) => {
     return (
         <section className={s.content}>
@@ -19,6 +20,7 @@ const Content = (props) => {
                         <Route path='/messages' element={<MessagesContainer />} />
                         <Route path='/subs' element={<SubsContainer />} />
                         <Route path='/login' element={<LoginConatainer />} />
+                        <Route path='/post/:id' element={<PostPageContainer />} />
                         <Route path='/posteditor' element={<PostEditorContainer />} />
                     </Routes>
                 </div>

@@ -3,11 +3,14 @@ import { authAPI, profileAPI } from "../api/api";
 const SET_USER_DATA = "SET-USER-DATA"
 const SET_AUTH_INFO = 'SET-AUTH-INFO';
 const SET_AUTH_ERROR = 'SET-AUTH-ERROR';
+const ADD_TO_LIKE_LIST = 'ADD-TO-LIKE-LIST'
 const setAuthInfo = (id, login, email, isAuth) => ({ type: SET_AUTH_INFO, data: { id, login, email, isAuth } })
 const setUserData = (data, photo) =>
     ({ type: SET_USER_DATA, data: data, photo: photo })
 const setAuthError = (errorState) =>
     ({ type: SET_AUTH_ERROR, errorState: errorState })
+const addToLikeList = (id) =>
+    ({ type: ADD_TO_LIKE_LIST, id })
 let initialState = {
     id: null,
     login: null,
@@ -35,7 +38,8 @@ let initialState = {
             small: null,
             large: null
         }
-    }
+    },
+    likedPosts: []
 }
 
 const authReducer = (state = initialState, action) => {
@@ -48,6 +52,9 @@ const authReducer = (state = initialState, action) => {
         }
         case SET_AUTH_ERROR: {
             return { ...state, authError: action.errorState };
+        }
+        case ADD_TO_LIKE_LIST: {
+            return { ...state, likedPosts: [...state.likedPosts, action.id] };
         }
         default: return state;
     }
@@ -86,4 +93,4 @@ const logout = () => async (dispatch) => {
         dispatch(setUserData(null, null));
     }
 }
-export { authReducer, authtorize, login, logout }
+export { authReducer, authtorize, login, logout, addToLikeList }

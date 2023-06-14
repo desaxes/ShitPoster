@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     margin-top: 2%;
+    cursor: pointer;
 }
 
 .avatar {
@@ -53,6 +54,7 @@
 .post_image img {
     width: 100%;
     height: 100%;
+    cursor: pointer;
 }
 
 .text_block {
@@ -96,7 +98,7 @@
     display: flex;
     width: 15%;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .like button {
@@ -104,11 +106,89 @@
     font-weight: 700;
 }
 
+.like_btn:disabled {
+    color: red;
+}
+
 .likes_dislikes__counter {
     color: #34dc25;
     font-weight: 700;
+    margin-right: 15px;
 }
+
 .dislike button {
     font-size: 30px;
     font-weight: 700;
+}
+
+.error {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: 900;
+    color: rgb(68, 48, 48);
+}
+
+.comments {}
+
+.comments_box {
+    background: #909090;
+    width: 90%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment {
+    width: 90%;
+    padding: 10px 15px;
+    background: #ffffff;
+    border-radius: 8px;
+    border: solid black 2px;
+}
+
+.com_header {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    gap: 10px;
+}
+
+.com_ava {
+    width: 40px;
+    height: 40px;
+}
+
+.com_name {
+    color: black;
+    font-weight: 900;
+    font-size: 18px;
+}
+
+.com_text {
+    color: black;
+    margin-left: 50px;
+    padding-bottom: 5px;
+}
+
+.form {
+    width: 90%;
+    height: 40px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.textbox {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.btn_box {
+    width: 50%;
 }

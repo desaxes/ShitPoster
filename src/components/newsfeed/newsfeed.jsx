@@ -3,8 +3,8 @@ import s from './newsfeed.module.css'
 import { connect } from 'react-redux';
 import Post from '../posts/post';
 const Newsfeed = (props) => {
-    let posts = [...props.posts].reverse().map(p => <Post key={p.id} name={p.name} avatar={p.avatar} time={p.time}
-        postimage={p.postimage} posttext={p.posttext} com_count={p.com_count} like_count={p.like_count} />
+    let posts = [...props.posts].reverse().map(p => <Post key={p.id} postId={p.userId} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
+        postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments}/>
     )
     return <>
         <div className={s.newsfeed}>

@@ -10,8 +10,8 @@ import { Tabs, Textarea } from '@mantine/core';
 
 const Profile = (props) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit' });
-    let posts = [...props.posts].reverse().map(p => p.userId === props.profileInfo.userId && <Post postId={p.userId} key={p.id} name={p.name} avatar={p.avatar} time={p.time}
-        postimage={p.postimage} posttext={p.posttext} com_count={p.com_count} like_count={p.like_count} />
+    let posts = [...props.posts].reverse().map(p => p.userId === props.profileInfo.userId && <Post postId={p.userId} key={p.id} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
+        postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments}/>
     )
     // let userPosts = posts.filter(e => e.props.postId === props.profileInfo.userId)
     // let onSubClick = (e) => {

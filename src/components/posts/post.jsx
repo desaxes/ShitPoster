@@ -1,12 +1,22 @@
 import s from './post.module.css'
-
 import comment from './../../img/com_item.png'
+import { connect } from 'react-redux';
+import { openPost, like } from '../../redux/news-reducer';
+import { useNavigate } from 'react-router-dom';
+import { addToLikeList } from '../../redux/auth-reducer';
 const Post = (props) => {
+    const navigate = useNavigate()
+    const openPostPage = () => {
+        navigate('/post/' + props.id)
+    }
+    const likePost = () => {
+        props.like(props.id)
+        props.addToLikeList(props.id)
+    }
     return (
         <div className={s.post}>
-
             <div className={s.inner}>
-                <div className={s.header}>
+                <div onClick={openPostPage} className={s.header}>
                     <div className={s.avatar}>
                         <img src={props.avatar} alt="" />
                     </div>
@@ -17,7 +27,7 @@ const Post = (props) => {
                         {props.time}
                     </div>
                 </div>
-                <div className={s.post_image}>
+                <div onClick={openPostPage} className={s.post_image}>
                     <img src={props.postimage} alt="" />
                 </div>
                 <div className={s.text_block}>
@@ -25,22 +35,19 @@ const Post = (props) => {
                 </div>
                 <div className={s.footer}>
                     <div className={s.left_block}>
-                        <button className={s.comments}>
+                        <button onClick={openPostPage} className={s.comments}>
                             <img src={comment} alt="" />
                         </button>
                         <div className={s.comments_counter}>
-                            {props.com_count}
+                            {props.comments.length}
                         </div>
                     </div>
                     <div className={s.right_block}>
-                        <div className={s.like}>
-                            <button type="button" className={s.like_btn}>+</button>
-                        </div>
                         <div className={s.likes_dislikes__counter}>
                             {props.like_count}
                         </div>
-                        <div className={s.dislike}>
-                            <button type="button" className={s.dislike_btn}>-</button>
+                        <div className={s.like}>
+                            <button disabled={props.likeList.some(id => id === props.id)} onClick={likePost} className={s.like_btn}>❤</button>
                         </div>
                     </div>
                 </div>
@@ -48,4 +55,10 @@ const Post = (props) => {
         </div>
     )
 };
-export default Post;
+const mapStateToProps = (state) => {
+    return {
+        likeList: state.auth.likedPosts
+    }
+}
+const PostContainer = connect(mapStateToProps, { openPost, addToLikeList, like })(Post)
+export default PostContainer;

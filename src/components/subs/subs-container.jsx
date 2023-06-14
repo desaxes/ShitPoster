@@ -1,23 +1,21 @@
 import { connect } from "react-redux"
 import { following, onPageChanged, getUsers } from "../../redux/subs-reducer"
-import React from "react";
+import React, { useEffect } from "react";
 import { SubsPresentation } from "./subs-presentation";
 import { AuthRedirect } from "../common_components/hoc-components";
 import { compose } from "redux";
 import * as subSelectors from "../../redux/subs-selectors";
 
-class Users extends React.Component {
-    componentDidMount() {
-        this.props.getUsers(this.props.pageSize, this.props.pageNumber)
+const Users = (props) => {
+    useEffect(() => {
+        props.getUsers(props.pageSize, props.pageNumber)
+    }, [props.pageNumber])
+    const onPageChanged = (pageNumber) => {
+        props.onPageChanged(props.pageSize, pageNumber)
     }
-    onPageChanged = (pageNumber) => {
-        this.props.onPageChanged(this.props.pageSize, pageNumber)
-    }
-    render() {
-        return <>
-            <SubsPresentation {...this.props} onPageChanged={this.onPageChanged} />
-        </>
-    }
+    return (<>
+        <SubsPresentation {...props} onPageChanged={onPageChanged} />
+    </>)
 }
 const mapStateToProps = (state) => {
     return {

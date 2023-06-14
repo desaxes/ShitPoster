@@ -18,7 +18,7 @@ const Content = (props) => {
                         <Route path='/popular' element={<PopularContainer />} />
                         <Route path='/newsfeed' element={<NewsfeedContainer />} />
                         <Route path='/messages' element={<MessagesContainer />} />
-                        <Route path='/subs' element={<SubsContainer />} />
+                        <Route path='/subs/:page?' element={<SubsContainer />} />
                         <Route path='/login' element={<LoginConatainer />} />
                         <Route path='/post/:id' element={<PostPageContainer />} />
                         <Route path='/posteditor' element={<PostEditorContainer />} />

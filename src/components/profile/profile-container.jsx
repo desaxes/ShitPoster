@@ -5,25 +5,21 @@ import { following } from "../../redux/subs-reducer"
 import * as profileSelectors from "../../redux/profile-selectors"
 import { getSubscribeProgress } from "../../redux/subs-selectors"
 import Profile from './profile';
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { AuthRedirect } from '../common_components/hoc-components';
 import { compose } from 'redux';
-class ProfilePage extends React.Component {
-    componentDidMount() {
-        let userid = this.props.match.params.id
-        if (!userid) {
-            userid = this.props.userId;
+const ProfilePage = (props) => {
+    const userid = useParams()
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!userid.id) {
+            navigate('/profile/' + props.authId)
+        } else {
+            props.getUserProfile(userid.id);
         }
-        this.props.getUserProfile(userid);
-        // axios.get("https://social-network.samuraijs.com/api/1.0/follow/" + userid, { withCredentials: true }).then(response => {
-        //     // this.props.setFollowedInfo(response.data)
-        // })
-    }
-    render() {
-        return <Profile {...this.props} />
-        
-    }
+    }, [userid.id])
+    return (<Profile {...props} />)
 }
 const mapStateToProps = (state) => {
     return {
@@ -31,15 +27,16 @@ const mapStateToProps = (state) => {
         profileInfo: profileSelectors.getProfileInfo(state),
         userId: profileSelectors.getUserId(state),
         subscribeProgress: getSubscribeProgress(state),
-        status: profileSelectors.getStatus(state)
+        status: profileSelectors.getStatus(state),
+        authId:state.auth.id
     }
 }
-export function withRouter(Children) {
-    return (props) => {
-        const match = { params: useParams() }
-        return <Children {...props} match={match} />
-    }
-}
+// export function withRouter(Children) {
+//     return (props) => {
+//         const match = { params: useParams() }
+//         return <Children {...props} match={match} />
+//     }
+// }
 
 export default compose(
     connect(mapStateToProps,
@@ -51,6 +48,6 @@ export default compose(
             setStatus,
             addPost
         }),
-    withRouter,
+    // withRouter,
     AuthRedirect,
 )(ProfilePage);

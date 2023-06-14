@@ -11,15 +11,21 @@ import { Tabs, Textarea } from '@mantine/core';
 const Profile = (props) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit' });
     let posts = [...props.posts].reverse().map(p => p.userId === props.profileInfo.userId && <Post postId={p.userId} key={p.id} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
-        postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments}/>
+        postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments} />
     )
+    let filteredPosts = posts.filter(p => p != false)
+    let rait = 0
+    for (let i = 0; i < filteredPosts.length; i++) {
+        const element = filteredPosts[i];
+        rait = rait + element.props.like_count
+    }
     // let userPosts = posts.filter(e => e.props.postId === props.profileInfo.userId)
     // let onSubClick = (e) => {
     //     e.preventDefault();
     //     props.following(props.profileInfo.followed, props.profileInfo.userId)
     // }
     let onSubmit = (e) => {
-        props.addPost(props.auth.id, props.profileInfo.fullName, avatar, 'Now', e.postText, '0', '0')
+        props.addPost(props.auth.id, props.profileInfo.fullName, avatar, 'Now', e.postText, 0)
         reset()
     }
     return (
@@ -45,11 +51,11 @@ const Profile = (props) => {
                                         authId={props.auth.id} status={props.status} />}
                                     <div className={s.desc_block}>
                                         <p className={s.question}>Rating:</p>
-                                        <p className={s.answer}>10000</p>
+                                        <p className={s.answer}>{rait}</p>
                                     </div>
                                     <div className={s.desc_block}>
                                         <p className={s.question}>Posts Counter:</p>
-                                        <p className={s.answer}>3</p>
+                                        <p className={s.answer}>{filteredPosts.length}</p>
                                     </div>
                                 </div>
                                 {props.profileInfo.userId != props.auth.id && <div className={s.btn_block}>
@@ -89,9 +95,21 @@ const Profile = (props) => {
                     </div>
                 </form>}
             <div className="page-block">
-                {posts}
+                {filteredPosts}
             </div>
         </div>
     )
 }
 export default Profile;
+
+
+// const ProfilePage = (props) => {
+//     const userid = useParams()
+//     useEffect(() => {
+//         // if (!userid.id) {
+//         //     userid.id = props.userId;
+//         // }
+//         props.getUserProfile(userid.id);
+//     })
+//     return (<Profile {...props} />)
+// }

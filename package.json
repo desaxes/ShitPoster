@@ -2,7 +2,7 @@
   "name": "first_project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://desaxes.github.io/ShitPoster/newsfeed",
+  "homepage": "https://desaxes.github.io/ShitPoster",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@mantine/core": "^6.0.13",

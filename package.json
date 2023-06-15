@@ -2,6 +2,7 @@
   "name": "first_project",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://desaxes.github.io/ShitPoster/newsfeed",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@mantine/core": "^6.0.13",
@@ -25,6 +26,7 @@
     "@tiptap/starter-kit": "^2.0.3",
     "axios": "^1.4.0",
     "dayjs": "^1.11.8",
+    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
@@ -40,7 +42,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

@@ -21,4 +21,4 @@ const LoginConatainer = connect(mapStateToProps, {
     login
 })(LoginAPI)
 
-export { LoginConatainer }
+export default LoginConatainer 

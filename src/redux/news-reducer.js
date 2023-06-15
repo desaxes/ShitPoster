@@ -1,8 +1,12 @@
 import React from 'react'
 import avatar from './../img/shit_icon.png'
-import postimage1 from './../img/jsgif.gif'
-import postimage2 from './../img/profile_head.png'
-import postimage3 from './../img/effy.gif'
+import week1 from './../img/react-1week.png'
+import week2 from './../img/react-2week.png'
+import week3 from './../img/react-3week.png'
+import week4 from './../img/react-4week.png'
+import week5 from './../img/react-5week.png'
+import week6 from './../img/react-6week.png'
+import week7 from './../img/react-7week.png'
 
 const ADD_POST = 'ADD-POST'
 const OPEN_POST = 'OPEN_POST'
@@ -28,10 +32,10 @@ const initialState = {
             id: "1",
             userId: 29179,
             name: 'desaxe',
-            time: '28 April 2023',
-            posttext: 'I hate TV',
-            like_count: 30,
-            postimage: postimage1,
+            time: '29 April 2023',
+            posttext: 'First Week',
+            like_count: 10,
+            postimage: week1,
             avatar: avatar,
             comments: [
                 {
@@ -50,10 +54,10 @@ const initialState = {
             id: "2",
             userId: 29179,
             name: 'desaxe',
-            time: 'Yesterday',
-            posttext: 'We updated the header of our profile',
+            time: '6 May 2023',
+            posttext: 'Second Week',
             like_count: 54,
-            postimage: postimage2,
+            postimage: week2,
             avatar: avatar,
             comments: [
                 {
@@ -67,10 +71,78 @@ const initialState = {
             id: "3",
             userId: 29179,
             name: 'desaxe',
-            time: '10 minutes ago',
-            posttext: 'Friday',
+            time: '13 May 2023',
+            posttext: "Third Week",
             like_count: 86,
-            postimage: postimage3,
+            postimage: week3,
+            avatar: avatar,
+            comments: [
+                {
+                    avatar: avatar,
+                    name: "desaxe",
+                    text: "Comment"
+                }
+            ]
+        },
+        {
+            id: "4",
+            userId: 29179,
+            name: 'desaxe',
+            time: '20 May 2023',
+            posttext: "Fourth Week",
+            like_count: 15,
+            postimage: week4,
+            avatar: avatar,
+            comments: [
+                {
+                    avatar: avatar,
+                    name: "desaxe",
+                    text: "Comment"
+                }
+            ]
+        },
+        {
+            id: "5",
+            userId: 29179,
+            name: 'desaxe',
+            time: '27 May 2023',
+            posttext: "Fifth Week",
+            like_count: 124,
+            postimage: week5,
+            avatar: avatar,
+            comments: [
+                {
+                    avatar: avatar,
+                    name: "desaxe",
+                    text: "Comment"
+                }
+            ]
+        },
+        {
+            id: "6",
+            userId: 29179,
+            name: 'desaxe',
+            time: '3 June 2023',
+            posttext: "Sixth Week",
+            like_count: 50,
+            postimage: week6,
+            avatar: avatar,
+            comments: [
+                {
+                    avatar: avatar,
+                    name: "desaxe",
+                    text: "Comment"
+                }
+            ]
+        },
+        {
+            id: "7",
+            userId: 29179,
+            name: 'desaxe',
+            time: '10 June 2023',
+            posttext: "Seventh Week",
+            like_count: 51,
+            postimage: week7,
             avatar: avatar,
             comments: [
                 {

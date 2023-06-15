@@ -10,8 +10,10 @@ const Post = (props) => {
         navigate('/post/' + props.id)
     }
     const likePost = () => {
-        props.like(props.id)
-        props.addToLikeList(props.id)
+        if (props.isAuth === true) {
+            props.like(props.id)
+            props.addToLikeList(props.id)
+        }
     }
     return (
         <div className={s.post}>
@@ -47,7 +49,8 @@ const Post = (props) => {
                             {props.like_count}
                         </div>
                         <div className={s.like}>
-                            <button disabled={props.likeList.some(id => id === props.id)} onClick={likePost} className={s.like_btn}>❤</button>
+                            <button disabled={props.likeList.some(id => id === props.id)} onClick={likePost} 
+                            className={`${s.like_btn} ${props.likeList.some(id => id === props.id) && props.isAuth && s.liked}`}>❤</button>
                         </div>
                     </div>
                 </div>
@@ -57,7 +60,8 @@ const Post = (props) => {
 };
 const mapStateToProps = (state) => {
     return {
-        likeList: state.auth.likedPosts
+        likeList: state.auth.likedPosts,
+        isAuth: state.auth.isAuth
     }
 }
 const PostContainer = connect(mapStateToProps, { openPost, addToLikeList, like })(Post)

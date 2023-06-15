@@ -105,8 +105,10 @@
     font-size: 24px;
     font-weight: 700;
 }
-
-.like_btn:disabled {
+.like_btn{
+    color:black;
+}
+.liked {
     color: red;
 }
 

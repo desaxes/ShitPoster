@@ -28,9 +28,11 @@ const PostPage = (props) => {
         reset()
     }
     const likePost = () => {
-        props.like(props.post.id)
-        props.addToLikeList(props.post.id)
-        navigate('/post/' + props.post.id)
+        if (props.isAuth === true) {
+            props.like(props.post.id)
+            props.addToLikeList(props.post.id)
+            navigate('/post/' + props.post.id)
+        }
     }
     return (
         <div className={s.post}>
@@ -66,15 +68,16 @@ const PostPage = (props) => {
                             {props.post.like_count}
                         </div>
                         <div className={s.like}>
-                            <button disabled={props.likeList.some(id => id === props.post.id)} onClick={likePost} type="button" className={s.like_btn}>❤</button>
+                            <button disabled={props.likeList.some(id => id === props.post.id)}
+                                onClick={likePost} type="button" className={`${s.like_btn} ${props.likeList.some(id => id === props.post.id) && props.isAuth && s.liked}`}>❤</button>
                         </div>
                     </div>
                 </div>
                 <div className={s.comments_box}>
-                    <form onSubmit={handleSubmit(sendComment)} className={s.form}>
+                    {props.isAuth && <form onSubmit={handleSubmit(sendComment)} className={s.form}>
                         <div className={s.textbox}><Textarea required {...register('com')} placeholder='Comment' /></div>
                         <div className={s.btn_box}><input className='quick-posting__btn' type="submit" /></div>
-                    </form>
+                    </form>}
                     {comments}
                 </div>
             </div>
@@ -99,7 +102,8 @@ const mapStateToProps = (state) => {
         posts: state.news.postData,
         login: state.auth.login,
         photo: state.auth.photo,
-        likeList: state.auth.likedPosts
+        likeList: state.auth.likedPosts,
+        isAuth: state.auth.isAuth
     }
 }
 const PostPageContainer = connect(mapStateToProps, { openPost, addComment, addToLikeList, like })(PostPage)

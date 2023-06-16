@@ -13,7 +13,7 @@ const addToLikeList = (id) =>
     ({ type: ADD_TO_LIKE_LIST, id })
 let initialState = {
     id: null,
-    login: null, 
+    login: null,
     email: null,
     isAuth: false,
     photo: null,
@@ -78,8 +78,11 @@ const login = (email, password, checkbox) => async (dispatch) => {
         const data = await authAPI.auth()
         if (data.resultCode === 0) {
             dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true));
-            // const data_1 = await profileAPI.getUserProfile(data.data.id)
-            // dispatch(setUserData(data_1, data_1.profileInfo.photo.large));
+            profileAPI.getUserProfile(data.data.id).then(
+                data_1 => {
+                    dispatch(setUserData(data_1, data_1.photos.large));
+                }
+            );
         }
     }
     else {

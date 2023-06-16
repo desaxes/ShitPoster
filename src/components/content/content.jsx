@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import s from './content.module.css'
 import { Route, Routes } from 'react-router-dom'
 import { Preloader } from '../common_components/preloader'
+import ProfileSettingsContainer from '../profile/profile-settings'
 const MessagesContainer = React.lazy(() => import('../messages/messages-container'))
 const ProfileContainer = React.lazy(() => import('../profile/profile-container'))
 const SubsContainer = React.lazy(() => import('../subs/subs-container'))
@@ -25,6 +26,7 @@ const Content = (props) => {
                             <Route path='/login' element={<LoginConatainer />} />
                             <Route path='/post/:id' element={<PostPageContainer />} />
                             <Route path='/posteditor' element={<PostEditorContainer />} />
+                            <Route path='/settings' element={<ProfileSettingsContainer />} />
                         </Routes>
                     </Suspense>
                 </div>

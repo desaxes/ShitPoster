@@ -12,6 +12,7 @@
 .avatar_box{
     border-radius: 50%;
     border: aquamarine solid 5px;
+    position: relative;
 }
 .avatar {
     width: 200px;
@@ -116,4 +117,62 @@
     text-align: center; 
     margin-top: 20px;
     margin-bottom: 20px;
+}
+.photo_btn{
+    color: #000000;
+    position: absolute;
+    bottom: 0;
+    right: 0px;
+    text-align: center;
+}
+.accordion{
+    padding-top: 30px;
+}
+.accordion_header{
+    color: #000;
+text-align: center;
+font-size: 26px;
+font-weight: 900;
+margin-bottom: 20px;
+}
+.accordion_box{
+    width: 50%;
+    margin: 0 auto;
+}
+.settings{
+    color: #000;
+    font-size: 28px;
+    font-weight: 900;
+}
+.set_header{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 36px;
+    text-decoration: underline;
+}
+.form_box{
+    display: flex;
+    justify-content: center;
+}
+.set_form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.set_form_grid{
+    display: grid;
+    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr/1fr 1fr;
+    gap: 10px;
+}
+.set_input{
+    font-size: 28px;
+    margin-left: 20px;
+    border: #000 solid 2px;
+    padding: 5px;
+    min-width: 500px;
+    border-radius: 6px;
+}
+.btn_box{
+    width: 300px;
 }

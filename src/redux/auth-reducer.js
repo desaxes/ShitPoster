@@ -13,7 +13,7 @@ const addToLikeList = (id) =>
     ({ type: ADD_TO_LIKE_LIST, id })
 let initialState = {
     id: null,
-    login: null,
+    login: null, 
     email: null,
     isAuth: false,
     photo: null,
@@ -48,7 +48,7 @@ const authReducer = (state = initialState, action) => {
             return { ...state, ...action.data }
         }
         case SET_USER_DATA: {
-            return { ...state, profileInfo: { ...action.data } };
+            return { ...state, profileInfo: { ...action.data }, photo: action.photo };
         }
         case SET_AUTH_ERROR: {
             return { ...state, authError: action.errorState };
@@ -66,7 +66,7 @@ const authtorize = () => async (dispatch) => {
         dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true));
         profileAPI.getUserProfile(data.data.id).then(
             data_1 => {
-                dispatch(setUserData(data_1, data_1.profileInfo.photo.large));
+                dispatch(setUserData(data_1, data_1.photos.large));
             }
         );
     }
@@ -78,8 +78,8 @@ const login = (email, password, checkbox) => async (dispatch) => {
         const data = await authAPI.auth()
         if (data.resultCode === 0) {
             dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true));
-            const data_1 = await profileAPI.getUserProfile(data.data.id)
-            dispatch(setUserData(data_1, data_1.profileInfo.photo.large));
+            // const data_1 = await profileAPI.getUserProfile(data.data.id)
+            // dispatch(setUserData(data_1, data_1.profileInfo.photo.large));
         }
     }
     else {

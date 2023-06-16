@@ -1,8 +1,9 @@
-import { profileAPI } from "../api/api";
+import { profileAPI, userAPI } from "../api/api";
 const ADD_POST = 'ADD-POST';
 const SET_PROFILE_INFO = 'SET-PROFILE-INFO';
 const SET_FOLLOWED_INFO = 'SET-FOLLOWED-INFO'
 const SET_PROFILE_STATUS = 'SET-PROFILE-STATUS'
+const SET_USER_PHOTO = 'SET-USER-PHOTO'
 const addPost = (name, avatar, time, posttext, com_count, like_count) => (
     { type: ADD_POST, name: name, avatar: avatar, time: time, posttext: posttext, com_count: com_count, like_count: like_count })
 const setProfileInfo = (data) =>
@@ -12,6 +13,9 @@ const setFollowedInfo = (followed) => ({
 })
 const setProfileStatus = (status) => ({
     type: SET_PROFILE_STATUS, status: status
+})
+const setUserPhoto = (small, large) => ({
+    type: SET_USER_PHOTO, small, large
 })
 let initialState = {
     profileInfo: {
@@ -50,6 +54,14 @@ const profileReducer = (state = initialState, action) => {
         case SET_PROFILE_STATUS: {
             return { ...state, status: action.status }
         }
+        case SET_USER_PHOTO: {
+            return {
+                ...state, profileInfo: {
+                    ...state.profileInfo, photos:
+                        { ...state.profileInfo.photos, small: action.small, large: action.large }
+                }
+            }
+        }
         default: return state;
     }
 }
@@ -69,5 +81,12 @@ const setStatus = (userid, status) => async (dispatch) => {
         })
     }
 }
+const setPhoto = (img) => async (dispatch) => {
+    debugger
+    let data = await userAPI.setUserPhoto(img)
+    if (data.resultCode === 0) {
+        dispatch(setUserPhoto(data.data.photos.small, data.data.photos.large))
+    }
+}
 
-export { profileReducer, addPost, getUserProfile, setFollowedInfo, setStatus }
+export { profileReducer, addPost, getUserProfile, setFollowedInfo, setStatus, setPhoto }

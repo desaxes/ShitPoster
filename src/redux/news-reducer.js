@@ -1,5 +1,6 @@
 import React from 'react'
-import avatar from './../img/shit_icon.png'
+import defaultAvatar from './../img/shit_icon.png'
+import avatar from './../img/Cart.png'
 import week1 from './../img/react-1week.png'
 import week2 from './../img/react-2week.png'
 import week3 from './../img/react-3week.png'
@@ -7,6 +8,7 @@ import week4 from './../img/react-4week.png'
 import week5 from './../img/react-5week.png'
 import week6 from './../img/react-6week.png'
 import week7 from './../img/react-7week.png'
+import test from './../img/profile_head.png'
 
 const ADD_POST = 'ADD-POST'
 const OPEN_POST = 'OPEN_POST'
@@ -39,11 +41,13 @@ const initialState = {
             avatar: avatar,
             comments: [
                 {
+                    id: '1',
                     avatar: avatar,
                     name: "desaxe",
                     text: "Comment"
                 },
                 {
+                    id: '2',
                     avatar: avatar,
                     name: "desaxe",
                     text: "Comment"
@@ -61,6 +65,7 @@ const initialState = {
             avatar: avatar,
             comments: [
                 {
+                    id: '3',
                     avatar: avatar,
                     name: "desaxe",
                     text: "Comment"
@@ -78,6 +83,7 @@ const initialState = {
             avatar: avatar,
             comments: [
                 {
+                    id: '4',
                     avatar: avatar,
                     name: "desaxe",
                     text: "Comment"
@@ -95,6 +101,7 @@ const initialState = {
             avatar: avatar,
             comments: [
                 {
+                    id: '5',
                     avatar: avatar,
                     name: "desaxe",
                     text: "Comment"
@@ -112,6 +119,7 @@ const initialState = {
             avatar: avatar,
             comments: [
                 {
+                    id: '6',
                     avatar: avatar,
                     name: "desaxe",
                     text: "Comment"
@@ -129,6 +137,7 @@ const initialState = {
             avatar: avatar,
             comments: [
                 {
+                    id: '7',
                     avatar: avatar,
                     name: "desaxe",
                     text: "Comment"
@@ -146,9 +155,34 @@ const initialState = {
             avatar: avatar,
             comments: [
                 {
+                    id: '8',
                     avatar: avatar,
                     name: "desaxe",
                     text: "Comment"
+                }
+            ]
+        },
+        {
+            id: "0",
+            userId: 1079,
+            name: 'Daria Kotik',
+            time: '16 June 2023',
+            posttext: 'Test Account',
+            like_count: 77,
+            postimage: test,
+            avatar: defaultAvatar,
+            comments: [
+                {
+                    id: '9',
+                    avatar: defaultAvatar,
+                    name: "Ummma",
+                    text: "Test?"
+                },
+                {
+                    id: '10',
+                    avatar: defaultAvatar,
+                    name: "Daria Kotik",
+                    text: "Test!"
                 }
             ]
         }
@@ -201,7 +235,7 @@ const newsReducer = (state = initialState, action) => {
             return {
                 ...state, postData: state.postData.map(p => {
                     if (p.id === action.id) {
-                        return { ...p, comments: [...p.comments, { avatar: action.avatar, name: action.name, text: action.text }] }
+                        return { ...p, comments: [...p.comments, { id: action.id+'-'+action.text.substring(0,7), avatar: action.avatar, name: action.name, text: action.text }] }
                     }
                     else {
                         return p

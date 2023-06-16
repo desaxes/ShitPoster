@@ -9,6 +9,9 @@ const Post = (props) => {
     const openPostPage = () => {
         navigate('/post/' + props.id)
     }
+    const toProfile = ()=>{
+        navigate('/profile/' + props.postId)
+    }
     const likePost = () => {
         if (props.isAuth === true) {
             props.like(props.id)
@@ -18,7 +21,7 @@ const Post = (props) => {
     return (
         <div className={s.post}>
             <div className={s.inner}>
-                <div onClick={openPostPage} className={s.header}>
+                <div onClick={toProfile} className={s.header}>
                     <div className={s.avatar}>
                         <img src={props.avatar} alt="" />
                     </div>

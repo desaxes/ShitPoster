@@ -17,6 +17,9 @@ const Header = (props) => {
     const toProfile = () => {
         navigate("/profile/" + props.auth.id)
     }
+    const toSettings =()=>{
+        navigate("/settings")
+    }
     const exitProfile = () => {
         props.logout();
         navigate("/login")
@@ -47,7 +50,7 @@ const Header = (props) => {
                                     <div onClick={toProfile} className={s.btn_box}>
                                         <div className='quick-posting__btn'>Profile</div>
                                     </div>
-                                    <div className={s.btn_box}>
+                                    <div onClick={toSettings} className={s.btn_box}>
                                         <div className='quick-posting__btn'>Settings</div>
                                     </div>
                                     <div onClick={exitProfile} className={s.btn_box}>

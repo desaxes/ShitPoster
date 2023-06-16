@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getUserProfile, setFollowedInfo, setStatus } from '../../redux/profile-reducer';
+import { getUserProfile, setFollowedInfo, setStatus, setPhoto } from '../../redux/profile-reducer';
 import { addPost } from '../../redux/news-reducer';
 import { following } from "../../redux/subs-reducer"
 import * as profileSelectors from "../../redux/profile-selectors"
@@ -28,7 +28,8 @@ const mapStateToProps = (state) => {
         userId: profileSelectors.getUserId(state),
         subscribeProgress: getSubscribeProgress(state),
         status: profileSelectors.getStatus(state),
-        authId:state.auth.id
+        authId: state.auth.id,
+        authPhoto:state.auth.photo,
     }
 }
 // export function withRouter(Children) {
@@ -46,7 +47,8 @@ export default compose(
             setFollowedInfo,
             following,
             setStatus,
-            addPost
+            addPost,
+            setPhoto
         }),
     // withRouter,
     AuthRedirect,

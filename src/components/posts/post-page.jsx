@@ -21,9 +21,9 @@ const PostPage = (props) => {
             }
         })
     }, [postId])
-    const comments = props.post.comments.map(c => <Comment ava={c.avatar} name={c.name} text={c.text} />)
+    const comments = props.post.comments.map(c => <Comment key={c.id} ava={c.avatar} name={c.name} text={c.text} />)
     const sendComment = (e) => {
-        props.addComment(postId.id, props.photo, props.login, e.com)
+        props.addComment(postId.id, props.authPhoto, props.login, e.com)
         navigate('/post/' + props.post.id)
         reset()
     }
@@ -34,10 +34,13 @@ const PostPage = (props) => {
             navigate('/post/' + props.post.id)
         }
     }
+    const toProfile = () => {
+        navigate('/profile/' + props.post.userId)
+    }
     return (
         <div className={s.post}>
             <div className={s.inner}>
-                <div className={s.header}>
+                <div onClick={toProfile} className={s.header}>
                     <div className={s.avatar}>
                         <img src={props.post.avatar} alt="" />
                     </div>
@@ -100,10 +103,10 @@ const mapStateToProps = (state) => {
     return {
         post: state.news.currentPost,
         posts: state.news.postData,
-        login: state.auth.login,
-        photo: state.auth.photo,
+        login: state.auth.profileInfo.fullName,
         likeList: state.auth.likedPosts,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        authPhoto: state.auth.photo
     }
 }
 const PostPageContainer = connect(mapStateToProps, { openPost, addComment, addToLikeList, like })(PostPage)

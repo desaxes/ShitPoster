@@ -1,5 +1,5 @@
-import { authAPI, profileAPI } from "../api/api";
-
+import { authAPI, profileAPI, userAPI } from "../api/api";
+const SET_AUTH_PHOTO = 'SET-USER-PHOTO'
 const SET_USER_DATA = "SET-USER-DATA"
 const SET_AUTH_INFO = 'SET-AUTH-INFO';
 const SET_AUTH_ERROR = 'SET-AUTH-ERROR';
@@ -11,6 +11,9 @@ const setAuthError = (errorState) =>
     ({ type: SET_AUTH_ERROR, errorState: errorState })
 const addToLikeList = (id) =>
     ({ type: ADD_TO_LIKE_LIST, id })
+const setAuthPhoto = (large) => ({
+    type: SET_AUTH_PHOTO, large
+})
 let initialState = {
     id: null,
     login: null,
@@ -48,13 +51,18 @@ const authReducer = (state = initialState, action) => {
             return { ...state, ...action.data }
         }
         case SET_USER_DATA: {
-            return { ...state, profileInfo: { ...action.data }, photo: action.photo };
+            return { ...state, profileInfo: action.data , photo: action.photo };
         }
         case SET_AUTH_ERROR: {
             return { ...state, authError: action.errorState };
         }
         case ADD_TO_LIKE_LIST: {
             return { ...state, likedPosts: [...state.likedPosts, action.id] };
+        }
+        case SET_AUTH_PHOTO: {
+            return {
+                ...state, photo: action.large
+            }
         }
         default: return state;
     }
@@ -96,4 +104,14 @@ const logout = () => async (dispatch) => {
         dispatch(setUserData(null, null));
     }
 }
-export { authReducer, authtorize, login, logout, addToLikeList }
+const changeAuthPhoto = (id) => async (dispatch) => {
+    let data = await profileAPI.getUserProfile(id)
+    dispatch(setAuthPhoto(data.data.photos.large))
+}
+const changeAuthInfo = (id) => async (dispatch) => {
+    let data = await profileAPI.getUserProfile(id)
+    dispatch(setUserData(data, data.photos.large));
+}
+export { authReducer, authtorize, login, logout, addToLikeList, changeAuthPhoto, changeAuthInfo }
+
+

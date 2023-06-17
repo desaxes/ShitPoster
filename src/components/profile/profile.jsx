@@ -19,12 +19,13 @@ const Profile = (props) => {
         rait = rait + element.props.like_count
     }
     let onSubmit = (e) => {
-        props.addPost(props.auth.id, props.profileInfo.fullName, props.authPhoto, 'Now', e.postText, 0)
+        props.addPost(props.auth.id, props.login, props.authPhoto, 'Now', e.postText, 0)
         reset()
     }
     const setPhoto = (e) => {
         // props.setPhoto(e.target.files[0])
         props.setPhoto(e)
+        props.changeAuthPhoto(props.authId)
     }
     return (
         <div className={s.profile}>

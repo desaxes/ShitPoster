@@ -165,7 +165,7 @@ const initialState = {
         {
             id: "0",
             userId: 1079,
-            name: 'Daria Kotik',
+            name: 'Test',
             time: '16 June 2023',
             posttext: 'Test Account',
             like_count: 77,
@@ -181,7 +181,7 @@ const initialState = {
                 {
                     id: '10',
                     avatar: defaultAvatar,
-                    name: "Daria Kotik",
+                    name: "Test",
                     text: "Test!"
                 }
             ]

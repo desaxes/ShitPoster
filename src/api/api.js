@@ -17,15 +17,6 @@ const userAPI = {
     unsubUser(id) {
         return (instance.delete("follow/" + id,).then(response => response.data.resultCode))
     },
-    setUserPhoto(img) {
-        const formData = new FormData()
-        formData.append("image", img)
-        return (instance.put("profile/photo", formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }).then(response => response.data))
-    }
 }
 
 const authAPI = {
@@ -37,6 +28,18 @@ const authAPI = {
     },
     auth() {
         return (instance.get("auth/me",).then(response => response.data))
+    },
+    setUserPhoto(img) {
+        const formData = new FormData()
+        formData.append("image", img)
+        return (instance.put("profile/photo", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => response.data))
+    },
+    setUserInfo(profile) {
+        return (instance.put("profile", profile).then(response => response.data))
     }
 }
 

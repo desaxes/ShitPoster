@@ -20,7 +20,7 @@ const SubsPresentation = (props) => {
                     <Flex gap={16} direction={'column'} className={`${s.sub_list} ${props.isFetching && s.page_opacity}`}>
                         {subs}
                     </Flex>
-                    <Pagination color='indigo' value={props.pageNumber} onChange={(e) => { props.onPageChanged(e)}} 
+                    <Pagination color='red' value={props.pageNumber} onChange={(e) => { props.onPageChanged(e)}} 
                     total={pageCount} withEdges  siblings={3} className={s.counter} size="lg">
                     </Pagination>
                 </div>

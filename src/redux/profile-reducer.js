@@ -1,9 +1,10 @@
-import { profileAPI, userAPI } from "../api/api";
+import { authAPI, profileAPI, userAPI } from "../api/api";
 const ADD_POST = 'ADD-POST';
 const SET_PROFILE_INFO = 'SET-PROFILE-INFO';
 const SET_FOLLOWED_INFO = 'SET-FOLLOWED-INFO'
 const SET_PROFILE_STATUS = 'SET-PROFILE-STATUS'
 const SET_USER_PHOTO = 'SET-USER-PHOTO'
+const CHANGE_PROFILE_INFO = 'CHANGE-PROFILE-INFO'
 const addPost = (name, avatar, time, posttext, com_count, like_count) => (
     { type: ADD_POST, name: name, avatar: avatar, time: time, posttext: posttext, com_count: com_count, like_count: like_count })
 const setProfileInfo = (data) =>
@@ -16,6 +17,9 @@ const setProfileStatus = (status) => ({
 })
 const setUserPhoto = (small, large) => ({
     type: SET_USER_PHOTO, small, large
+})
+const changeProfileInfoAction = (about, job, desc, fname, git, vk, fb, inst, twit, web, yt, ml) => ({
+    type: CHANGE_PROFILE_INFO, about, job, desc, fname, git, vk, fb, inst, twit, web, yt, ml
 })
 let initialState = {
     profileInfo: {
@@ -40,7 +44,8 @@ let initialState = {
             large: null
         },
     },
-    status: null
+    status: null,
+    settingSuccess: false
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -62,6 +67,25 @@ const profileReducer = (state = initialState, action) => {
                 }
             }
         }
+        case CHANGE_PROFILE_INFO: {
+            return {
+                ...state, aboutMe: action.about, fullname: action.fname, lookingForAJob: action.job, lookingForAJobDescription: action.desc,
+                contacts: {
+                    ...state.contacts,
+                    facebook: action.fb,
+                    website: action.web,
+                    vk: action.vk,
+                    twitter: action.twit,
+                    instagram: action.inst,
+                    youtube: action.yt,
+                    github: action.git,
+                    mainLink: action.ml
+                }
+            }
+        }
+        // case SETTINGS_SUCCESS:{
+
+        // }
         default: return state;
     }
 }
@@ -82,11 +106,32 @@ const setStatus = (userid, status) => async (dispatch) => {
     }
 }
 const setPhoto = (img) => async (dispatch) => {
-    debugger
-    let data = await userAPI.setUserPhoto(img)
+    let data = await authAPI.setUserPhoto(img)
     if (data.resultCode === 0) {
         dispatch(setUserPhoto(data.data.photos.small, data.data.photos.large))
     }
 }
+const changeProfileInfo = (id, about, job, desc, fname, git, vk, fb, inst, twit, web, yt, ml) => async (dispatch) => {
+    let data = await authAPI.setUserInfo({
+        userId: id,
+        aboutMe: about,
+        lookingForAJob: job,
+        lookingForAJobDescription: desc,
+        fullName: fname,
+        contacts: {
+            github: git,
+            vk: vk,
+            facebook: fb,
+            instagram: inst,
+            twitter: twit,
+            website: web,
+            youtube: yt,
+            mainLink: ml
+        }
+    })
+    if (data.resultCode === 0) {
+        dispatch(changeProfileInfoAction(about, job, desc, fname, git, vk, fb, inst, twit, web, yt, ml))
+    }
+}
 
-export { profileReducer, addPost, getUserProfile, setFollowedInfo, setStatus, setPhoto }
+export { profileReducer, addPost, getUserProfile, setFollowedInfo, setStatus, setPhoto, changeProfileInfo }

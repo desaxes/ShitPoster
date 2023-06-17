@@ -3,8 +3,8 @@
 }
 
 .inner {
-    width: 600px;
-    background: #909090;
+    max-width: 600px;
+    background: linear-gradient(115deg, #a22727cc 0%, #000000c9 100%);
     margin: 0 auto;
     border-radius: 6px;
     display: flex;
@@ -134,7 +134,9 @@
 .comments {}
 
 .comments_box {
-    background: #909090;
+    background: linear-gradient(115deg, #a227274c 0%, #070a3092 100%);
+    border: 1px black solid;
+    border-radius: 10px;
     width: 90%;
     margin-top: 20px;
     display: flex;

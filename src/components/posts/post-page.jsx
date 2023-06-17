@@ -13,25 +13,23 @@ const PostPage = (props) => {
     let postId = useParams()
     const navigate = useNavigate()
     useEffect(() => {
-        props.posts.filter(post => {
+        props.news.filter(post => {
             if (post.id === postId.id) {
                 props.openPost(post.id, post.userId,
                     post.name, post.time, post.posttext,
                     post.like_count, post.postimage, post.avatar, post.comments)
             }
         })
-    }, [postId])
+    }, [postId, props.postData])
     const comments = props.post.comments.map(c => <Comment key={c.id} ava={c.avatar} name={c.name} text={c.text} />)
     const sendComment = (e) => {
         props.addComment(postId.id, props.authPhoto, props.login, e.com)
-        navigate('/post/' + props.post.id)
         reset()
     }
     const likePost = () => {
         if (props.isAuth === true) {
             props.like(props.post.id)
             props.addToLikeList(props.post.id)
-            navigate('/post/' + props.post.id)
         }
     }
     const toProfile = () => {
@@ -102,11 +100,11 @@ const Comment = (props) => {
 const mapStateToProps = (state) => {
     return {
         post: state.news.currentPost,
-        posts: state.news.postData,
-        login: state.auth.profileInfo.fullName,
+        // posts: state.news.postData,
+        login: state.auth.login,
         likeList: state.auth.likedPosts,
         isAuth: state.auth.isAuth,
-        authPhoto: state.auth.photo
+        authPhoto: state.auth.photo,
     }
 }
 const PostPageContainer = connect(mapStateToProps, { openPost, addComment, addToLikeList, like })(PostPage)

@@ -34,8 +34,9 @@
     justify-content: space-between;
     padding: 40px 15px;
     align-items: center;
-    background: #909090;
+    background: linear-gradient(45deg, #bf6bffcc 0%, #1c0530c9 100%);
     border-radius: 10px;
+    max-width: 450px;
 }
 
 .link_box {
@@ -75,7 +76,7 @@
 .btn_box {
     min-width: 150px;
     width: 150px;
-    height: 30px;
+    height: 40px;
     margin-left: 20px;
 }
 
@@ -95,5 +96,5 @@
 }
 
 .f_color {
-    background: linear-gradient(60.95deg, #000000cc 0%, #901111c9 100%);
+    background: linear-gradient(45deg, #9fffa9cc 0%, #c70606c9 100%);
 }

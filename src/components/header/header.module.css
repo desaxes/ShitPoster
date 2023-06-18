@@ -37,6 +37,7 @@
 .avatar{
     width: 60px;
     height: 60px;
+    border-radius: 50%;
 }
 .settings{
     margin-right: 2%;
@@ -54,7 +55,6 @@
 .sMenu{
     width: 400px;
     height: 40px;
-    /* background: linear-gradient(180.95deg, #cdccdcc9 0%, #413c8dc9 100%);   */
     border: solid 2px #fff;
     position: fixed;
     right: 200px;

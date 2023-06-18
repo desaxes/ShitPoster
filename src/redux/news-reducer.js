@@ -8,6 +8,7 @@ import week4 from './../img/react-4week.png'
 import week5 from './../img/react-5week.png'
 import week6 from './../img/react-6week.png'
 import week7 from './../img/react-7week.png'
+import week8 from './../img/react-8week.png'
 import test from './../img/profile_head.png'
 
 const ADD_POST = 'ADD-POST'
@@ -185,7 +186,25 @@ const initialState = {
                     text: "Test!"
                 }
             ]
-        }
+        },
+        {
+            id: "8",
+            userId: 29179,
+            name: 'desaxe',
+            time: '18 June 2023',
+            posttext: "Eighth Week",
+            like_count: 34,
+            postimage: week8,
+            avatar: avatar,
+            comments: [
+                {
+                    id: '11',
+                    avatar: avatar,
+                    name: "desaxe",
+                    text: "Eeeeeeeeeee"
+                }
+            ]
+        },
     ],
     currentPost: {
         id: "",

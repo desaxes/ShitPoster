@@ -1,9 +1,10 @@
-import { authAPI, profileAPI, userAPI } from "../api/api";
+import { authAPI, profileAPI, securityAPI, userAPI } from "../api/api";
 const SET_AUTH_PHOTO = 'SET-USER-PHOTO'
 const SET_USER_DATA = "SET-USER-DATA"
 const SET_AUTH_INFO = 'SET-AUTH-INFO';
 const SET_AUTH_ERROR = 'SET-AUTH-ERROR';
 const ADD_TO_LIKE_LIST = 'ADD-TO-LIKE-LIST'
+const SET_CAPTCHA = 'SET-CAPTCHA'
 const setAuthInfo = (id, login, email, isAuth) => ({ type: SET_AUTH_INFO, data: { id, login, email, isAuth } })
 const setUserData = (data, photo) =>
     ({ type: SET_USER_DATA, data: data, photo: photo })
@@ -14,6 +15,9 @@ const addToLikeList = (id) =>
 const setAuthPhoto = (large) => ({
     type: SET_AUTH_PHOTO, large
 })
+const setCaptchaUrl = (url) => ({
+    type: SET_CAPTCHA, url
+})
 let initialState = {
     id: null,
     login: null,
@@ -21,6 +25,7 @@ let initialState = {
     isAuth: false,
     photo: null,
     authError: false,
+    captchaUrl: null,
     profileInfo: {
         aboutMe: null,
         contacts: {
@@ -51,7 +56,7 @@ const authReducer = (state = initialState, action) => {
             return { ...state, ...action.data }
         }
         case SET_USER_DATA: {
-            return { ...state, profileInfo: action.data , photo: action.photo };
+            return { ...state, profileInfo: action.data, photo: action.photo };
         }
         case SET_AUTH_ERROR: {
             return { ...state, authError: action.errorState };
@@ -62,6 +67,11 @@ const authReducer = (state = initialState, action) => {
         case SET_AUTH_PHOTO: {
             return {
                 ...state, photo: action.large
+            }
+        }
+        case SET_CAPTCHA: {
+            return {
+                ...state, captchaUrl: action.url
             }
         }
         default: return state;
@@ -79,13 +89,14 @@ const authtorize = () => async (dispatch) => {
         );
     }
 }
-const login = (email, password, checkbox) => async (dispatch) => {
-    const resultCode = await authAPI.login(email, password, checkbox);
+const login = (email, password, checkbox, captcha) => async (dispatch) => {
+    const resultCode = await authAPI.login(email, password, checkbox, captcha);
     if (resultCode === 0) {
         dispatch(setAuthError(false));
         const data = await authAPI.auth()
         if (data.resultCode === 0) {
             dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true));
+            dispatch(setCaptchaUrl(null))
             profileAPI.getUserProfile(data.data.id).then(
                 data_1 => {
                     dispatch(setUserData(data_1, data_1.photos.large));
@@ -94,8 +105,15 @@ const login = (email, password, checkbox) => async (dispatch) => {
         }
     }
     else {
+        if (resultCode === 10) {
+            dispatch(getCaptcha())
+        }
         dispatch(setAuthError(true));
     }
+}
+const getCaptcha = () => async (dispatch) => {
+    const result = await securityAPI.captcha();
+    dispatch(setCaptchaUrl(result.data.url))
 }
 const logout = () => async (dispatch) => {
     const resultCode = await authAPI.logout();
@@ -112,6 +130,15 @@ const changeAuthInfo = (id) => async (dispatch) => {
     let data = await profileAPI.getUserProfile(id)
     dispatch(setUserData(data, data.photos.large));
 }
-export { authReducer, authtorize, login, logout, addToLikeList, changeAuthPhoto, changeAuthInfo }
+export {
+    authReducer,
+    authtorize,
+    login,
+    logout,
+    addToLikeList,
+    changeAuthPhoto,
+    changeAuthInfo,
+    getCaptcha
+}
 
 

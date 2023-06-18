@@ -21,10 +21,8 @@
 }
 
 .field {
-    /* padding: 10px; */
     line-height: 28px;
     font-size: 30px;
-    /* border: solid 2px black; */
     margin-bottom: 20px;
     text-align: center;
     width: 100%;
@@ -34,7 +32,7 @@
 .btn_box {
     display: flex;
     width: 40%;
-    height: 30px;
+    height: 40px;
     margin-top: 20px;
     text-align: center;
     align-items: center;
@@ -91,11 +89,22 @@
 .card_header{
     color: #000000;
     font-weight: 900;
-    font-size: 20px;
+    font-size: 26px;
+    text-align: center;
 }
 .card_data{
     color: black;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 300;
+    font-size: 20px;
     margin-top: 15px;
+}
+.captcha_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.captcha{
+    width: 200px;
+    height: 70px;
+    text-align: center;
 }

@@ -2,12 +2,10 @@ import { connect } from "react-redux";
 import React from "react";
 import Header from "./header";
 import { logout } from "../../redux/auth-reducer";
-class HeaderAPI extends React.Component {
-    render() {
-        return (
-            <Header {...this.props} />
-        )
-    }
+const HeaderAPI = (props) => {
+    return (
+        <Header {...props} />
+    )
 }
 
 const mapStateToProps = (state) => {

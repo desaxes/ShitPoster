@@ -18,3 +18,10 @@
     align-items: center;
     justify-content: center;
 }
+.errorpage_inner{
+    color: #000 ;
+    display: flex;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 36px;
+}

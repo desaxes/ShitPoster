@@ -77,7 +77,7 @@ const PostPage = (props) => {
                 <div className={s.comments_box}>
                     {props.isAuth && <form onSubmit={handleSubmit(sendComment)} className={s.form}>
                         <div className={s.textbox}><Textarea required {...register('com')} placeholder='Comment' /></div>
-                        <div className={s.btn_box}><input className='quick-posting__btn' type="submit" /></div>
+                        <div className={s.btn_box}><input value={'Comment'} className='quick-posting__btn' type="submit" /></div>
                     </form>}
                     {comments}
                 </div>

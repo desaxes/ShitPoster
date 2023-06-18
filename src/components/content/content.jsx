@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react'
 import s from './content.module.css'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { Preloader } from '../common_components/preloader'
 import ProfileSettingsContainer from '../profile/profile-settings'
+import ErrorPage from '../common_components/error-page'
 const MessagesContainer = React.lazy(() => import('../messages/messages-container'))
 const ProfileContainer = React.lazy(() => import('../profile/profile-container'))
 const SubsContainer = React.lazy(() => import('../subs/subs-container'))
@@ -18,6 +19,7 @@ const Content = (props) => {
                 <div className='content__inner'>
                     <Suspense fallback={<Preloader />}>
                         <Routes>
+                            <Route path='/' element={<Navigate to='/newsfeed'/>} />
                             <Route path='/profile/:id?' element={<ProfileContainer />} />
                             <Route path='/popular' element={<PopularContainer />} />
                             <Route path='/newsfeed' element={<NewsfeedContainer />} />
@@ -27,6 +29,7 @@ const Content = (props) => {
                             <Route path='/post/:id' element={<PostPageContainer news={props.news} />} />
                             <Route path='/posteditor' element={<PostEditorContainer />} />
                             <Route path='/settings' element={<ProfileSettingsContainer />} />
+                            <Route path='/*' element={<ErrorPage />} />
                         </Routes>
                     </Suspense>
                 </div>

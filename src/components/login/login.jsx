@@ -9,7 +9,7 @@ const LoginForm = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onBlur' });
     const navigate = useNavigate()
     let onSubmit = (e) => {
-        props.login(e.email, e.password, e.checkbox)
+        props.login(e.email, e.password, e.checkbox, e.captcha)
     }
     if (props.auth.isAuth === false) {
         return (
@@ -36,14 +36,20 @@ const LoginForm = (props) => {
                             {/* <input type='checkbox' {...register("checkbox")}
                                 className={s.checkbox} /> */}
                         </Checkbox>
+                        {props.auth.captchaUrl != null &&
+                            <div className={s.captcha_box}>
+                                <img className={s.captcha} src={props.auth.captchaUrl} alt="" />
+                                <TextInput className={`${s.field} ${errors?.captcha && s.field_border}`} type="text" {...register("captcha", { required: "✎ Enter Symbols!" })} />
+                            </div>
+                        }
                         <div className={s.btn_box}>
                             {props.auth.authError &&
                                 <div>
-                                    <p className={s.error}>Wrong Password or Login</p>
-                                </div>}
+                                    <p className={s.error}>Something is Wrong</p>
+                                </div>
+                            }
                             <input value={'Confirm'} type="submit" className='quick-posting__btn' />
                         </div>
-
                     </form>
                 </HoverCard.Target>
                 <HoverCard.Dropdown m={20}>

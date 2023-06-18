@@ -1,30 +1,29 @@
 import './App.css';
 import Main from './components/main/main';
 import { HeaderContainer } from './components/header/header-container';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { initialize } from "./redux/app-reducer";
 import { Preloader } from './components/common_components/preloader';
-class App extends React.Component {
-  componentDidMount() {
-    this.props.initialize()
-  }
-  render() {
-    if (this.props.initialized === true) {
-      return (
-        <div className="App">
-          <div className='wrapper'>
-            <HeaderContainer />
-            <Main />
-          </div>
+const App = (props) => {
+  useEffect(() => {
+    props.initialize()
+  }, [props.initialized])
+  if (props.initialized === true) {
+    return (
+      <div className="App">
+        <div className='wrapper'>
+          <HeaderContainer />
+          <Main />
         </div>
-      )
-    }
-    else {
-      return (<Preloader />)
-    }
+      </div>
+    )
+  }
+  else {
+    return (<Preloader />)
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     initialized: state.app.initialized

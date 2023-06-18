@@ -18,10 +18,14 @@ const userAPI = {
         return (instance.delete("follow/" + id,).then(response => response.data.resultCode))
     },
 }
-
+const securityAPI = {
+    captcha() {
+        return (instance.get("security/get-captcha-url").then(response => response))
+    }
+}
 const authAPI = {
-    login(email, password, rememberMe) {
-        return (instance.post("auth/login", { email, password, rememberMe }).then(response => response.data.resultCode))
+    login(email, password, rememberMe, captcha) {
+        return (instance.post("auth/login", { email, password, rememberMe, captcha }).then(response => response.data.resultCode))
     },
     logout() {
         return (instance.delete("auth/login").then(response => response.data.resultCode))
@@ -54,4 +58,4 @@ const profileAPI = {
         return (instance.put("profile/status", { status: status }).then(response => response.data))
     }
 }
-export { userAPI, authAPI, profileAPI }
+export { userAPI, authAPI, profileAPI, securityAPI }

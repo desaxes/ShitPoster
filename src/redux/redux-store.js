@@ -1,10 +1,10 @@
 import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from "redux";
 import { profileReducer } from "./profile-reducer";
-import { messagesReducer } from "./messages-reducer";
+import { messagesReducer } from "./messages-reducer.ts";
 import { subsReducer } from "./subs-reducer";
-import { authReducer } from "./auth-reducer";
+import { authReducer } from "./auth-reducer.ts";
 import thunkMiddleware from "redux-thunk";
-import { appReducer } from "./app-reducer";
+import { appReducer } from "./app-reducer.ts";
 import { newsReducer } from "./news-reducer";
 
 let reducers = combineReducers({

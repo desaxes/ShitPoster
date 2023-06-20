@@ -3,7 +3,7 @@ import Main from './components/main/main';
 import { HeaderContainer } from './components/header/header-container';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { initialize } from "./redux/app-reducer";
+import { initialize } from "./redux/app-reducer.ts";
 import { Preloader } from './components/common_components/preloader';
 const App = (props) => {
   useEffect(() => {

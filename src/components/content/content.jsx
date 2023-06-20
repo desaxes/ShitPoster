@@ -19,7 +19,7 @@ const Content = (props) => {
                 <div className='content__inner'>
                     <Suspense fallback={<Preloader />}>
                         <Routes>
-                            <Route path='/' element={<Navigate to='/newsfeed'/>} />
+                            <Route path='/ShitPoster' element={<Navigate to='/newsfeed'/>} />
                             <Route path='/profile/:id?' element={<ProfileContainer />} />
                             <Route path='/popular' element={<PopularContainer />} />
                             <Route path='/newsfeed' element={<NewsfeedContainer />} />
@@ -29,7 +29,7 @@ const Content = (props) => {
                             <Route path='/post/:id' element={<PostPageContainer news={props.news} />} />
                             <Route path='/posteditor' element={<PostEditorContainer />} />
                             <Route path='/settings' element={<ProfileSettingsContainer />} />
-                            <Route path='/*' element={<ErrorPage />} />
+                            <Route path='*' element={<ErrorPage />} />
                         </Routes>
                     </Suspense>
                 </div>

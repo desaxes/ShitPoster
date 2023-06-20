@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { openPost, addComment, like } from '../../redux/news-reducer';
-import { addToLikeList } from '../../redux/auth-reducer';
+import { addToLikeList } from '../../redux/auth-reducer.ts';
 import { useForm } from 'react-hook-form';
 import { Textarea } from '@mantine/core'
 import avatar from './../../img/shit_icon.png'

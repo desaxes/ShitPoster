@@ -9,7 +9,7 @@ const Chat = (props) => {
             <div className="page-block">
                 <div className={s.chat_window}>
                     <Messagebox messages={props.messages} />
-                    <Mes_textbox sendMessage={props.sendMessage} />
+                    <Mes_textbox authId={props.authId} sendMessage={props.sendMessage} />
                 </div>
             </div>
         </div>
@@ -17,11 +17,13 @@ const Chat = (props) => {
 }
 
 const Mes_textbox = (props) => {
+    const id = props.authId.toString()
     const { register, reset, handleSubmit, formState: { errors } } = useForm()
     const onSubmit = (e) => {
-        props.sendMessage(e.messageText);
+        props.sendMessage(e.messageText, id);
         reset();
     }
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={s.text_box}>
             <textarea {...register('messageText', { required: "✎ You must enter the text ⇒" })}>

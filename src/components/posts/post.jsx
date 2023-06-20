@@ -3,7 +3,7 @@ import comment from './../../img/com_item.png'
 import { connect } from 'react-redux';
 import { openPost, like } from '../../redux/news-reducer';
 import { useNavigate } from 'react-router-dom';
-import { addToLikeList } from '../../redux/auth-reducer';
+import { addToLikeList } from '../../redux/auth-reducer.ts';
 const Post = (props) => {
     const navigate = useNavigate()
     const openPostPage = () => {

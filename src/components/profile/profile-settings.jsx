@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form"
 import { connect } from "react-redux"
 import s from './profile.module.css'
 import { changeProfileInfo, getUserProfile } from './../../redux/profile-reducer'
-import { changeAuthInfo } from "../../redux/auth-reducer"
+import { changeAuthInfo } from "../../redux/auth-reducer.ts"
 import { useEffect, useState } from "react"
 const ProfileSettings = (props) => {
     useEffect(() => {

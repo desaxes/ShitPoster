@@ -1,24 +1,90 @@
-import { authAPI, profileAPI, securityAPI, userAPI } from "../api/api";
+import { authAPI, profileAPI, securityAPI } from "../api/api";
 const SET_AUTH_PHOTO = 'SET-USER-PHOTO'
 const SET_USER_DATA = "SET-USER-DATA"
 const SET_AUTH_INFO = 'SET-AUTH-INFO';
 const SET_AUTH_ERROR = 'SET-AUTH-ERROR';
 const ADD_TO_LIKE_LIST = 'ADD-TO-LIKE-LIST'
 const SET_CAPTCHA = 'SET-CAPTCHA'
-const setAuthInfo = (id, login, email, isAuth) => ({ type: SET_AUTH_INFO, data: { id, login, email, isAuth } })
-const setUserData = (data, photo) =>
+
+type setAuthInfoActionDataType = {
+    id: number | null,
+    login: string | null,
+    email: string | null,
+    isAuth: boolean
+}
+type setAuthInfoActionType = {
+    type: typeof SET_AUTH_INFO
+    data: setAuthInfoActionDataType
+}
+type setUserDataActionType = {
+    type: typeof SET_USER_DATA,
+    data: any,
+    photo: string | null
+}
+type setAuthErrorActionType = {
+    type: typeof SET_AUTH_ERROR,
+    errorState: boolean
+}
+type addToLikeListActionType = {
+    type: typeof ADD_TO_LIKE_LIST,
+    id: number
+}
+type setAuthPhotoActionType = {
+    type: typeof SET_AUTH_PHOTO,
+    large: string
+}
+type setCaptchaUrlActionType = {
+    type: typeof SET_CAPTCHA,
+    url: string | null
+}
+
+const setAuthInfo = (id: number | null, login: string | null, email: string | null, isAuth: boolean): setAuthInfoActionType => ({ type: SET_AUTH_INFO, data: { id, login, email, isAuth } })
+const setUserData = (data: any, photo: string | null): setUserDataActionType =>
     ({ type: SET_USER_DATA, data: data, photo: photo })
-const setAuthError = (errorState) =>
+const setAuthError = (errorState: boolean): setAuthErrorActionType =>
     ({ type: SET_AUTH_ERROR, errorState: errorState })
-const addToLikeList = (id) =>
+const addToLikeList = (id: number): addToLikeListActionType =>
     ({ type: ADD_TO_LIKE_LIST, id })
-const setAuthPhoto = (large) => ({
+const setAuthPhoto = (large: string): setAuthPhotoActionType => ({
     type: SET_AUTH_PHOTO, large
 })
-const setCaptchaUrl = (url) => ({
+const setCaptchaUrl = (url: string | null): setCaptchaUrlActionType => ({
     type: SET_CAPTCHA, url
 })
-let initialState = {
+
+type initialStateType = {
+    id: null | number,
+    login: null | string,
+    email: null | string,
+    isAuth: false | boolean,
+    photo: null | string,
+    authError: boolean,
+    captchaUrl: null | string,
+    profileInfo: {
+        aboutMe: null | string,
+        contacts: {
+            facebook: null | string,
+            website: null | string,
+            vk: null | string,
+            twitter: null | string,
+            instagram: null | string,
+            youtube: null | string,
+            github: null | string,
+            mainLink: null | string
+        },
+        lookingForAJob: boolean,
+        lookingForAJobDescription: null | string,
+        fullName: null | string,
+        userId: number,
+        photos: {
+            small: null | string,
+            large: null | string
+        }
+    },
+    likedPosts: { id: string }[]
+}
+
+let initialState: initialStateType = {
     id: null,
     login: null,
     email: null,
@@ -50,7 +116,7 @@ let initialState = {
     likedPosts: []
 }
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any): initialStateType => {
     switch (action.type) {
         case SET_AUTH_INFO: {
             return { ...state, ...action.data }
@@ -78,18 +144,14 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-const authtorize = () => async (dispatch) => {
+const authtorize = () => async (dispatch: any) => {
     const data = await authAPI.auth();
     if (data.resultCode === 0) {
         dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true));
-        profileAPI.getUserProfile(data.data.id).then(
-            data_1 => {
-                dispatch(setUserData(data_1, data_1.photos.large));
-            }
-        );
+        dispatch(changeAuthInfo(data.data.id))
     }
 }
-const login = (email, password, checkbox, captcha) => async (dispatch) => {
+const login = (email: string, password: string, checkbox: boolean, captcha: string) => async (dispatch: any) => {
     const resultCode = await authAPI.login(email, password, checkbox, captcha);
     if (resultCode === 0) {
         dispatch(setAuthError(false));
@@ -97,11 +159,7 @@ const login = (email, password, checkbox, captcha) => async (dispatch) => {
         if (data.resultCode === 0) {
             dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true));
             dispatch(setCaptchaUrl(null))
-            profileAPI.getUserProfile(data.data.id).then(
-                data_1 => {
-                    dispatch(setUserData(data_1, data_1.photos.large));
-                }
-            );
+            dispatch(changeAuthInfo(data.data.id))
         }
     }
     else {
@@ -111,22 +169,22 @@ const login = (email, password, checkbox, captcha) => async (dispatch) => {
         dispatch(setAuthError(true));
     }
 }
-const getCaptcha = () => async (dispatch) => {
+const getCaptcha = () => async (dispatch: any) => {
     const result = await securityAPI.captcha();
     dispatch(setCaptchaUrl(result.data.url))
 }
-const logout = () => async (dispatch) => {
+const logout = () => async (dispatch: any) => {
     const resultCode = await authAPI.logout();
     if (resultCode === 0) {
         dispatch(setAuthInfo(null, null, null, false));
         dispatch(setUserData(null, null));
     }
 }
-const changeAuthPhoto = (id) => async (dispatch) => {
+const changeAuthPhoto = (id: number) => async (dispatch: any) => {
     let data = await profileAPI.getUserProfile(id)
     dispatch(setAuthPhoto(data.data.photos.large))
 }
-const changeAuthInfo = (id) => async (dispatch) => {
+const changeAuthInfo = (id: number) => async (dispatch: any) => {
     let data = await profileAPI.getUserProfile(id)
     dispatch(setUserData(data, data.photos.large));
 }

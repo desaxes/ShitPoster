@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import React from 'react'
 import { Login } from "./login";
-import { authtorize, login } from "../../redux/auth-reducer";
+import { authtorize, login } from "../../redux/auth-reducer.ts";
 const LoginAPI = (props) => {
     return <>
         <Login {...props} />

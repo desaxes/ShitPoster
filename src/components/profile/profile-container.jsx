@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { getUserProfile, setFollowedInfo, setStatus, setPhoto } from '../../redux/profile-reducer';
 import { addPost } from '../../redux/news-reducer';
 import { following } from "../../redux/subs-reducer"
-import { changeAuthPhoto, changeAuthInfo } from "../../redux/auth-reducer"
+import { changeAuthPhoto, changeAuthInfo } from "../../redux/auth-reducer.ts"
 import * as profileSelectors from "../../redux/profile-selectors"
 import { getSubscribeProgress } from "../../redux/subs-selectors"
 import Profile from './profile';

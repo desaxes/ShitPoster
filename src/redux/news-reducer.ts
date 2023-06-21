@@ -10,26 +10,79 @@ import week6 from './../img/react-6week.png'
 import week7 from './../img/react-7week.png'
 import week8 from './../img/react-8week.png'
 import test from './../img/profile_head.png'
-
+// ----------------------------------------------ACTIONS CONST-----------------------------------------
 const ADD_POST = 'ADD-POST'
 const OPEN_POST = 'OPEN_POST'
 const ADD_COMMENT = 'ADD-COMMENT'
 const LIKE = 'LIKE'
-const addPost = (userId, name, avatar, time, posttext, like_count) => (
+// ----------------------------------------------ACTIONS TYPES-----------------------------------------
+
+type addCommentActionType =
     {
-        type: ADD_POST, userId: userId, name: name, avatar: avatar, time: time,
-        posttext: posttext, like_count: like_count
+        type: typeof ADD_COMMENT,
+        id: string,
+        avatar: string,
+        name: string,
+        text: string
+    }
+type addPostActionType = {
+    type: typeof ADD_POST,
+    userId: number,
+    name: string,
+    avatar: string,
+    time: string,
+    posttext: string,
+    like_count: number
+}
+type openPostActionType = {
+    type: typeof OPEN_POST,
+    id: string,
+    userId: number,
+    name: string,
+    time: string,
+    posttext: string,
+    like_count: number,
+    postimage: string,
+    avatar: string,
+    comments: commentArrayType
+}
+// ----------------------------------------------ACTIONS---------------------------------------------------
+
+const addPost = (userId: number, name: string, avatar: string, time: string, posttext: string, like_count: number): addPostActionType => (
+    {
+        type: ADD_POST, userId, name, avatar, time, posttext, like_count
     })
-const openPost = (id, userId, name, time, posttext, like_count, postimage, avatar, comments) => ({
+const openPost = (id: string, userId: number, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType): openPostActionType => ({
     type: OPEN_POST, id, userId, name, time, posttext, like_count, postimage, avatar, comments
 })
-const addComment = (id, avatar, name, text) => ({
+const addComment = (id: string, avatar: string, name: string, text: string): addCommentActionType => ({
     type: ADD_COMMENT, id, avatar, name, text
 })
-const like = (id) => ({
+const like = (id: string): { type: typeof LIKE, id: string } => ({
     type: LIKE, id
 })
-const initialState = {
+
+// ----------------------------------------------INIT STATE TYPES-----------------------------------------
+
+type postArrayType = {
+    id: string,
+    userId: number,
+    name: string,
+    time: string,
+    posttext: string,
+    like_count: number,
+    postimage: string | null,
+    avatar: string | null,
+    comments: commentArrayType
+}[]
+
+type initialStateType = {
+    postData: Array<postType>,
+    currentPost: postType
+}
+
+// ----------------------------------------------INIT STATE -----------------------------------------
+const initialState: initialStateType = {
     postData: [
         {
             id: "1",
@@ -213,13 +266,14 @@ const initialState = {
         time: '',
         posttext: '',
         like_count: 0,
-        postimage: null,
-        avatar: null,
+        postimage: '',
+        avatar: '',
         comments: [
         ]
     }
 }
-const newsReducer = (state = initialState, action) => {
+// ----------------------------------------------REDUCER-----------------------------------------
+const newsReducer = (state = initialState, action: any): initialStateType => {
     switch (action.type) {
         case ADD_POST: {
             if (action.posttext == '') { return state }
@@ -232,6 +286,7 @@ const newsReducer = (state = initialState, action) => {
                         userId: action.userId,
                         name: action.name,
                         avatar: action.avatar,
+                        postimage: action.postimage,
                         time: action.time,
                         posttext: action.posttext,
                         like_count: action.like_count,
@@ -254,7 +309,7 @@ const newsReducer = (state = initialState, action) => {
             return {
                 ...state, postData: state.postData.map(p => {
                     if (p.id === action.id) {
-                        return { ...p, comments: [...p.comments, { id: action.id+'-'+action.text.substring(0,7), avatar: action.avatar, name: action.name, text: action.text }] }
+                        return { ...p, comments: [...p.comments, { id: action.id + '-' + action.text.substring(0, 7), avatar: action.avatar, name: action.name, text: action.text }] }
                     }
                     else {
                         return p

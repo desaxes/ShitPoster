@@ -2,15 +2,24 @@ import React from 'react';
 import s from './subs.module.css'
 import avatar from './../../img/shit_icon.png'
 import { NavLink } from 'react-router-dom';
-import { userAPI } from '../../api/api';
 import axios from 'axios';
 
-const Sub = (props) => {
-    let onSubClick = (e) => {
+type propsType = {
+    key: number
+    id: number
+    name: string
+    status: string
+    followed: boolean
+    avatar: string
+    subscribeProgress: number[]
+    following: (followed: boolean, id: number) => void
+}
+const Sub: React.FC<propsType> = (props) => {
+    let onSubClick = (e: any) => {
         e.preventDefault();
         props.following(props.followed, props.id)
     }
-    let setProfileInfo = (e) => {
+    let setProfileInfo = (e: any) => {
         axios.get("https://social-network.samuraijs.com/api/1.0/follow/" + props.id, { withCredentials: true }).then(response => {
         })
     }

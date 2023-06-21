@@ -1,15 +1,35 @@
 import s from './post.module.css'
+import React from 'react'
 import comment from './../../img/com_item.png'
 import { connect } from 'react-redux';
-import { openPost, like } from '../../redux/news-reducer';
+import { openPost, like } from '../../redux/news-reducer.ts';
 import { useNavigate } from 'react-router-dom';
 import { addToLikeList } from '../../redux/auth-reducer.ts';
-const Post = (props) => {
+import { appStateType } from '../../redux/redux-store.ts';
+import { compose } from 'redux';
+type props = {
+    postId: number
+    key: string
+    id: string
+    name: string
+    avatar: string
+    time: string
+    postimage: string
+    posttext: string
+    like_count: number
+    comments: commentArrayType
+    likeList: string[]
+    isAuth: boolean
+    openPost: () => void
+    addToLikeList: (postId: string) => void
+    like: (postId: string) => void
+}
+const Post: React.FC<props> = (props) => {
     const navigate = useNavigate()
     const openPostPage = () => {
         navigate('/post/' + props.id)
     }
-    const toProfile = ()=>{
+    const toProfile = () => {
         navigate('/profile/' + props.postId)
     }
     const likePost = () => {
@@ -52,8 +72,8 @@ const Post = (props) => {
                             {props.like_count}
                         </div>
                         <div className={s.like}>
-                            <button disabled={props.likeList.some(id => id === props.id)} onClick={likePost} 
-                            className={`${s.like_btn} ${props.likeList.some(id => id === props.id) && props.isAuth && s.liked}`}>❤</button>
+                            <button disabled={props.likeList.some(id => id === props.id)} onClick={likePost}
+                                className={`${s.like_btn} ${props.likeList.some(id => id === props.id) && props.isAuth && s.liked}`}>❤</button>
                         </div>
                     </div>
                 </div>
@@ -61,11 +81,19 @@ const Post = (props) => {
         </div>
     )
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: appStateType) => {
     return {
         likeList: state.auth.likedPosts,
         isAuth: state.auth.isAuth
     }
 }
-const PostContainer = connect(mapStateToProps, { openPost, addToLikeList, like })(Post)
-export default PostContainer;
+export default compose<React.ComponentClass<props>>(
+    connect(mapStateToProps,
+        {
+            openPost,
+            addToLikeList,
+            like
+        }
+    )
+)(Post);
+// export default Post

@@ -81,7 +81,7 @@ type initialStateType = {
             large: null | string
         }
     },
-    likedPosts: { id: string }[]
+    likedPosts: string []
 }
 
 let initialState: initialStateType = {

@@ -1,29 +1,66 @@
 import { userAPI } from "../api/api";
-
+// ----------------------------------------------ACTION CONST--------------------------------------------------
 const SUBSCRIBE = 'SUBSCRIBE';
 const SETSUBS = 'SETSUBS';
 const SETUSERSNUMBER = 'SET-USERS-NUMBER'
 const SETPAGENUMBER = 'SET-PAGE-NUMBER'
 const SETLOADER = 'SET-LOADER'
 const SUBSCRIBE_IN_PROGRESS = 'SUBSCRIBE-IN-PROGRESS'
-const subscribe = (userid) => (
+// ----------------------------------------------ACTION TYPES--------------------------------------------------
+
+type subscribeActionType = {
+    type: typeof SUBSCRIBE,
+    userid: number
+}
+type setsubsActionType = {
+    type: typeof SETSUBS,
+    subsData: userItemType[]
+}
+type setUsersNumberActionType = {
+    type: typeof SETUSERSNUMBER,
+    count: number
+}
+type setPageNumberActionType = {
+    type: typeof SETPAGENUMBER,
+    page: number
+}
+type setLoaderActionType = {
+    type: typeof SETLOADER,
+    isFetching: boolean
+}
+type subscribeInProgressActionType = {
+    type: typeof SUBSCRIBE_IN_PROGRESS,
+    isFetching: boolean,
+    userId: number
+}
+// ----------------------------------------------ACTIONS--------------------------------------------------
+const subscribe = (userid: number): subscribeActionType => (
     { type: SUBSCRIBE, userid: userid })
-const setsubs = (subsData) => (
+const setsubs = (subsData: userItemType[]): setsubsActionType => (
     { type: SETSUBS, subsData: subsData })
-const setUsersNumber = (count) => (
+const setUsersNumber = (count: number): setUsersNumberActionType => (
     { type: SETUSERSNUMBER, count: count }
 )
-const setPageNumber = (page) => (
+const setPageNumber = (page: number): setPageNumberActionType => (
     { type: SETPAGENUMBER, page: page }
 )
-const setLoader = (isFetching) => (
+const setLoader = (isFetching: boolean): setLoaderActionType => (
     { type: SETLOADER, isFetching: isFetching }
 )
-const subscribeInProgress = (isFetching, userId) => (
+const subscribeInProgress = (isFetching: boolean, userId: number): subscribeInProgressActionType => (
     { type: SUBSCRIBE_IN_PROGRESS, isFetching: isFetching, userId: userId })
 
-
-let initialState = {
+// ----------------------------------------------INIT STATE TYPES--------------------------------------------------
+type initialStateType = {
+    subsData: userItemType[],
+    pageSize: number,
+    totalCount: number,
+    pageNumber: number,
+    isFetching: boolean,
+    subscribeProgress: number[]
+}
+// ----------------------------------------------INIT STATE--------------------------------------------------
+let initialState: initialStateType = {
     subsData: [],
     pageSize: 8,
     totalCount: 0,
@@ -31,8 +68,8 @@ let initialState = {
     isFetching: false,
     subscribeProgress: []
 }
-
-const subsReducer = (state = initialState, action) => {
+// ----------------------------------------------REDUCER--------------------------------------------------
+const subsReducer = (state = initialState, action: any): initialStateType => {
     switch (action.type) {
         case SUBSCRIBE: {
             return {
@@ -80,14 +117,14 @@ const subsReducer = (state = initialState, action) => {
     }
 }
 
-const getUsers = (pageSize, pageNumber) => async (dispatch) => {
+const getUsers = (pageSize: number, pageNumber: number) => async (dispatch: any) => {
     dispatch(setLoader(true))
     const data = await userAPI.getUsers(pageSize, pageNumber)
     dispatch(setLoader(false))
     dispatch(setsubs(data.items))
     dispatch(setUsersNumber(data.totalCount))
 }
-const onPageChanged = (pageSize, pageNumber) => async (dispatch) => {
+const onPageChanged = (pageSize: number, pageNumber: number) => async (dispatch: any) => {
     dispatch(setLoader(true))
     dispatch(setPageNumber(pageNumber))
     const data = await userAPI.getUsers(pageSize, pageNumber)
@@ -95,7 +132,7 @@ const onPageChanged = (pageSize, pageNumber) => async (dispatch) => {
     dispatch(setsubs(data.items))
 }
 
-const following = (subscribeStatus, userId) => async (dispatch) => {
+const following = (subscribeStatus: boolean, userId: number) => async (dispatch: any) => {
     if (subscribeStatus === false) {
         dispatch(subscribeInProgress(true, userId))
         const resultCode = await userAPI.subUser(userId)

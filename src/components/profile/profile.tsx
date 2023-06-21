@@ -2,27 +2,52 @@ import React from 'react';
 import profile_head_img from './../../img/profile_head.png'
 import logo from './../../img/shit_icon.png'
 import s from './profile.module.css'
-import Post from './../posts/post'
+import Post from '../posts/post.tsx'
 import ProfileStatus from './profile-status';
 import { useForm } from 'react-hook-form';
 import { Accordion, Button, FileButton, Tabs, Textarea } from '@mantine/core';
 
-const Profile = (props) => {
+type props = {
+    posts: postType[]
+    profileInfo: profileInfoType
+    userId: number
+    subscribeProgress: number[]
+    status: string
+    authId: number
+    authPhoto: string
+    login: string
+    addPost: (id: number, login: string, photo: string, time: string, text: string, likes: number) => void
+    getUserProfile: (userId: string) => void
+    setFollowedInfo: () => void
+    following: () => void
+    setStatus: () => void
+    setPhoto: (photo: string) => void
+    changeAuthPhoto: (id: number) => void
+    likeList: string[]
+    isAuth: boolean
+    openPost: () => void
+    addToLikeList: (postId: string) => void
+    like: (postId: string) => void
+}
+
+const Profile: React.FC<props> = (props) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit' });
     let posts = [...props.posts].reverse().map(p => p.userId === props.profileInfo.userId && <Post postId={p.userId} key={p.id} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
-        postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments} />
+        postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments} openPost = {props.openPost}
+        isAuth={props.isAuth} likeList={props.likeList} addToLikeList={props.addToLikeList} like={props.like}/>
     )
     let filteredPosts = posts.filter(p => p != false)
     let rait = 0
     for (let i = 0; i < filteredPosts.length; i++) {
         const element = filteredPosts[i];
+        //@ts-ignore
         rait = rait + element.props.like_count
     }
-    let onSubmit = (e) => {
-        props.addPost(props.auth.id, props.login, props.authPhoto, 'Now', e.postText, 0)
+    let onSubmit = (e: any) => {
+        props.addPost(props.authId, props.login, props.authPhoto, 'Now', e.postText, 0)
         reset()
     }
-    const setPhoto = (e) => {
+    const setPhoto = (e: any) => {
         // props.setPhoto(e.target.files[0])
         props.setPhoto(e)
         props.changeAuthPhoto(props.authId)
@@ -42,7 +67,7 @@ const Profile = (props) => {
                             <div className={s.info_block}>
                                 <div className={s.avatar_box}>
                                     <img className={s.avatar} src={props.profileInfo.photos.large === null ? logo : props.profileInfo.photos.large} alt='avatar'></img>
-                                    {props.profileInfo.userId === props.auth.id &&
+                                    {props.profileInfo.userId === props.authId &&
                                         <div className={s.photo_btn}>
                                             <FileButton onChange={setPhoto} accept="image/png,image/jpeg">
                                                 {(props) => <Button color='red' variant="subtle" size='s' compact {...props}>💾</Button>}
@@ -53,7 +78,7 @@ const Profile = (props) => {
                                 <div className={s.info_inf}>
                                     <div className={s.name}>{props.profileInfo.fullName}</div>
                                     {<ProfileStatus setStatus={props.setStatus} profileId={props.profileInfo.userId}
-                                        authId={props.auth.id} status={props.status} />}
+                                        authId={props.authId} status={props.status} />}
                                     <div className={s.desc_block}>
                                         <p className={s.question}>Rating:</p>
                                         <p className={s.answer}>{rait}</p>
@@ -63,7 +88,7 @@ const Profile = (props) => {
                                         <p className={s.answer}>{filteredPosts.length}</p>
                                     </div>
                                 </div>
-                                {props.profileInfo.userId != props.auth.id && <div className={s.btn_block}>
+                                {props.profileInfo.userId != props.authId && <div className={s.btn_block}>
                                     <div className='quick-posting-btnbox'>
                                         <button className='quick-posting__btn'>Send Message</button>
                                     </div>
@@ -132,10 +157,11 @@ const Profile = (props) => {
 
                 </div>
             </div>
-            {props.profileInfo.userId === props.auth.id &&
+            {props.profileInfo.userId === props.authId &&
                 <form onSubmit={handleSubmit(onSubmit)} className='quick-posting page-block'>
-                    <Textarea error={errors?.postText?.message} label='Quick Post' size='xl' {...register("postText", { required: "✎ You must enter the text ⇒", minLength: { value: 10, message: "Min length is 10 symbols" } })} placeholder='Enter Text'
-                        className='quick-posting-field' />
+                    {   //@ts-ignore
+                        <Textarea error={errors?.postText?.message} label='Quick Post' size='xl' {...register("postText", { required: "✎ You must enter the text ⇒", minLength: { value: 10, message: "Min length is 10 symbols" } })} placeholder='Enter Text'
+                            className='quick-posting-field' />}
                     <div className='quick-posting-btnbox'>
                         <input value={'Post'} type='submit' className='quick-posting__btn' />
                     </div>

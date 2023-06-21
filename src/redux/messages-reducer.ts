@@ -1,9 +1,14 @@
 import mes_style from './../components/chat/messagebox/messagebox.module.css';
-type action = string
 
-const SEND_MESSAGE: action = 'SEND-MESSAGE';
+const SEND_MESSAGE = 'SEND-MESSAGE';
 
-const sendMessage = (newMessageText: string, id: string) =>
+type sendMessageActionType = {
+    type: typeof SEND_MESSAGE,
+    newMessageText: string,
+    id: string
+}
+
+const sendMessage = (newMessageText: string, id: string): sendMessageActionType =>
     ({ type: SEND_MESSAGE, newMessageText, id })
 
 type initialStateType = {
@@ -38,7 +43,7 @@ let initialState: initialStateType = {
     ]
 }
 
-const messagesReducer = (state = initialState, action:any) => {
+const messagesReducer = (state = initialState, action: any): initialStateType => {
     switch (action.type) {
         case SEND_MESSAGE: {
             if (action.newMessageText === '') { return state }

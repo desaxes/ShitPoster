@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { getUserProfile, setFollowedInfo, setStatus, setPhoto } from '../../redux/profile-reducer.ts';
-import { addPost, like, openPost } from '../../redux/news-reducer.ts';
+import { addPost } from '../../redux/news-reducer.ts';
 import { following } from "../../redux/subs-reducer.ts"
-import { changeAuthPhoto, addToLikeList } from "../../redux/auth-reducer.ts"
+import { changeAuthPhoto, } from "../../redux/auth-reducer.ts"
 import * as profileSelectors from "../../redux/profile-selectors.ts"
 import { getSubscribeProgress } from "../../redux/subs-selectors.ts"
 import Profile from './profile.tsx';
@@ -27,11 +27,6 @@ type props = {
     setStatus: () => void
     setPhoto: () => void
     changeAuthPhoto: () => void
-    likeList: string[]
-    isAuth: boolean
-    openPost: () => void
-    addToLikeList: (postId: string) => void
-    like: (postId: string) => void
 }
 const ProfilePage: React.FC<props> = (props) => {
     const userid = useParams()
@@ -55,8 +50,6 @@ const mapStateToProps = (state: appStateType) => {
         authId: state.auth.id,
         authPhoto: state.auth.photo,
         login: state.auth.login,
-        likeList: state.auth.likedPosts,
-        isAuth: state.auth.isAuth
     }
 }
 // export function withRouter(Children) {
@@ -76,9 +69,6 @@ export default compose<React.Component<props>>(
             setStatus,
             setPhoto,
             changeAuthPhoto,
-            openPost,
-            addToLikeList,
-            like
         }),
     // withRouter,
     AuthRedirect,

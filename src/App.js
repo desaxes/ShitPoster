@@ -1,6 +1,6 @@
 import './App.css';
 import Main from './components/main/main';
-import { HeaderContainer } from './components/header/header-container';
+import  HeaderContainer  from './components/header/header-container';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { initialize } from "./redux/app-reducer.ts";

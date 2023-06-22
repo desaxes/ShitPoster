@@ -23,24 +23,17 @@ type props = {
     setStatus: () => void
     setPhoto: (photo: string) => void
     changeAuthPhoto: (id: number) => void
-    likeList: string[]
-    isAuth: boolean
-    openPost: () => void
-    addToLikeList: (postId: string) => void
-    like: (postId: string) => void
 }
 
 const Profile: React.FC<props> = (props) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit' });
-    let posts = [...props.posts].reverse().map(p => p.userId === props.profileInfo.userId && <Post postId={p.userId} key={p.id} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
-        postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments} openPost = {props.openPost}
-        isAuth={props.isAuth} likeList={props.likeList} addToLikeList={props.addToLikeList} like={props.like}/>
-    )
-    let filteredPosts = posts.filter(p => p != false)
+    let sortedPosts = [...props.posts].reverse().filter(e => e.userId === props.profileInfo.userId)
+
+    let posts = sortedPosts.map(p => <Post postId={p.userId} key={p.id} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
+        postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments} />)
     let rait = 0
-    for (let i = 0; i < filteredPosts.length; i++) {
-        const element = filteredPosts[i];
-        //@ts-ignore
+    for (let i = 0; i < posts.length; i++) {
+        const element = posts[i];
         rait = rait + element.props.like_count
     }
     let onSubmit = (e: any) => {
@@ -85,7 +78,7 @@ const Profile: React.FC<props> = (props) => {
                                     </div>
                                     <div className={s.desc_block}>
                                         <p className={s.question}>Posts Counter:</p>
-                                        <p className={s.answer}>{filteredPosts.length}</p>
+                                        <p className={s.answer}>{posts.length}</p>
                                     </div>
                                 </div>
                                 {props.profileInfo.userId != props.authId && <div className={s.btn_block}>
@@ -167,7 +160,7 @@ const Profile: React.FC<props> = (props) => {
                     </div>
                 </form>}
             <div className="page-block">
-                {filteredPosts}
+                {posts}
             </div>
         </div>
     )

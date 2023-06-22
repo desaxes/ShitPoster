@@ -1,34 +1,45 @@
+import React from 'react'
 import { useForm } from "react-hook-form"
 import { connect } from "react-redux"
 import s from './profile.module.css'
-import { changeProfileInfo, getUserProfile } from './../../redux/profile-reducer'
+import { changeProfileInfo, getUserProfile } from '../../redux/profile-reducer.ts'
 import { changeAuthInfo } from "../../redux/auth-reducer.ts"
 import { useEffect, useState } from "react"
-const ProfileSettings = (props) => {
+import { appStateType } from '../../redux/redux-store.ts'
+import { compose } from 'redux'
+type props = {
+    profileInfo: profileInfoType
+    authId: number
+    changeProfileInfo: (authId: number, about: string, job: boolean, desc: string, name: string, git: string, vk: string, fb: string, inst: string, twit: string, web: string, yt: string, ml: string) => void
+    getUserProfile: (authId: number) => void
+    changeAuthInfo: (authId: number) => void
+}
+const ProfileSettings: React.FC<props> = (props) => {
     useEffect(() => {
         props.getUserProfile(props.authId)
     }, [])
     const [settingSuccess, setSettingSuccess] = useState(false)
     const { register, handleSubmit } = useForm({
-        defaultValues:{
-            about:props.profileInfo.aboutMe, 
-            job:props.profileInfo.lookingForAJob, 
-            desc:props.profileInfo.lookingForAJobDescription, 
-            name:props.profileInfo.fullName, 
-            git:props.profileInfo.contacts.github, 
-            vk:props.profileInfo.contacts.vk, 
-            fb:props.profileInfo.contacts.facebook, 
-            inst:props.profileInfo.contacts.instagram, 
-            twit:props.profileInfo.contacts.twitter, 
-            web:props.profileInfo.contacts.website, 
-            yt:props.profileInfo.contacts.youtube, 
-            ml:props.profileInfo.contacts.mainLink
+        defaultValues: {
+            about: props.profileInfo.aboutMe,
+            job: props.profileInfo.lookingForAJob,
+            desc: props.profileInfo.lookingForAJobDescription,
+            name: props.profileInfo.fullName,
+            git: props.profileInfo.contacts.github,
+            vk: props.profileInfo.contacts.vk,
+            fb: props.profileInfo.contacts.facebook,
+            inst: props.profileInfo.contacts.instagram,
+            twit: props.profileInfo.contacts.twitter,
+            web: props.profileInfo.contacts.website,
+            yt: props.profileInfo.contacts.youtube,
+            ml: props.profileInfo.contacts.mainLink
         }
     })
-    const changeInfo = (e) => {
-        let result = props.changeProfileInfo(props.authId, e.about, e.job, e.desc, e.name, e.git, e.vk, e.fb, e.inst, e.twit, e.web, e.yt, e.ml)
+    const changeInfo = (e: any) => {
+        props.changeProfileInfo(props.authId, e.about, e.job, e.desc, e.name, e.git, e.vk, e.fb, e.inst, e.twit, e.web, e.yt, e.ml)
         props.changeAuthInfo(props.authId)
-        result.then(setSettingSuccess(true)).then(setTimeout(() => setSettingSuccess(false), 2000))
+        setSettingSuccess(true)
+        setTimeout(() => setSettingSuccess(false), 2000)
     }
     return (
         <div className={s.settings}>
@@ -44,7 +55,7 @@ const ProfileSettings = (props) => {
                             • Description
                             <input  {...register('desc')} className={s.set_input} type="text" />
                             •  Full Name*
-                            <input  required {...register('name')} className={s.set_input} type="text" />
+                            <input required {...register('name')} className={s.set_input} type="text" />
                             • GitHub
                             <input {...register('git')} className={s.set_input} type="url" />
                             • VK
@@ -71,11 +82,12 @@ const ProfileSettings = (props) => {
         </div>
     )
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: appStateType) => {
     return {
         profileInfo: state.profilePage.profileInfo,
         authId: state.auth.id
     }
 }
-const ProfileSettingsContainer = connect(mapStateToProps, { changeProfileInfo, getUserProfile, changeAuthInfo })(ProfileSettings)
-export default ProfileSettingsContainer
+// const ProfileSettingsContainer = connect(mapStateToProps, { changeProfileInfo, getUserProfile, changeAuthInfo })(ProfileSettings)
+export default compose<React.Component>(connect(mapStateToProps, { changeProfileInfo, getUserProfile, changeAuthInfo })
+)(ProfileSettings)

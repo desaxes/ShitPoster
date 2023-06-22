@@ -1,8 +1,16 @@
 import s from './header.module.css'
+import React from 'react'
 import logo from './../../img/shit_icon.png'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-const Header = (props) => {
+type props = {
+    id: number
+    isAuth: boolean
+    logout: () => void
+    login: string
+    photo: string
+}
+const Header: React.FC<props> = (props) => {
     const [menuSwitch, рunchSwitch] = useState(false)
     const navigate = useNavigate()
     const showUserMenu = () => {
@@ -12,10 +20,9 @@ const Header = (props) => {
         else {
             рunchSwitch(false)
         }
-        console.log(menuSwitch)
     }
     const toProfile = () => {
-        navigate("/profile/" + props.auth.id)
+        navigate("/profile/" + props.id)
     }
     const toSettings = () => {
         navigate("/settings")
@@ -34,14 +41,14 @@ const Header = (props) => {
                 <NavLink to="/newsfeed" className={s.title}>
                     ShitPoster
                 </NavLink>
-                <div className={s.flex}>{props.auth.isAuth === false ?
+                <div className={s.flex}>{props.isAuth === false ?
                     <NavLink to="/login" className={s.login}>Login</NavLink> : <div className={s.authorize}>
                         <div className={s.flex}>
                             <div className={s.header__avatar}>
                                 <img className={s.avatar}
-                                    src={props.auth.photo === null ? logo : props.auth.photo} alt='logotip'></img>
+                                    src={props.photo === null ? logo : props.photo} alt='logotip'></img>
                             </div>
-                            <div className={s.login}>{props.auth.login}</div>
+                            <div className={s.login}>{props.login}</div>
                             <div className={s.settings}>
                                 <button onClick={showUserMenu} type='button' className={s.set_btn}>
                                     {menuSwitch ? '◄' : '▼'}

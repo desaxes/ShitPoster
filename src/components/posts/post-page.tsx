@@ -1,14 +1,19 @@
 import s from './post.module.css'
+import React from 'react'
 import comment from './../../img/com_item.png'
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { openPost, addComment, like } from '../../redux/news-reducer';
+import { openPost, addComment, like } from '../../redux/news-reducer.ts';
 import { addToLikeList } from '../../redux/auth-reducer.ts';
 import { useForm } from 'react-hook-form';
 import { Textarea } from '@mantine/core'
 import avatar from './../../img/shit_icon.png'
-const PostPage = (props) => {
+import { appStateType } from '../../redux/redux-store.ts';
+import { compose } from 'redux';
+
+type props = ownPPProps & statePPProps & dispatchPPProps
+const PostPage: React.FC<props> = (props) => {
     const { register, handleSubmit, reset } = useForm()
     let postId = useParams()
     const navigate = useNavigate()
@@ -20,9 +25,9 @@ const PostPage = (props) => {
                     post.like_count, post.postimage, post.avatar, post.comments)
             }
         })
-    }, [postId, props.postData])
+    }, [postId, props.news])
     const comments = props.post.comments.map(c => <Comment key={c.id} ava={c.avatar} name={c.name} text={c.text} />)
-    const sendComment = (e) => {
+    const sendComment = (e: any) => {
         props.addComment(postId.id, props.authPhoto, props.login, e.com)
         reset()
     }
@@ -85,7 +90,14 @@ const PostPage = (props) => {
         </div>
     )
 };
-const Comment = (props) => {
+
+type commentType = {
+    ava: string
+    name: string
+    text: string
+}
+
+const Comment: React.FC<commentType> = (props) => {
     return (
         <div className={s.comment}>
             <div className={s.com_header}>
@@ -97,15 +109,22 @@ const Comment = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: appStateType) => {
     return {
         post: state.news.currentPost,
-        // posts: state.news.postData,
         login: state.auth.login,
         likeList: state.auth.likedPosts,
         isAuth: state.auth.isAuth,
         authPhoto: state.auth.photo,
     }
 }
-const PostPageContainer = connect(mapStateToProps, { openPost, addComment, addToLikeList, like })(PostPage)
-export default PostPageContainer;
+// const PostPageContainer = connect(mapStateToProps, { openPost, addComment, addToLikeList, like })(PostPage)
+export default compose<React.Component<ownPPProps>>(
+    connect(mapStateToProps,
+        {
+            openPost,
+            addComment,
+            addToLikeList,
+            like
+        })
+)(PostPage);

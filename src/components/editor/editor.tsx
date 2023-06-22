@@ -13,7 +13,7 @@ import SubScript from '@tiptap/extension-subscript';
 import s from './editor.module.css'
 import { Flex } from "@mantine/core";
 
-const Editor = (props) => {
+const Editor = () => {
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -89,7 +89,7 @@ class PostEditor extends React.Component {
         </>
     }
 }
-export default compose(
+export default compose<React.Component>(
     connect(null, {}),
     AuthRedirect
 )(PostEditor)

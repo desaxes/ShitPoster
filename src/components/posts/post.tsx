@@ -7,23 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { addToLikeList } from '../../redux/auth-reducer.ts';
 import { appStateType } from '../../redux/redux-store.ts';
 import { compose } from 'redux';
-type props = {
-    postId: number
-    key: string
-    id: string
-    name: string
-    avatar: string
-    time: string
-    postimage: string
-    posttext: string
-    like_count: number
-    comments: commentArrayType
-    likeList: string[]
-    isAuth: boolean
-    openPost: () => void
-    addToLikeList: (postId: string) => void
-    like: (postId: string) => void
-}
+
+
+
+type props = postsStateProps & postsOwnProps & postsDispatchProps
 const Post: React.FC<props> = (props) => {
     const navigate = useNavigate()
     const openPostPage = () => {
@@ -81,13 +68,13 @@ const Post: React.FC<props> = (props) => {
         </div>
     )
 };
-const mapStateToProps = (state: appStateType) => {
+const mapStateToProps = (state: appStateType): postsStateProps => {
     return {
         likeList: state.auth.likedPosts,
         isAuth: state.auth.isAuth
     }
 }
-export default compose<React.ComponentClass<props>>(
+export default compose<React.ComponentClass<postsOwnProps>>(
     connect(mapStateToProps,
         {
             openPost,

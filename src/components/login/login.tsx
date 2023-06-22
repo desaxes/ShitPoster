@@ -1,17 +1,28 @@
 import React, { useState } from 'react'
 import s from "./login.module.css"
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, Navigate, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Checkbox, HoverCard, PasswordInput, TextInput, Tooltip } from '@mantine/core'
 import { IconAlertCircle } from '@tabler/icons-react'
 
-const LoginForm = (props) => {
+const Login: React.FC<loginProps> = (props) => {
+    return (
+        <div className={s.subs}>
+            <div className='page-block'>
+                <div className={s.page_inner}>
+                    <LoginForm id={props.id} isAuth={props.isAuth} login={props.login} authtorize={props.authtorize} captchaUrl={props.captchaUrl}
+                        authError={props.authError} authId={props.authId} />
+                </div>
+            </div>
+        </div>
+    )
+}
+const LoginForm: React.FC<loginProps> = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onBlur' });
-    const navigate = useNavigate()
-    let onSubmit = (e) => {
+    let onSubmit = (e: any) => {
         props.login(e.email, e.password, e.checkbox, e.captcha)
     }
-    if (props.auth.isAuth === false) {
+    if (props.isAuth === false) {
         return (
             <HoverCard width={280}>
                 <HoverCard.Target>
@@ -36,14 +47,14 @@ const LoginForm = (props) => {
                             {/* <input type='checkbox' {...register("checkbox")}
                                 className={s.checkbox} /> */}
                         </Checkbox>
-                        {props.auth.captchaUrl != null &&
+                        {props.captchaUrl != null &&
                             <div className={s.captcha_box}>
-                                <img className={s.captcha} src={props.auth.captchaUrl} alt="" />
+                                <img className={s.captcha} src={props.captchaUrl} alt="" />
                                 <TextInput className={`${s.field} ${errors?.captcha && s.field_border}`} type="text" {...register("captcha", { required: "✎ Enter Symbols!" })} />
                             </div>
                         }
                         <div className={s.btn_box}>
-                            {props.auth.authError &&
+                            {props.authError &&
                                 <div>
                                     <p className={s.error}>Something is Wrong</p>
                                 </div>
@@ -53,7 +64,7 @@ const LoginForm = (props) => {
                     </form>
                 </HoverCard.Target>
                 <HoverCard.Dropdown m={20}>
-                    <p className={s.card_header} size="sm">
+                    <p className={s.card_header}>
                         "Test Account"
                         <p className={s.card_data}>
                             Email: free@samuraijs.com
@@ -68,19 +79,10 @@ const LoginForm = (props) => {
     }
     else {
         return (
-            navigate("/profile/" + props.auth.id)
+            <Navigate to={"/profile/" + props.id} />
         )
     }
 }
-const Login = (props) => {
-    return (
-        <div className={s.subs}>
-            <div className='page-block'>
-                <div className={s.page_inner}>
-                    <LoginForm {...props} />
-                </div>
-            </div>
-        </div>
-    )
-}
+
+
 export { Login }

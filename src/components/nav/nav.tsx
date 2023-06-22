@@ -1,17 +1,24 @@
+import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import s from './nav.module.css'
 import { connect } from 'react-redux';
 import { getUserProfile } from '../../redux/profile-reducer';
-
-const Nav = (props) => {
+import { compose } from 'redux';
+import { appStateType } from '../../redux/redux-store';
+type props = {
+    id: number
+    isAuth: boolean
+    getUserProfile: (id: number) => void
+}
+const Nav: React.FC<props> = (props) => {
     let toMyProfile = () => {
-        props.getUserProfile(props.auth.id)
+        props.getUserProfile(props.id)
     }
     return (<nav className={s.nav}>
-        {props.auth.isAuth ?
+        {props.isAuth ?
             <ul className={s.ul}>
                 <li className={s.item}>
-                    <button onClick={toMyProfile} className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to={'/profile/' + props.auth.id}>Profile</NavLink></button>
+                    <button onClick={toMyProfile} className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to={'/profile/' + props.id}>Profile</NavLink></button>
                 </li>
                 <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/popular'>Popular</NavLink></button>
@@ -46,12 +53,12 @@ const Nav = (props) => {
             </ul>}
     </nav>)
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: appStateType) => {
     return {
-        auth: state.auth,
+        id: state.auth.id,
+        isAuth: state.auth.isAuth,
     }
-
 }
-const NavContainer = connect(mapStateToProps, { getUserProfile })(Nav)
+// const NavContainer = connect(mapStateToProps, { getUserProfile })(Nav)
 
-export default NavContainer;
+export default compose<React.ComponentClass>(connect(mapStateToProps, { getUserProfile }))(Nav);

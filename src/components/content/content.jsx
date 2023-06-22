@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import s from './content.module.css'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Preloader } from '../common_components/preloader'
 import ProfileSettingsContainer from '../profile/profile-settings'
 import ErrorPage from '../common_components/error-page'
@@ -11,7 +11,7 @@ const LoginConatainer = React.lazy(() => import('../login/login-container'))
 const PostEditorContainer = React.lazy(() => import('../editor/editor'))
 const NewsfeedContainer = React.lazy(() => import('../newsfeed/newsfeed'))
 const PopularContainer = React.lazy(() => import('../popular/popular/popular'))
-const PostPageContainer = React.lazy(() => import('./../posts/post-page'))
+const PostPageContainer = React.lazy(() => import('../posts/post-page'))
 const Content = (props) => {
     return (
         <section className={s.content}>

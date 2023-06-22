@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { userAPI } from "../api/api";
 // ----------------------------------------------ACTION CONST--------------------------------------------------
 const SUBSCRIBE = 'SUBSCRIBE';
@@ -33,6 +34,8 @@ type subscribeInProgressActionType = {
     isFetching: boolean,
     userId: number
 }
+type actionTypes = subscribeActionType | setsubsActionType | setUsersNumberActionType | setPageNumberActionType |
+    setLoaderActionType | subscribeInProgressActionType
 // ----------------------------------------------ACTIONS--------------------------------------------------
 const subscribe = (userid: number): subscribeActionType => (
     { type: SUBSCRIBE, userid: userid })
@@ -69,7 +72,7 @@ let initialState: initialStateType = {
     subscribeProgress: []
 }
 // ----------------------------------------------REDUCER--------------------------------------------------
-const subsReducer = (state = initialState, action: any): initialStateType => {
+const subsReducer = (state = initialState, action: actionTypes): initialStateType => {
     switch (action.type) {
         case SUBSCRIBE: {
             return {
@@ -124,7 +127,7 @@ const getUsers = (pageSize: number, pageNumber: number) => async (dispatch: any)
     dispatch(setsubs(data.items))
     dispatch(setUsersNumber(data.totalCount))
 }
-const onPageChanged = (pageSize: number, pageNumber: number) => async (dispatch: any) => {
+const onPageChanged = (pageSize: number, pageNumber: number) => async (dispatch: Dispatch<actionTypes>) => {
     dispatch(setLoader(true))
     dispatch(setPageNumber(pageNumber))
     const data = await userAPI.getUsers(pageSize, pageNumber)

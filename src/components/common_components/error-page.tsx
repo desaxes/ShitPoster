@@ -1,5 +1,6 @@
+import React from 'react'
 import s from './common.module.css'
-const ErrorPage = (props) => {
+const ErrorPage = () => {
     return (
         <div className={s.errorpage}>
             <div className='page-block'>

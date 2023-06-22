@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import pencil from './../../img/pencil.png'
 import pencilColor from './../../img/pencil_color.png'
 import s from './profile.module.css'
 import { useForm } from 'react-hook-form'
-const ProfileStatus = (props) => {
+type props = {
+    setStatus: (id: number, status: string) => void
+    profileId: number
+    authId: number
+    status: string
+}
+const ProfileStatus: React.FC<props> = (props) => {
 
     const { register, reset } = useForm()
     const [editMode, setEditMode] = useState(false)
@@ -11,13 +17,13 @@ const ProfileStatus = (props) => {
     // useEffect(()=>{
     //     console.log(pencilMode)
     // },[pencilMode])
-    const changeImage = (mode) => {
+    const changeImage = (mode: boolean) => {
         setPencilMode(mode)
     }
-    const activateEditMode = (e) => {
+    const activateEditMode = (e: any) => {
         setEditMode(true)
     }
-    const deactivateEditMode = (e) => {
+    const deactivateEditMode = (e: any) => {
         setEditMode(false)
         props.setStatus(props.authId, e.currentTarget.value)
         reset()

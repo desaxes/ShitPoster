@@ -2,19 +2,21 @@ import React from 'react'
 import s from './popular.module.css'
 import { connect } from 'react-redux';
 import Post from '../../posts/post';
-const Popular = (props) => {
-    let posts = [...props.posts].reverse().map(p => p.like_count>50 && <Post key={p.id} id={p.id} postId={p.userId} name={p.name} avatar={p.avatar} time={p.time}
+import { appStateType } from '../../../redux/redux-store';
+
+const Popular: React.FC<postPageProps> = (props) => {
+    let posts = [...props.posts].reverse().map(p => p.like_count > 50 && <Post key={p.id} id={p.id} postId={p.userId} name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments} />
     )
     return <>
         <div className={s.newsfeed}>
             {/* <div className="page-block"> */}
-                {posts}
+            {posts}
             {/* </div> */}
         </div>
     </>
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: appStateType) => {
     return {
         posts: state.news.postData
     }

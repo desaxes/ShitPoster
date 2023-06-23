@@ -34,7 +34,7 @@ type contactsType = {
 type profileInfoType = {
     aboutMe: string | null,
     contacts: contactsType,
-    followed: string | null,
+    followed: boolean | null,
     lookingForAJob: boolean,
     lookingForAJobDescription: string | null,
     fullName: string | null,
@@ -43,6 +43,14 @@ type profileInfoType = {
         small: string | null,
         large: string | null
     }
+}
+type profileType = {
+    userId: number,
+    aboutMe: string,
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    contacts: contactsType
 }
 // =============================================POST-TYPES=================================================
 type postType = {

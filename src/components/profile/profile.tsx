@@ -16,7 +16,7 @@ type props = {
     authId: number
     authPhoto: string
     login: string
-    addPost: (id: number, login: string, photo: string, time: string, text: string, likes: number) => void
+    addPost: (id: number, login: string, photo: string, image: string, time: string, text: string, likes: number) => void
     getUserProfile: (userId: string) => void
     setFollowedInfo: () => void
     following: () => void
@@ -37,7 +37,7 @@ const Profile: React.FC<props> = (props) => {
         rait = rait + element.props.like_count
     }
     let onSubmit = (e: any) => {
-        props.addPost(props.authId, props.login, props.authPhoto, 'Now', e.postText, 0)
+        props.addPost(props.authId, props.login, props.authPhoto, '', 'Now', e.postText, 0)
         reset()
     }
     const setPhoto = (e: any) => {

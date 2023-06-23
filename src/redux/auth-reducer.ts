@@ -1,3 +1,5 @@
+import { actionTypes, thunkType } from "../action-types";
+import { ResultCodes } from "../api-types";
 import { authAPI, profileAPI, securityAPI } from "../api/api";
 const SET_AUTH_PHOTO = 'SET-USER-PHOTO'
 const SET_USER_DATA = "SET-USER-DATA"
@@ -5,50 +7,50 @@ const SET_AUTH_INFO = 'SET-AUTH-INFO';
 const SET_AUTH_ERROR = 'SET-AUTH-ERROR';
 const ADD_TO_LIKE_LIST = 'ADD-TO-LIKE-LIST'
 const SET_CAPTCHA = 'SET-CAPTCHA'
-
-type setAuthInfoActionDataType = {
-    id: number | null,
-    login: string | null,
-    email: string | null,
-    isAuth: boolean
+export namespace authTypes {
+    export type setAuthInfoActionDataType = {
+        id: number | null,
+        login: string | null,
+        email: string | null,
+        isAuth: boolean
+    }
+    export type setAuthInfoActionType = {
+        type: typeof SET_AUTH_INFO
+        data: setAuthInfoActionDataType
+    }
+    export type setUserDataActionType = {
+        type: typeof SET_USER_DATA,
+        data: any,
+        photo: string | null
+    }
+    export type setAuthErrorActionType = {
+        type: typeof SET_AUTH_ERROR,
+        errorState: boolean
+    }
+    export type addToLikeListActionType = {
+        type: typeof ADD_TO_LIKE_LIST,
+        id: string
+    }
+    export type setAuthPhotoActionType = {
+        type: typeof SET_AUTH_PHOTO,
+        large: string
+    }
+    export type setCaptchaUrlActionType = {
+        type: typeof SET_CAPTCHA,
+        url: string | null
+    }
 }
-type setAuthInfoActionType = {
-    type: typeof SET_AUTH_INFO
-    data: setAuthInfoActionDataType
-}
-type setUserDataActionType = {
-    type: typeof SET_USER_DATA,
-    data: any,
-    photo: string | null
-}
-type setAuthErrorActionType = {
-    type: typeof SET_AUTH_ERROR,
-    errorState: boolean
-}
-type addToLikeListActionType = {
-    type: typeof ADD_TO_LIKE_LIST,
-    id: number
-}
-type setAuthPhotoActionType = {
-    type: typeof SET_AUTH_PHOTO,
-    large: string
-}
-type setCaptchaUrlActionType = {
-    type: typeof SET_CAPTCHA,
-    url: string | null
-}
-
-const setAuthInfo = (id: number | null, login: string | null, email: string | null, isAuth: boolean): setAuthInfoActionType => ({ type: SET_AUTH_INFO, data: { id, login, email, isAuth } })
-const setUserData = (data: any, photo: string | null): setUserDataActionType =>
+const setAuthInfo = (id: number | null, login: string | null, email: string | null, isAuth: boolean): authTypes.setAuthInfoActionType => ({ type: SET_AUTH_INFO, data: { id, login, email, isAuth } })
+const setUserData = (data: any, photo: string | null): authTypes.setUserDataActionType =>
     ({ type: SET_USER_DATA, data: data, photo: photo })
-const setAuthError = (errorState: boolean): setAuthErrorActionType =>
+const setAuthError = (errorState: boolean): authTypes.setAuthErrorActionType =>
     ({ type: SET_AUTH_ERROR, errorState: errorState })
-const addToLikeList = (id: number): addToLikeListActionType =>
+const addToLikeList = (id: string): authTypes.addToLikeListActionType =>
     ({ type: ADD_TO_LIKE_LIST, id })
-const setAuthPhoto = (large: string): setAuthPhotoActionType => ({
+const setAuthPhoto = (large: string): authTypes.setAuthPhotoActionType => ({
     type: SET_AUTH_PHOTO, large
 })
-const setCaptchaUrl = (url: string | null): setCaptchaUrlActionType => ({
+const setCaptchaUrl = (url: string | null): authTypes.setCaptchaUrlActionType => ({
     type: SET_CAPTCHA, url
 })
 
@@ -81,7 +83,7 @@ type initialStateType = {
             large: null | string
         }
     },
-    likedPosts: string []
+    likedPosts: string[]
 }
 
 let initialState: initialStateType = {
@@ -116,7 +118,13 @@ let initialState: initialStateType = {
     likedPosts: []
 }
 
-const authReducer = (state = initialState, action: any): initialStateType => {
+const authReducer = (state = initialState, action: actionTypes<
+    authTypes.setAuthInfoActionType |
+    authTypes.setUserDataActionType |
+    authTypes.setAuthErrorActionType |
+    authTypes.addToLikeListActionType |
+    authTypes.setAuthPhotoActionType |
+    authTypes.setCaptchaUrlActionType>): initialStateType => {
     switch (action.type) {
         case SET_AUTH_INFO: {
             return { ...state, ...action.data }
@@ -144,47 +152,47 @@ const authReducer = (state = initialState, action: any): initialStateType => {
     }
 }
 
-const authtorize = () => async (dispatch: any) => {
+const authtorize = ():thunkType => async (dispatch) => {
     const data = await authAPI.auth();
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCodes.Success) {
         dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true));
         dispatch(changeAuthInfo(data.data.id))
     }
 }
-const login = (email: string, password: string, checkbox: boolean, captcha: string) => async (dispatch: any) => {
+const login = (email: string, password: string, checkbox: boolean, captcha: string):thunkType => async (dispatch) => {
     const resultCode = await authAPI.login(email, password, checkbox, captcha);
-    if (resultCode === 0) {
+    if (resultCode === ResultCodes.Success) {
         dispatch(setAuthError(false));
         const data = await authAPI.auth()
-        if (data.resultCode === 0) {
+        if (data.resultCode === ResultCodes.Success) {
             dispatch(setAuthInfo(data.data.id, data.data.login, data.data.email, true));
             dispatch(setCaptchaUrl(null))
             dispatch(changeAuthInfo(data.data.id))
         }
     }
     else {
-        if (resultCode === 10) {
+        if (resultCode === ResultCodes.NeedCaptcha) {
             dispatch(getCaptcha())
         }
         dispatch(setAuthError(true));
     }
 }
-const getCaptcha = () => async (dispatch: any) => {
+const getCaptcha = ():thunkType => async (dispatch) => {
     const result = await securityAPI.captcha();
     dispatch(setCaptchaUrl(result.data.url))
 }
-const logout = () => async (dispatch: any) => {
+const logout = ():thunkType => async (dispatch) => {
     const resultCode = await authAPI.logout();
-    if (resultCode === 0) {
+    if (resultCode === ResultCodes.Success) {
         dispatch(setAuthInfo(null, null, null, false));
         dispatch(setUserData(null, null));
     }
 }
-const changeAuthPhoto = (id: number) => async (dispatch: any) => {
+const changeAuthPhoto = (id: number):thunkType => async (dispatch) => {
     let data = await profileAPI.getUserProfile(id)
     dispatch(setAuthPhoto(data.data.photos.large))
 }
-const changeAuthInfo = (id: number) => async (dispatch: any) => {
+const changeAuthInfo = (id: number):thunkType => async (dispatch) => {
     let data = await profileAPI.getUserProfile(id)
     dispatch(setUserData(data, data.photos.large));
 }

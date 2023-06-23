@@ -1,5 +1,6 @@
-import { Dispatch } from "redux";
 import { userAPI } from "../api/api";
+import { actionTypes, thunkType } from "../action-types";
+
 // ----------------------------------------------ACTION CONST--------------------------------------------------
 const SUBSCRIBE = 'SUBSCRIBE';
 const SETSUBS = 'SETSUBS';
@@ -8,49 +9,50 @@ const SETPAGENUMBER = 'SET-PAGE-NUMBER'
 const SETLOADER = 'SET-LOADER'
 const SUBSCRIBE_IN_PROGRESS = 'SUBSCRIBE-IN-PROGRESS'
 // ----------------------------------------------ACTION TYPES--------------------------------------------------
-
-type subscribeActionType = {
-    type: typeof SUBSCRIBE,
-    userid: number
+export namespace subTypes {
+    export type subscribeActionType = {
+        type: typeof SUBSCRIBE,
+        userid: number
+    }
+    export type setsubsActionType = {
+        type: typeof SETSUBS,
+        subsData: userItemType[]
+    }
+    export type setUsersNumberActionType = {
+        type: typeof SETUSERSNUMBER,
+        count: number
+    }
+    export type setPageNumberActionType = {
+        type: typeof SETPAGENUMBER,
+        page: number
+    }
+    export type setLoaderActionType = {
+        type: typeof SETLOADER,
+        isFetching: boolean
+    }
+    export type subscribeInProgressActionType = {
+        type: typeof SUBSCRIBE_IN_PROGRESS,
+        isFetching: boolean,
+        userId: number
+    }
 }
-type setsubsActionType = {
-    type: typeof SETSUBS,
-    subsData: userItemType[]
-}
-type setUsersNumberActionType = {
-    type: typeof SETUSERSNUMBER,
-    count: number
-}
-type setPageNumberActionType = {
-    type: typeof SETPAGENUMBER,
-    page: number
-}
-type setLoaderActionType = {
-    type: typeof SETLOADER,
-    isFetching: boolean
-}
-type subscribeInProgressActionType = {
-    type: typeof SUBSCRIBE_IN_PROGRESS,
-    isFetching: boolean,
-    userId: number
-}
-type actionTypes = subscribeActionType | setsubsActionType | setUsersNumberActionType | setPageNumberActionType |
-    setLoaderActionType | subscribeInProgressActionType
+// subscribeActionType | setsubsActionType | setUsersNumberActionType | setPageNumberActionType |
+//     setLoaderActionType | subscribeInProgressActionType
 // ----------------------------------------------ACTIONS--------------------------------------------------
-const subscribe = (userid: number): subscribeActionType => (
+const subscribe = (userid: number): subTypes.subscribeActionType => (
     { type: SUBSCRIBE, userid: userid })
-const setsubs = (subsData: userItemType[]): setsubsActionType => (
+const setsubs = (subsData: userItemType[]): subTypes.setsubsActionType => (
     { type: SETSUBS, subsData: subsData })
-const setUsersNumber = (count: number): setUsersNumberActionType => (
+const setUsersNumber = (count: number): subTypes.setUsersNumberActionType => (
     { type: SETUSERSNUMBER, count: count }
 )
-const setPageNumber = (page: number): setPageNumberActionType => (
+const setPageNumber = (page: number): subTypes.setPageNumberActionType => (
     { type: SETPAGENUMBER, page: page }
 )
-const setLoader = (isFetching: boolean): setLoaderActionType => (
+const setLoader = (isFetching: boolean): subTypes.setLoaderActionType => (
     { type: SETLOADER, isFetching: isFetching }
 )
-const subscribeInProgress = (isFetching: boolean, userId: number): subscribeInProgressActionType => (
+const subscribeInProgress = (isFetching: boolean, userId: number): subTypes.subscribeInProgressActionType => (
     { type: SUBSCRIBE_IN_PROGRESS, isFetching: isFetching, userId: userId })
 
 // ----------------------------------------------INIT STATE TYPES--------------------------------------------------
@@ -72,7 +74,13 @@ let initialState: initialStateType = {
     subscribeProgress: []
 }
 // ----------------------------------------------REDUCER--------------------------------------------------
-const subsReducer = (state = initialState, action: actionTypes): initialStateType => {
+const subsReducer = (state = initialState, action: actionTypes<
+    subTypes.subscribeActionType |
+    subTypes.setsubsActionType |
+    subTypes.setUsersNumberActionType |
+    subTypes.setPageNumberActionType |
+    subTypes.setLoaderActionType |
+    subTypes.subscribeInProgressActionType>): initialStateType => {
     switch (action.type) {
         case SUBSCRIBE: {
             return {
@@ -119,15 +127,17 @@ const subsReducer = (state = initialState, action: actionTypes): initialStateTyp
         default: return state
     }
 }
+// ----------------------------------------------THUNKS--------------------------------------------------
+// type dispatchType = Dispatch<actionTypes>
 
-const getUsers = (pageSize: number, pageNumber: number) => async (dispatch: any) => {
+const getUsers = (pageSize: number, pageNumber: number): thunkType => async (dispatch) => {
     dispatch(setLoader(true))
     const data = await userAPI.getUsers(pageSize, pageNumber)
     dispatch(setLoader(false))
     dispatch(setsubs(data.items))
     dispatch(setUsersNumber(data.totalCount))
 }
-const onPageChanged = (pageSize: number, pageNumber: number) => async (dispatch: Dispatch<actionTypes>) => {
+const onPageChanged = (pageSize: number, pageNumber: number): thunkType => async (dispatch) => {
     dispatch(setLoader(true))
     dispatch(setPageNumber(pageNumber))
     const data = await userAPI.getUsers(pageSize, pageNumber)
@@ -135,7 +145,7 @@ const onPageChanged = (pageSize: number, pageNumber: number) => async (dispatch:
     dispatch(setsubs(data.items))
 }
 
-const following = (subscribeStatus: boolean, userId: number) => async (dispatch: any) => {
+const following = (subscribeStatus: boolean, userId: number): thunkType => async (dispatch) => {
     if (subscribeStatus === false) {
         dispatch(subscribeInProgress(true, userId))
         const resultCode = await userAPI.subUser(userId)

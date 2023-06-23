@@ -10,55 +10,63 @@ import week6 from './../img/react-6week.png'
 import week7 from './../img/react-7week.png'
 import week8 from './../img/react-8week.png'
 import test from './../img/profile_head.png'
+import { actionTypes } from '../action-types'
 // ----------------------------------------------ACTIONS CONST-----------------------------------------
 const ADD_POST = 'ADD-POST'
 const OPEN_POST = 'OPEN_POST'
 const ADD_COMMENT = 'ADD-COMMENT'
 const LIKE = 'LIKE'
 // ----------------------------------------------ACTIONS TYPES-----------------------------------------
-
-type addCommentActionType =
-    {
-        type: typeof ADD_COMMENT,
-        id: string,
-        avatar: string,
+export namespace newsTypes {
+    export type addCommentActionType =
+        {
+            type: typeof ADD_COMMENT,
+            id: string,
+            avatar: string,
+            name: string,
+            text: string
+        }
+    export type addPostActionType = {
+        type: typeof ADD_POST,
+        userId: number,
         name: string,
-        text: string
+        avatar: string,
+        postimage: string ,
+        time: string,
+        posttext: string,
+        like_count: number
     }
-type addPostActionType = {
-    type: typeof ADD_POST,
-    userId: number,
-    name: string,
-    avatar: string,
-    time: string,
-    posttext: string,
-    like_count: number
+    export type openPostActionType = {
+        type: typeof OPEN_POST,
+        id: string,
+        userId: number,
+        name: string,
+        time: string,
+        posttext: string,
+        like_count: number,
+        postimage: string ,
+        avatar: string,
+        comments: commentArrayType
+    }
+    export type likeActionType = {
+        type: typeof LIKE,
+        id: string
+    }
 }
-type openPostActionType = {
-    type: typeof OPEN_POST,
-    id: string,
-    userId: number,
-    name: string,
-    time: string,
-    posttext: string,
-    like_count: number,
-    postimage: string,
-    avatar: string,
-    comments: commentArrayType
-}
+
 // ----------------------------------------------ACTIONS---------------------------------------------------
 
-const addPost = (userId: number, name: string, avatar: string, time: string, posttext: string, like_count: number): addPostActionType => (
+const addPost = (userId: number, name: string, avatar: string, postimage: string, time: string, posttext: string, like_count: number): newsTypes.addPostActionType => (
     {
-        type: ADD_POST, userId, name, avatar, time, posttext, like_count
+        type: ADD_POST, userId, name, avatar, postimage, time, posttext, like_count
     })
-const openPost = (id: string, userId: number, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType): openPostActionType => ({
+const openPost = (id: string, userId: number, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType): newsTypes.openPostActionType => ({
     type: OPEN_POST, id, userId, name, time, posttext, like_count, postimage, avatar, comments
 })
-const addComment = (id: string, avatar: string, name: string, text: string): addCommentActionType => ({
+const addComment = (id: string, avatar: string, name: string, text: string): newsTypes.addCommentActionType => ({
     type: ADD_COMMENT, id, avatar, name, text
 })
-const like = (id: string): { type: typeof LIKE, id: string } => ({
+const like = (id: string): newsTypes.likeActionType => ({
     type: LIKE, id
 })
 
@@ -273,7 +281,11 @@ const initialState: initialStateType = {
     }
 }
 // ----------------------------------------------REDUCER-----------------------------------------
-const newsReducer = (state = initialState, action: any): initialStateType => {
+const newsReducer = (state = initialState, action: actionTypes<
+    newsTypes.addPostActionType |
+    newsTypes.openPostActionType |
+    newsTypes.addCommentActionType |
+    newsTypes.likeActionType>): initialStateType => {
     switch (action.type) {
         case ADD_POST: {
             if (action.posttext == '') { return state }

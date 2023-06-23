@@ -39,9 +39,9 @@ const Post: React.FC<props> = (props) => {
                         {props.time}
                     </div>
                 </div>
-                <div onClick={openPostPage} className={s.post_image}>
+                {props.postimage != "" && <div onClick={openPostPage} className={s.post_image}>
                     <img src={props.postimage} alt="" />
-                </div>
+                </div>}
                 <div className={s.text_block}>
                     <p>{props.posttext}</p>
                 </div>

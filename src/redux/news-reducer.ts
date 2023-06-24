@@ -1,6 +1,7 @@
 import React from 'react'
 import defaultAvatar from './../img/shit_icon.png'
 import avatar from './../img/Cart.png'
+import avatar2 from './../img/Kyle.png'
 import week1 from './../img/react-1week.png'
 import week2 from './../img/react-2week.png'
 import week3 from './../img/react-3week.png'
@@ -9,67 +10,26 @@ import week5 from './../img/react-5week.png'
 import week6 from './../img/react-6week.png'
 import week7 from './../img/react-7week.png'
 import week8 from './../img/react-8week.png'
+import week9 from './../img/react-9week.png'
 import test from './../img/profile_head.png'
-import { actionTypes } from '../action-types'
-// ----------------------------------------------ACTIONS CONST-----------------------------------------
-const ADD_POST = 'ADD-POST'
-const OPEN_POST = 'OPEN_POST'
-const ADD_COMMENT = 'ADD-COMMENT'
-const LIKE = 'LIKE'
-// ----------------------------------------------ACTIONS TYPES-----------------------------------------
-export namespace newsTypes {
-    export type addCommentActionType =
-        {
-            type: typeof ADD_COMMENT,
-            id: string,
-            avatar: string,
-            name: string,
-            text: string
-        }
-    export type addPostActionType = {
-        type: typeof ADD_POST,
-        userId: number,
-        name: string,
-        avatar: string,
-        postimage: string ,
-        time: string,
-        posttext: string,
-        like_count: number
-    }
-    export type openPostActionType = {
-        type: typeof OPEN_POST,
-        id: string,
-        userId: number,
-        name: string,
-        time: string,
-        posttext: string,
-        like_count: number,
-        postimage: string ,
-        avatar: string,
-        comments: commentArrayType
-    }
-    export type likeActionType = {
-        type: typeof LIKE,
-        id: string
-    }
-}
-
+import { InferActionsTypes } from './redux-store'
 // ----------------------------------------------ACTIONS---------------------------------------------------
-
-const addPost = (userId: number, name: string, avatar: string, postimage: string, time: string, posttext: string, like_count: number): newsTypes.addPostActionType => (
-    {
-        type: ADD_POST, userId, name, avatar, postimage, time, posttext, like_count
-    })
-const openPost = (id: string, userId: number, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType): newsTypes.openPostActionType => ({
-    type: OPEN_POST, id, userId, name, time, posttext, like_count, postimage, avatar, comments
-})
-const addComment = (id: string, avatar: string, name: string, text: string): newsTypes.addCommentActionType => ({
-    type: ADD_COMMENT, id, avatar, name, text
-})
-const like = (id: string): newsTypes.likeActionType => ({
-    type: LIKE, id
-})
-
+const actions = {
+    addPost: (userId: number, name: string, avatar: string, postimage: string, time: string, posttext: string, like_count: number) => (
+        {
+            type: 'ADD_POST', userId, name, avatar, postimage, time, posttext, like_count
+        } as const),
+    openPost: (id: string, userId: number, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType) => ({
+        type: 'OPEN_POST', id, userId, name, time, posttext, like_count, postimage, avatar, comments
+    } as const),
+    addComment: (id: string, avatar: string, name: string, text: string) => ({
+        type: 'ADD_COMMENT', id, avatar, name, text
+    } as const),
+    like: (id: string) => ({
+        type: 'LIKE', id
+    } as const)
+}
+export type NewsActionTypes = InferActionsTypes<typeof actions>
 // ----------------------------------------------INIT STATE TYPES-----------------------------------------
 
 type postArrayType = {
@@ -266,6 +226,24 @@ const initialState: initialStateType = {
                 }
             ]
         },
+        {
+            id: "9",
+            userId: 29179,
+            name: 'desaxe',
+            time: '24 June 2023',
+            posttext: "ninth Week",
+            like_count: 69,
+            postimage: week9,
+            avatar: avatar,
+            comments: [
+                {
+                    id: '12',
+                    avatar: avatar2,
+                    name: "Kyle",
+                    text: "Typescript is so COOL!!!"
+                }
+            ]
+        }
     ],
     currentPost: {
         id: "",
@@ -281,13 +259,9 @@ const initialState: initialStateType = {
     }
 }
 // ----------------------------------------------REDUCER-----------------------------------------
-const newsReducer = (state = initialState, action: actionTypes<
-    newsTypes.addPostActionType |
-    newsTypes.openPostActionType |
-    newsTypes.addCommentActionType |
-    newsTypes.likeActionType>): initialStateType => {
+const newsReducer = (state = initialState, action: NewsActionTypes): initialStateType => {
     switch (action.type) {
-        case ADD_POST: {
+        case 'ADD_POST': {
             if (action.posttext == '') { return state }
             else {
                 return {
@@ -307,7 +281,7 @@ const newsReducer = (state = initialState, action: actionTypes<
                 };
             }
         }
-        case OPEN_POST: {
+        case 'OPEN_POST': {
             return {
                 ...state, currentPost: {
                     ...state.currentPost, id: action.id, userId: action.userId,
@@ -317,7 +291,7 @@ const newsReducer = (state = initialState, action: actionTypes<
                 }
             }
         }
-        case ADD_COMMENT: {
+        case 'ADD_COMMENT': {
             return {
                 ...state, postData: state.postData.map(p => {
                     if (p.id === action.id) {
@@ -329,7 +303,7 @@ const newsReducer = (state = initialState, action: actionTypes<
                 })
             }
         }
-        case LIKE: {
+        case 'LIKE': {
             return {
                 ...state, postData: state.postData.map(p => {
                     if (p.id === action.id) {
@@ -344,4 +318,17 @@ const newsReducer = (state = initialState, action: actionTypes<
         default: return state
     }
 }
-export { newsReducer, addPost, openPost, addComment, like }
+
+const addPost = (userId: number, name: string, avatar: string, postimage: string, time: string, posttext: string, like_count: number) => (dispatch: any) => {
+    dispatch(actions.addPost(userId, name, avatar, postimage, time, posttext, like_count))
+}
+const openPost = (id: string, userId: number, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType) => (dispatch: any) => {
+    dispatch(actions.openPost(id, userId, name, time, posttext, like_count, postimage, avatar, comments))
+}
+const addComment = (id: string, avatar: string, name: string, text: string) => (dispatch: any) => {
+    dispatch(actions.addComment(id, avatar, name, text))
+}
+const like = (id: string) => (dispatch: any) => {
+    dispatch(actions.like(id))
+}
+export { newsReducer, addPost, openPost, addComment, like } 

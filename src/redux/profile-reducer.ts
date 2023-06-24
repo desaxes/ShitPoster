@@ -1,64 +1,26 @@
-import { actionTypes, thunkType } from "../action-types";
+import { thunkType } from "../action-types";
 import { authAPI, profileAPI } from "../api/api";
-
-// ----------------------------------------------ACTIONS CONST-----------------------------------------
-const SET_PROFILE_INFO = 'SET-PROFILE-INFO';
-const SET_FOLLOWED_INFO = 'SET-FOLLOWED-INFO'
-const SET_PROFILE_STATUS = 'SET-PROFILE-STATUS'
-const SET_USER_PHOTO = 'SET-USER-PHOTO'
-const CHANGE_PROFILE_INFO = 'CHANGE-PROFILE-INFO'
-// ----------------------------------------------ACTION TYPES-----------------------------------------
-export namespace profileTypes {
-    export type setProfileInfoActionType = {
-        type: typeof SET_PROFILE_INFO
-        data: any
-    }
-    export type setFollowedInfoActionType = {
-        type: typeof SET_FOLLOWED_INFO,
-        followed: boolean
-    }
-    export type setProfileStatusActionType = {
-        type: typeof SET_PROFILE_STATUS,
-        status: string
-    }
-    export type setUserPhotoActionType = {
-        type: typeof SET_USER_PHOTO,
-        small: string,
-        large: string
-    }
-    export type changeProfileInfoActionActionType = {
-        type: typeof CHANGE_PROFILE_INFO,
-        about: string,
-        job: boolean,
-        desc: string,
-        fname: string,
-        git: string,
-        vk: string,
-        fb: string,
-        inst: string,
-        twit: string,
-        web: string,
-        yt: string,
-        ml: string
-    }
+import { InferActionsTypes } from "./redux-store";
+// ----------------------------------------------ACTIONS-----------------------------------------
+export const ProfileActions = {
+    setProfileInfo: (data: any) =>
+        ({ type: 'SET_PROFILE_INFO', data: data } as const),
+    setFollowedInfo: (followed: boolean) => ({
+        type: 'SET_FOLLOWED_INFO', followed: followed
+    } as const),
+    setProfileStatus: (status: string) => ({
+        type: 'SET_PROFILE_STATUS', status: status
+    } as const),
+    setUserPhoto: (small: string, large: string) => ({
+        type: 'SET_USER_PHOTO', small, large
+    } as const),
+    changeProfileInfoAction: (about: string, job: boolean, desc: string, fname: string, git: string,
+        vk: string, fb: string, inst: string, twit: string, web: string, yt: string, ml: string) => ({
+            type: 'CHANGE_PROFILE_INFO', about, job, desc, fname, git, vk, fb, inst, twit, web, yt, ml
+        } as const)
 }
 
-// ----------------------------------------------ACTIONS-----------------------------------------
-const setProfileInfo = (data: any): profileTypes.setProfileInfoActionType =>
-    ({ type: SET_PROFILE_INFO, data: data })
-const setFollowedInfo = (followed: boolean): profileTypes.setFollowedInfoActionType => ({
-    type: SET_FOLLOWED_INFO, followed: followed
-})
-const setProfileStatus = (status: string): profileTypes.setProfileStatusActionType => ({
-    type: SET_PROFILE_STATUS, status: status
-})
-const setUserPhoto = (small: string, large: string): profileTypes.setUserPhotoActionType => ({
-    type: SET_USER_PHOTO, small, large
-})
-const changeProfileInfoAction = (about: string, job: boolean, desc: string, fname: string, git: string,
-    vk: string, fb: string, inst: string, twit: string, web: string, yt: string, ml: string): profileTypes.changeProfileInfoActionActionType => ({
-        type: CHANGE_PROFILE_INFO, about, job, desc, fname, git, vk, fb, inst, twit, web, yt, ml
-    })
+export type ProfileActionTypes = InferActionsTypes<typeof ProfileActions>
 // ----------------------------------------------INIT STATE TYPES-----------------------------------------
 
 
@@ -95,20 +57,18 @@ let initialState: initialStateType = {
     settingSuccess: false
 }
 // ----------------------------------------------REDUCER--------------------------------------------------
-const profileReducer = (state = initialState, action: actionTypes<profileTypes.setProfileInfoActionType |
-    profileTypes.setFollowedInfoActionType | profileTypes.setProfileStatusActionType |
-    profileTypes.setUserPhotoActionType | profileTypes.changeProfileInfoActionActionType>): initialStateType => {
+const profileReducer = (state = initialState, action: ProfileActionTypes): initialStateType => {
     switch (action.type) {
-        case SET_PROFILE_INFO: {
+        case 'SET_PROFILE_INFO': {
             return { ...state, profileInfo: { ...action.data } };
         }
-        case SET_FOLLOWED_INFO: {
+        case 'SET_FOLLOWED_INFO': {
             return { ...state, profileInfo: { ...state.profileInfo, followed: action.followed } };
         }
-        case SET_PROFILE_STATUS: {
+        case 'SET_PROFILE_STATUS': {
             return { ...state, status: action.status }
         }
-        case SET_USER_PHOTO: {
+        case 'SET_USER_PHOTO': {
             return {
                 ...state, profileInfo: {
                     ...state.profileInfo, photos:
@@ -116,7 +76,7 @@ const profileReducer = (state = initialState, action: actionTypes<profileTypes.s
                 }
             }
         }
-        case CHANGE_PROFILE_INFO: {
+        case 'CHANGE_PROFILE_INFO': {
             return {
                 ...state, profileInfo: {
                     ...state.profileInfo, aboutMe: action.about, fullName: action.fname, lookingForAJob: action.job, lookingForAJobDescription: action.desc,
@@ -140,7 +100,7 @@ const profileReducer = (state = initialState, action: actionTypes<profileTypes.s
 
 const getUserProfile = (userid: number): thunkType => async (dispatch) => {
     const data = await profileAPI.getUserProfile(userid);
-    dispatch(setProfileInfo(data));
+    dispatch(ProfileActions.setProfileInfo(data));
     dispatch(getStatusFromServer(userid))
 }
 const setStatus = (userid: number, status: string): thunkType => async (dispatch) => {
@@ -151,13 +111,13 @@ const setStatus = (userid: number, status: string): thunkType => async (dispatch
 }
 const getStatusFromServer = (userid: number): thunkType => async (dispatch) => {
     let response = await profileAPI.getStatus(userid)
-    dispatch(setProfileStatus(response))
+    dispatch(ProfileActions.setProfileStatus(response))
 
 }
 const setPhoto = (img: string) => async (dispatch: any) => {
     let data = await authAPI.setUserPhoto(img)
     if (data.resultCode === 0) {
-        dispatch(setUserPhoto(data.data.photos.small, data.data.photos.large))
+        dispatch(ProfileActions.setUserPhoto(data.data.photos.small, data.data.photos.large))
     }
 }
 const changeProfileInfo = (id: number, about: string, job: boolean, desc: string, fname: string,
@@ -180,8 +140,8 @@ const changeProfileInfo = (id: number, about: string, job: boolean, desc: string
             }
         })
         if (data.resultCode === 0) {
-            dispatch(changeProfileInfoAction(about, job, desc, fname, git, vk, fb, inst, twit, web, yt, ml))
+            dispatch(ProfileActions.changeProfileInfoAction(about, job, desc, fname, git, vk, fb, inst, twit, web, yt, ml))
         }
     }
 
-export { profileReducer, getUserProfile, setFollowedInfo, setStatus, setPhoto, changeProfileInfo }
+export { profileReducer, getUserProfile, setStatus, setPhoto, changeProfileInfo }

@@ -9,19 +9,19 @@ const instance = axios.create({
 })
 const userAPI = {
     getUsers(pageSize = 5, pageNumber = 1) {
-        return (instance.get("users?count=" +
+        return (instance.get<APITypes.userAPITypes.getUsersType>("users?count=" +
             pageSize + "&page=" + pageNumber).then(response => response.data))
     },
     subUser(id: number) {
-        return (instance.post("follow/" + id, {},).then(response => response.data.resultCode))
+        return (instance.post<APITypes.CommonAPITypes.onlyResultAPIType>("follow/" + id, {},).then(response => response.data.resultCode))
     },
     unsubUser(id: number) {
-        return (instance.delete("follow/" + id,).then(response => response.data.resultCode))
+        return (instance.delete<APITypes.CommonAPITypes.onlyResultAPIType>("follow/" + id,).then(response => response.data.resultCode))
     },
 }
 const securityAPI = {
     captcha() {
-        return (instance.get("security/get-captcha-url").then(response => response))
+        return (instance.get<APITypes.securityAPITypes.captchaType>("security/get-captcha-url").then(response => response))
     }
 }
 
@@ -30,7 +30,7 @@ const authAPI = {
         return (instance.post<APITypes.authAPITypes.loginType>("auth/login", { email, password, rememberMe, captcha }).then(response => response.data.resultCode))
     },
     logout() {
-        return (instance.delete<APITypes.authAPITypes.onlyResultAPIType>("auth/login").then(response => response.data.resultCode))
+        return (instance.delete<APITypes.CommonAPITypes.onlyResultAPIType>("auth/login").then(response => response.data.resultCode))
     },
     auth() {
         return (instance.get<APITypes.authAPITypes.authType>("auth/me",).then(response => response.data))
@@ -38,26 +38,26 @@ const authAPI = {
     setUserPhoto(img: string) {
         const formData = new FormData()
         formData.append("image", img)
-        return (instance.put<APITypes.authAPITypes.onlyResultAPIType>("profile/photo", formData, {
+        return (instance.put<APITypes.CommonAPITypes.onlyResultAPIType>("profile/photo", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(response => response.data))
     },
     setUserInfo(profile: profileType) {
-        return (instance.put<APITypes.authAPITypes.onlyResultAPIType>("profile", profile).then(response => response.data))
+        return (instance.put<APITypes.CommonAPITypes.onlyResultAPIType>("profile", profile).then(response => response.data))
     }
 }
 
 const profileAPI = {
     getUserProfile(userid: number) {
-        return (instance.get("profile/" + userid).then(response => response.data))
+        return (instance.get<APITypes.profileAPITypes.getUserProfileType>("profile/" + userid).then(response => response.data))
     },
     getStatus(userid: number) {
-        return (instance.get("profile/status/" + userid).then(response => response.data))
+        return (instance.get<string>("profile/status/" + userid).then(response => response.data))
     },
     putStatus(status: string) {
-        return (instance.put("profile/status", { status: status }).then(response => response.data))
+        return (instance.put<APITypes.CommonAPITypes.onlyResultAPIType>("profile/status", { status: status }).then(response => response.data))
     }
 }
 export { userAPI, authAPI, profileAPI, securityAPI }

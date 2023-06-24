@@ -52,6 +52,7 @@ type profileType = {
     fullName: string,
     contacts: contactsType
 }
+
 // =============================================POST-TYPES=================================================
 type postType = {
     id: string,

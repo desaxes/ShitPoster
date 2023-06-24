@@ -1,9 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import s from "./login.module.css"
-import { NavLink, Navigate, useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
+import { Navigate } from 'react-router-dom'
+import { Resolver, useForm } from 'react-hook-form'
 import { Checkbox, HoverCard, PasswordInput, TextInput, Tooltip } from '@mantine/core'
 import { IconAlertCircle } from '@tabler/icons-react'
+
+type FormValues = {
+    email: string
+    password: string
+    checkbox: boolean
+    captcha: string
+}
 
 const Login: React.FC<loginProps> = (props) => {
     return (
@@ -18,7 +25,7 @@ const Login: React.FC<loginProps> = (props) => {
     )
 }
 const LoginForm: React.FC<loginProps> = (props) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onBlur' });
+    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ mode: 'onBlur' });
     let onSubmit = (e: any) => {
         props.login(e.email, e.password, e.checkbox, e.captcha)
     }
@@ -26,7 +33,7 @@ const LoginForm: React.FC<loginProps> = (props) => {
         return (
             <HoverCard width={280}>
                 <HoverCard.Target>
-                    <form {...register("form")} onSubmit={handleSubmit(onSubmit)} className={s.form} action="">
+                    <form onSubmit={handleSubmit(onSubmit)} className={s.form} action="">
                         <h1>Authorization</h1>
                         <div className={s.input_box}>
                             <TextInput type='email' size='lg' radius='md' icon='@' {...register("email", { required: "✎ Enter your Email!" })}

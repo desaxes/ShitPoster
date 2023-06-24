@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getUserProfile, setFollowedInfo, setStatus, setPhoto } from '../../redux/profile-reducer.ts';
+import { getUserProfile, setStatus, setPhoto } from '../../redux/profile-reducer.ts';
 import { addPost } from '../../redux/news-reducer.ts';
 import { following } from "../../redux/subs-reducer.ts"
 import { changeAuthPhoto, } from "../../redux/auth-reducer.ts"
@@ -22,7 +22,6 @@ type props = {
     login: string
     addPost: () => void
     getUserProfile: (userId: string) => void
-    setFollowedInfo: () => void
     following: () => void
     setStatus: () => void
     setPhoto: () => void
@@ -64,7 +63,6 @@ export default compose<React.Component<props>>(
         {
             addPost,
             getUserProfile,
-            setFollowedInfo,
             following,
             setStatus,
             setPhoto,

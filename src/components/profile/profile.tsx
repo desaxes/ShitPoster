@@ -18,15 +18,17 @@ type props = {
     login: string
     addPost: (id: number, login: string, photo: string, image: string, time: string, text: string, likes: number) => void
     getUserProfile: (userId: string) => void
-    setFollowedInfo: () => void
     following: () => void
     setStatus: () => void
     setPhoto: (photo: string) => void
     changeAuthPhoto: (id: number) => void
 }
+type FormValues = {
+    postText: string
+}
 
 const Profile: React.FC<props> = (props) => {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit' });
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({ mode: 'onSubmit' });
     let sortedPosts = [...props.posts].reverse().filter(e => e.userId === props.profileInfo.userId)
 
     let posts = sortedPosts.map(p => <Post postId={p.userId} key={p.id} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
@@ -141,18 +143,15 @@ const Profile: React.FC<props> = (props) => {
                                     </Accordion>
                                 </div>
                             </div>
-
                         </Tabs.Panel>
                         <Tabs.Panel pt={30} value='Subs'>
                         </Tabs.Panel>
                     </Tabs>
-
-
                 </div>
             </div>
             {props.profileInfo.userId === props.authId &&
                 <form onSubmit={handleSubmit(onSubmit)} className='quick-posting page-block'>
-                    {   //@ts-ignore
+                    {
                         <Textarea error={errors?.postText?.message} label='Quick Post' size='xl' {...register("postText", { required: "✎ You must enter the text ⇒", minLength: { value: 10, message: "Min length is 10 symbols" } })} placeholder='Enter Text'
                             className='quick-posting-field' />}
                     <div className='quick-posting-btnbox'>

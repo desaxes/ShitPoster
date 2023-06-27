@@ -89,5 +89,5 @@ const mapStateToProps = (state: appStateType) => {
     }
 }
 // const ProfileSettingsContainer = connect(mapStateToProps, { changeProfileInfo, getUserProfile, changeAuthInfo })(ProfileSettings)
-export default compose<React.Component>(connect(mapStateToProps, { changeProfileInfo, getUserProfile, changeAuthInfo })
+export default compose<React.FC>(connect(mapStateToProps, { changeProfileInfo, getUserProfile, changeAuthInfo })
 )(ProfileSettings)

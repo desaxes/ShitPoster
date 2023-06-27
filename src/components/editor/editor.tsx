@@ -89,7 +89,7 @@ class PostEditor extends React.Component {
         </>
     }
 }
-export default compose<React.Component>(
+export default compose<React.FC>(
     connect(null, {}),
     AuthRedirect
 )(PostEditor)

@@ -7,9 +7,9 @@ import thunkMiddleware from "redux-thunk";
 import { appReducer } from "./app-reducer.ts";
 import { newsReducer } from "./news-reducer.ts";
 
-
-type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never
-export type InferActionsTypes<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertiesTypes<T>>
+export type InferActionsTypes<T> = T extends { [key: string]: (...args: any[]) => infer U } ? U : never
+// type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never
+// export type InferActionsTypes<T extends { [key: string]: (...args: any[]) => any }> = ReturnType<PropertiesTypes<T>>
 let rootReducer = combineReducers({
     profilePage: profileReducer,
     messagesPage: messagesReducer,

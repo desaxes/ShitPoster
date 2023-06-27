@@ -7,12 +7,12 @@ const actions = {
 }
 export type AppActionTypes = InferActionsTypes<typeof actions>
 
-type initialStateType = {
-    initialized: boolean
-}
-let initialState: initialStateType = {
+
+let initialState = {
     initialized: false
 }
+
+type initialStateType = typeof initialState
 
 const appReducer = (state = initialState, action: AppActionTypes): initialStateType => {
     switch (action.type) {

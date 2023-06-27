@@ -29,6 +29,6 @@ const mapStateToProps = (state: appStateType) => {
 }
 // const HeaderContainer = connect(mapStateToProps, { logout })(HeaderAPI)
 
-export default compose<React.Component<props>>(
+export default compose<React.FC>(
     connect(mapStateToProps, { logout })
 )(HeaderAPI) 

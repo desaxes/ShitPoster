@@ -1,8 +1,10 @@
+import React from 'react'
 import s from './messages.module.css'
-import Chat from './../chat/chat';
+import Chat from '../chat/chat';
 import Contact from '../contact/contact';
-const Messages = (props) => {
-    let contacts = props.contacts.map(c => <Contact key={c.id} id={c.id} username={c.name} />
+
+const Messages: React.FC<MessagesProps> = (props) => {
+    let contacts = props.contacts.map(c => <Contact key={c.id} id={c.id} name={c.name} />
     )
     return (
         <div className={s.messages}>

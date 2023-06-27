@@ -3,7 +3,12 @@ import s from './chat.module.css'
 import Messagebox from './messagebox/messagebox';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-const Chat = (props) => {
+type ChatProps = {
+    sendMessage: () => void
+    messages: MessagesType[]
+    authId: number
+}
+const Chat: React.FC<ChatProps> = (props) => {
     return (
         <div className={s.chat_block}>
             <div className="page-block">
@@ -15,11 +20,18 @@ const Chat = (props) => {
         </div>
     )
 }
+type TextboxProps = {
+    authId: number
+    sendMessage: (message: string, id: string) => void
+}
+type FormValues = {
+    messageText: string
+}
 
-const Mes_textbox = (props) => {
+const Mes_textbox: React.FC<TextboxProps> = (props) => {
     const id = props.authId.toString()
-    const { register, reset, handleSubmit, formState: { errors } } = useForm()
-    const onSubmit = (e) => {
+    const { register, reset, handleSubmit, formState: { errors } } = useForm<FormValues>()
+    const onSubmit = (e: any) => {
         props.sendMessage(e.messageText, id);
         reset();
     }

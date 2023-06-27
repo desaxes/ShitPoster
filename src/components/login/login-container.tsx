@@ -21,7 +21,7 @@ const mapStateToProps = (state: appStateType) => {
         id: state.auth.id
     }
 }
-export default compose<React.Component<loginProps>>(
+export default compose<React.FC>(
     connect(mapStateToProps, {
         authtorize,
         login

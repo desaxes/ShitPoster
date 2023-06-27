@@ -58,7 +58,7 @@ const mapStateToProps = (state: appStateType) => {
 //     }
 // }
 
-export default compose<React.Component<props>>(
+export default compose<React.FC>(
     connect(mapStateToProps,
         {
             addPost,

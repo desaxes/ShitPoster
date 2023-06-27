@@ -1,11 +1,16 @@
 import './App.css';
 import Main from './components/main/main';
-import  HeaderContainer  from './components/header/header-container';
+import HeaderContainer from './components/header/header-container';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { initialize } from "./redux/app-reducer.ts";
+import { initialize } from "./redux/app-reducer";
 import { Preloader } from './components/common_components/preloader';
-const App = (props) => {
+import { appStateType } from './redux/redux-store';
+type props = {
+  initialized: boolean
+  initialize: () => void
+}
+const App: React.FC<props> = (props) => {
   useEffect(() => {
     props.initialize()
   }, [props.initialized])
@@ -24,7 +29,7 @@ const App = (props) => {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: appStateType) => {
   return {
     initialized: state.app.initialized
   }

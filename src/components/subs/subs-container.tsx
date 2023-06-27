@@ -42,7 +42,7 @@ const mapStateToProps = (state: appStateType) => {
         subscribeProgress: subSelectors.getSubscribeProgress(state),
     }
 }
-export default compose<React.Component<propsType>>(
+export default compose<React.FC>(
     connect(mapStateToProps, {
         getUsers,
         onPageChanged,

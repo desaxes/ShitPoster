@@ -52,7 +52,6 @@ type profileType = {
     fullName: string,
     contacts: contactsType
 }
-
 // =============================================POST-TYPES=================================================
 type postType = {
     id: string,
@@ -119,3 +118,19 @@ type commentArrayType =
         name: string,
         text: string
     }[]
+// =============================================MESSAGES-TYPES=============================================
+type DialogType = {
+    id: string
+    name: string
+}
+type MessagesType = {
+    id: string;
+    inout: string;
+    text: string;
+}
+type MessagesProps = {
+    contacts: DialogType[]
+    messages: MessagesType[]
+    authId: number
+    sendMessage: () => void
+}

@@ -12,14 +12,15 @@ const PostEditorContainer = React.lazy(() => import('../editor/editor'))
 const NewsfeedContainer = React.lazy(() => import('../newsfeed/newsfeed'))
 const PopularContainer = React.lazy(() => import('../popular/popular/popular'))
 const PostPageContainer = React.lazy(() => import('../posts/post-page'))
-const Content = (props) => {
+
+const Content = (props: ownPPProps) => {
     return (
         <section className={s.content}>
             <div className='container'>
                 <div className='content__inner'>
                     <Suspense fallback={<Preloader />}>
                         <Routes>
-                            <Route path='/ShitPoster' element={<Navigate to='/newsfeed'/>} />
+                            <Route path='/ShitPoster' element={<Navigate to='/newsfeed' />} />
                             <Route path='/profile/:id?' element={<ProfileContainer />} />
                             <Route path='/popular' element={<PopularContainer />} />
                             <Route path='/newsfeed' element={<NewsfeedContainer />} />

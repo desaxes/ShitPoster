@@ -24,7 +24,7 @@ export type ProfileActionTypes = InferActionsTypes<typeof ProfileActions>
 // ----------------------------------------------INIT STATE TYPES-----------------------------------------
 
 
-type initialStateType = {
+export type initialStateType = {
     profileInfo: profileInfoType,
     status: null | string,
     settingSuccess: boolean

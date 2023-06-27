@@ -119,7 +119,7 @@ const mapStateToProps = (state: appStateType) => {
     }
 }
 // const PostPageContainer = connect(mapStateToProps, { openPost, addComment, addToLikeList, like })(PostPage)
-export default compose<React.Component<ownPPProps>>(
+export default compose<React.FC<ownPPProps>>(
     connect(mapStateToProps,
         {
             openPost,

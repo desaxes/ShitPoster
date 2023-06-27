@@ -3,6 +3,7 @@ import { Sub } from './sub'
 import React, { FC } from 'react'
 import { Preloader } from '../common_components/preloader'
 import { Flex, Pagination } from '@mantine/core'
+import { Tabs } from '@mantine/core';
 type propsType = {
     users: userItemType[],
     pageSize: number
@@ -24,15 +25,37 @@ const SubsPresentation: FC<propsType> = (props) => {
         <div className={s.subs}>
             <div className='page-block'>
                 <div className={s.page_inner}>
-                    {props.isFetching ? <Preloader /> : null}
-                    <div className={s.btn_box}></div>
-                    <input className={s.search} type="text" placeholder='Search' />
-                    <Flex gap={16} direction={'column'} className={`${s.sub_list} ${props.isFetching && s.page_opacity}`}>
-                        {subs}
-                    </Flex>
-                    <Pagination color='red' value={props.pageNumber} onChange={(e) => { props.onPageChanged(e) }}
-                        total={pageCount} withEdges siblings={3} className={s.counter} size="lg">
-                    </Pagination>
+                    <Tabs defaultValue='Users' >
+                        <Tabs.List grow>
+                            <Tabs.Tab value='Users'>Users</Tabs.Tab>
+                            <Tabs.Tab value='Subs'>Subs</Tabs.Tab>
+                        </Tabs.List>
+                        {props.isFetching ? <Preloader /> : null}
+                        <Tabs.Panel mt={0} pt={30} value='Users'>
+                            <div className={s.panel}>
+                                <div className={s.btn_box}></div>
+                                <input className={s.search} type="text" placeholder='Search' />
+                                <Flex gap={16} direction={'column'} className={`${s.sub_list} ${props.isFetching && s.page_opacity}`}>
+                                    {subs}
+                                </Flex>
+                                <Pagination color='red' value={props.pageNumber} onChange={(e) => { props.onPageChanged(e) }}
+                                    total={pageCount} withEdges siblings={3} className={s.counter} size="lg">
+                                </Pagination>
+                            </div>
+                        </Tabs.Panel>
+                        <Tabs.Panel pt={30} value='Subs'>
+                            <div className={s.panel}>
+                                <div className={s.btn_box}></div>
+                                <input className={s.search} type="text" placeholder='Search' />
+                                <Flex gap={16} direction={'column'} className={`${s.sub_list} ${props.isFetching && s.page_opacity}`}>
+                                    {subs}
+                                </Flex>
+                                <Pagination color='red' value={props.pageNumber} onChange={(e) => { props.onPageChanged(e) }}
+                                    total={pageCount} withEdges siblings={3} className={s.counter} size="lg">
+                                </Pagination>
+                            </div>
+                        </Tabs.Panel>
+                    </Tabs>
                 </div>
             </div>
         </div>

@@ -30,7 +30,7 @@ const actions = {
 export type SubsActionTypes = InferActionsTypes<typeof actions>
 
 // ----------------------------------------------INIT STATE TYPES--------------------------------------------------
-type initialStateType = {
+export type initialStateType = {
     subsData: userItemType[],
     pageSize: number,
     totalCount: number,

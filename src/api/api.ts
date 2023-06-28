@@ -8,9 +8,12 @@ const instance = axios.create({
     headers: { "API-KEY": "568f7a3f-f1e5-4bdb-af65-e3569e78f4b7" }
 })
 const userAPI = {
-    getUsers(pageSize = 5, pageNumber = 1) {
+    getUsers(pageSize = 5, pageNumber = 1, term = '') {
         return (instance.get<APITypes.userAPITypes.getUsersType>("users?count=" +
-            pageSize + "&page=" + pageNumber).then(response => response.data))
+            pageSize + "&page=" + pageNumber + '&term=' + term).then(response => response.data))
+    },
+    getSubUsers() {
+        return (instance.get<APITypes.userAPITypes.getUsersType>("users?friend=" + true + "&count=100").then(response => response.data))
     },
     subUser(id: number) {
         return (instance.post<APITypes.CommonAPITypes.onlyResultAPIType>("follow/" + id, {},).then(response => response.data.resultCode))
@@ -18,6 +21,9 @@ const userAPI = {
     unsubUser(id: number) {
         return (instance.delete<APITypes.CommonAPITypes.onlyResultAPIType>("follow/" + id,).then(response => response.data.resultCode))
     },
+    getFollowInfo(id: number) {
+        return (instance.get<boolean>('follow/' + id).then(response => response.data))
+    }
 }
 const securityAPI = {
     captcha() {

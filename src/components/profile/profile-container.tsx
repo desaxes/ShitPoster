@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getUserProfile, setStatus, setPhoto } from '../../redux/profile-reducer.ts';
+import { getUserProfile, setStatus, setPhoto, getFollowedInfo } from '../../redux/profile-reducer.ts';
 import { addPost } from '../../redux/news-reducer.ts';
 import { following } from "../../redux/subs-reducer.ts"
 import { changeAuthPhoto, } from "../../redux/auth-reducer.ts"
@@ -21,11 +21,13 @@ type props = {
     authPhoto: string
     login: string
     addPost: () => void
-    getUserProfile: (userId: string) => void
+    getUserProfile: (userId: number|string) => void
     following: () => void
     setStatus: () => void
     setPhoto: () => void
     changeAuthPhoto: () => void
+    getFollowedInfo: () => void
+    followed: boolean
 }
 const ProfilePage: React.FC<props> = (props) => {
     const userid = useParams()
@@ -49,6 +51,7 @@ const mapStateToProps = (state: appStateType) => {
         authId: state.auth.id,
         authPhoto: state.auth.photo,
         login: state.auth.login,
+        followed: state.profilePage.followed
     }
 }
 // export function withRouter(Children) {
@@ -67,6 +70,7 @@ export default compose<React.FC>(
             setStatus,
             setPhoto,
             changeAuthPhoto,
+            getFollowedInfo
         }),
     // withRouter,
     AuthRedirect,

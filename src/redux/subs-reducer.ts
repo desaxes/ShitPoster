@@ -1,14 +1,7 @@
 import { userAPI } from "../api/api";
 import { thunkType } from "../action-types";
 import { InferActionsTypes } from "./redux-store";
-
-// ----------------------------------------------ACTION CONST--------------------------------------------------
-// const SUBSCRIBE = 'SUBSCRIBE';
-// const SETSUBS = 'SETSUBS';
-// const SETUSERSNUMBER = 'SET-USERS-NUMBER'
-// const SETPAGENUMBER = 'SET-PAGE-NUMBER'
-// const SETLOADER = 'SET-LOADER'
-// const SUBSCRIBE_IN_PROGRESS = 'SUBSCRIBE-IN-PROGRESS'
+import { authActions, getSubUsers } from "./auth-reducer";
 // ----------------------------------------------ACTIONS--------------------------------------------------
 const actions = {
     subscribe: (userid: number) => (
@@ -18,9 +11,9 @@ const actions = {
     setUsersNumber: (count: number) => (
         { type: 'SETUSERSNUMBER', count: count } as const
     ),
-    setPageNumber: (page: number) => (
-        { type: 'SETPAGENUMBER', page: page } as const
-    ),
+    // setPageNumber: (page: number) => (
+    //     { type: 'SETPAGENUMBER', page: page } as const
+    // ),
     setLoader: (isFetching: boolean) => (
         { type: 'SETLOADER', isFetching: isFetching } as const
     ),
@@ -75,11 +68,11 @@ const subsReducer = (state = initialState, action: SubsActionTypes): initialStat
                 ...state, totalCount: action.count
             }
         }
-        case 'SETPAGENUMBER': {
-            return {
-                ...state, pageNumber: action.page
-            }
-        }
+        // case 'SETPAGENUMBER': {
+        //     return {
+        //         ...state, pageNumber: action.page
+        //     }
+        // }
         case 'SETLOADER': {
             return {
                 ...state, isFetching: action.isFetching
@@ -98,20 +91,16 @@ const subsReducer = (state = initialState, action: SubsActionTypes): initialStat
 // ----------------------------------------------THUNKS--------------------------------------------------
 // type dispatchType = Dispatch<actionTypes>
 
-const getUsers = (pageSize: number, pageNumber: number): thunkType => async (dispatch) => {
+const getUsers = (pageSize: number, pageNumber: number, term: string): thunkType => async (dispatch) => {
     dispatch(actions.setLoader(true))
-    const data = await userAPI.getUsers(pageSize, pageNumber)
+    const data = await userAPI.getUsers(pageSize, pageNumber, term)
     dispatch(actions.setLoader(false))
     dispatch(actions.setsubs(data.items))
     dispatch(actions.setUsersNumber(data.totalCount))
 }
-const onPageChanged = (pageSize: number, pageNumber: number): thunkType => async (dispatch) => {
-    dispatch(actions.setLoader(true))
-    dispatch(actions.setPageNumber(pageNumber))
-    const data = await userAPI.getUsers(pageSize, pageNumber)
-    dispatch(actions.setLoader(false))
-    dispatch(actions.setsubs(data.items))
-}
+// const onPageChanged = (pageNumber: number): thunkType => async (dispatch) => {
+//     dispatch(actions.setPageNumber(pageNumber))
+// }
 
 const following = (subscribeStatus: boolean, userId: number): thunkType => async (dispatch) => {
     if (subscribeStatus === false) {
@@ -119,6 +108,7 @@ const following = (subscribeStatus: boolean, userId: number): thunkType => async
         const resultCode = await userAPI.subUser(userId)
         if (resultCode == 0) {
             dispatch(actions.subscribe(userId));
+            dispatch(getSubUsers())
         }
         dispatch(actions.subscribeInProgress(false, userId))
     }
@@ -127,9 +117,10 @@ const following = (subscribeStatus: boolean, userId: number): thunkType => async
         const resultCode = await userAPI.unsubUser(userId)
         if (resultCode == 0) {
             dispatch(actions.subscribe(userId));
+            dispatch(authActions.updateSubUsers(userId))
         }
         dispatch(actions.subscribeInProgress(false, userId))
     }
 }
 
-export { subsReducer, getUsers, onPageChanged, following, actions }
+export { subsReducer, getUsers, following, actions }

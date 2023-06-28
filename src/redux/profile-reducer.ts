@@ -1,12 +1,12 @@
 import { thunkType } from "../action-types";
-import { authAPI, profileAPI } from "../api/api";
+import { authAPI, profileAPI, userAPI } from "../api/api";
 import { InferActionsTypes } from "./redux-store";
 // ----------------------------------------------ACTIONS-----------------------------------------
 export const ProfileActions = {
     setProfileInfo: (data: any) =>
         ({ type: 'SET_PROFILE_INFO', data: data } as const),
     setFollowedInfo: (followed: boolean) => ({
-        type: 'SET_FOLLOWED_INFO', followed: followed
+        type: 'SET_FOLLOWED_INFO', followed
     } as const),
     setProfileStatus: (status: string) => ({
         type: 'SET_PROFILE_STATUS', status: status
@@ -25,9 +25,10 @@ export type ProfileActionTypes = InferActionsTypes<typeof ProfileActions>
 
 
 export type initialStateType = {
-    profileInfo: profileInfoType,
-    status: null | string,
+    profileInfo: profileInfoType
+    status: null | string
     settingSuccess: boolean
+    followed: boolean
 }
 // ----------------------------------------------INIT STATE ----------------------------------------------
 let initialState: initialStateType = {
@@ -54,7 +55,8 @@ let initialState: initialStateType = {
         },
     },
     status: null,
-    settingSuccess: false
+    settingSuccess: false,
+    followed: false
 }
 // ----------------------------------------------REDUCER--------------------------------------------------
 const profileReducer = (state = initialState, action: ProfileActionTypes): initialStateType => {
@@ -63,7 +65,7 @@ const profileReducer = (state = initialState, action: ProfileActionTypes): initi
             return { ...state, profileInfo: { ...action.data } };
         }
         case 'SET_FOLLOWED_INFO': {
-            return { ...state, profileInfo: { ...state.profileInfo, followed: action.followed } };
+            return { ...state, followed: action.followed };
         }
         case 'SET_PROFILE_STATUS': {
             return { ...state, status: action.status }
@@ -102,6 +104,11 @@ const getUserProfile = (userid: number): thunkType => async (dispatch) => {
     const data = await profileAPI.getUserProfile(userid);
     dispatch(ProfileActions.setProfileInfo(data));
     dispatch(getStatusFromServer(userid))
+    dispatch(getFollowedInfo(userid))
+}
+const getFollowedInfo = (userid: number): thunkType => async (dispatch) => {
+    const followed = await userAPI.getFollowInfo(userid)
+    dispatch(ProfileActions.setFollowedInfo(followed))
 }
 const setStatus = (userid: number, status: string): thunkType => async (dispatch) => {
     let response = await profileAPI.putStatus(status)
@@ -144,4 +151,4 @@ const changeProfileInfo = (id: number, about: string, job: boolean, desc: string
         }
     }
 
-export { profileReducer, getUserProfile, setStatus, setPhoto, changeProfileInfo }
+export { profileReducer, getUserProfile, setStatus, setPhoto, changeProfileInfo, getFollowedInfo }

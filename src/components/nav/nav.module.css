@@ -1,5 +1,6 @@
 .ul {
     margin: 0;
+    margin-bottom: 50px;
 }
 
 .nav {
@@ -31,14 +32,17 @@
     color: #ffffff00;
     transition: color 1.2s, text-shadow 0.3s;
 }
-.nav:hover .link .active{
+
+.nav:hover .link .active {
     color: aquamarine;
     transition: color 1.2s;
 }
-.link .active{
+
+.link .active {
     transition: color 1.2s;
     color: #ffffff00;
 }
+
 .nav .link:first-child {
     margin-top: 30px;
 }
@@ -56,4 +60,27 @@
 
 .nav:hover .link {
     color: #ffffff;
+}
+
+.sub_list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.sub_box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 30px;
+    cursor: pointer;
+}
+
+.sub_avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.name{
+    font-size: 22px;
 }

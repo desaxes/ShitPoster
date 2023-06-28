@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useDeferredValue } from 'react';
 import profile_head_img from './../../img/profile_head.png'
 import logo from './../../img/shit_icon.png'
 import s from './profile.module.css'
@@ -6,6 +6,8 @@ import Post from '../posts/post.tsx'
 import ProfileStatus from './profile-status';
 import { useForm } from 'react-hook-form';
 import { Accordion, Button, FileButton, Tabs, Textarea } from '@mantine/core';
+import { following } from '../../redux/subs-reducer.ts';
+import { useDebouncedValue } from '@mantine/hooks';
 
 type props = {
     posts: postType[]
@@ -17,11 +19,13 @@ type props = {
     authPhoto: string
     login: string
     addPost: (id: number, login: string, photo: string, image: string, time: string, text: string, likes: number) => void
-    getUserProfile: (userId: string) => void
-    following: () => void
+    getUserProfile: (userId: number | string) => void
+    following: (followed: boolean, id: number) => void
+    getFollowedInfo: (userid: number) => void
     setStatus: () => void
     setPhoto: (photo: string) => void
     changeAuthPhoto: (id: number) => void
+    followed: boolean
 }
 type FormValues = {
     postText: string
@@ -47,6 +51,10 @@ const Profile: React.FC<props> = (props) => {
         props.setPhoto(e)
         props.changeAuthPhoto(props.authId)
     }
+    const followUser = () => {
+        props.following(props.followed, props.profileInfo.userId)
+        props.getUserProfile(props.profileInfo.userId)
+    }
     return (
         <div className={s.profile}>
             <div className={s.head}>
@@ -56,7 +64,6 @@ const Profile: React.FC<props> = (props) => {
                         <Tabs.List grow>
                             <Tabs.Tab value='Profile'>Profile</Tabs.Tab>
                             <Tabs.Tab value='About'>About</Tabs.Tab>
-                            <Tabs.Tab value='Subs'>Subs</Tabs.Tab>
                         </Tabs.List>
                         <Tabs.Panel pt={30} value='Profile'>
                             <div className={s.info_block}>
@@ -88,13 +95,9 @@ const Profile: React.FC<props> = (props) => {
                                         <button className='quick-posting__btn'>Send Message</button>
                                     </div>
                                     <div className='quick-posting-btnbox'>
-                                        <button
-                                            // disabled={props.subscribeProgress.some(id => id === props.profileInfo.userId)} onClick={onSubClick} 
-                                            className={`${'quick-posting__btn'} ${props.profileInfo.followed && s.f_color}`}>
-                                            {props.profileInfo.followed ? 'Unsubscribe' : 'Subscribe'}</button>
-                                    </div>
-                                    <div className='quick-posting-btnbox'>
-                                        <button className='quick-posting__btn'>Show Subs</button>
+                                        <button onClick={followUser}
+                                            className={`${'quick-posting__btn'} ${props.followed && s.f_color}`}>
+                                            {props.followed ? 'Unsubscribe' : 'Subscribe'}</button>
                                     </div>
                                 </div>}
                             </div>
@@ -144,8 +147,6 @@ const Profile: React.FC<props> = (props) => {
                                 </div>
                             </div>
                         </Tabs.Panel>
-                        <Tabs.Panel pt={30} value='Subs'>
-                        </Tabs.Panel>
                     </Tabs>
                 </div>
             </div>
@@ -158,9 +159,9 @@ const Profile: React.FC<props> = (props) => {
                         <input value={'Post'} type='submit' className='quick-posting__btn' />
                     </div>
                 </form>}
-            <div className="page-block">
+            {posts.length != 0 && <div className="page-block">
                 {posts}
-            </div>
+            </div>}
         </div>
     )
 }

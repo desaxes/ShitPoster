@@ -25,7 +25,7 @@ const Content = (props: ownPPProps) => {
                             <Route path='/popular' element={<PopularContainer />} />
                             <Route path='/newsfeed' element={<NewsfeedContainer />} />
                             <Route path='/messages' element={<MessagesContainer />} />
-                            <Route path='/subs/:page?' element={<SubsContainer />} />
+                            <Route path='/subs/:page/:term?' element={<SubsContainer />} />
                             <Route path='/login' element={<LoginConatainer />} />
                             <Route path='/post/:id' element={<PostPageContainer news={props.news} />} />
                             <Route path='/posteditor' element={<PostEditorContainer />} />

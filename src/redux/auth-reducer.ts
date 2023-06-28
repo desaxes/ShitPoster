@@ -1,11 +1,11 @@
 import { thunkType } from "../action-types";
 import { ResultCodes } from "../api-types";
-import { authAPI, profileAPI, securityAPI } from "../api/api";
+import { authAPI, profileAPI, securityAPI, userAPI } from "../api/api";
 import { InferActionsTypes } from "./redux-store";
 // ================================================ACTIONS===============================================
-const actions = {
-    setAuthInfo: (id: number | null, login: string | null, email: string | null, isAuth: boolean) => 
-    ({ type: 'SET_AUTH_INFO', data: { id, login, email, isAuth } } as const),
+export const authActions = {
+    setAuthInfo: (id: number | null, login: string | null, email: string | null, isAuth: boolean) =>
+        ({ type: 'SET_AUTH_INFO', data: { id, login, email, isAuth } } as const),
     setUserData: (data: any, photo: string | null) =>
         ({ type: 'SET_USER_DATA', data: data, photo: photo } as const),
     setAuthError: (errorState: boolean) =>
@@ -17,9 +17,15 @@ const actions = {
     } as const),
     setCaptchaUrl: (url: string | null) => ({
         type: 'SET_CAPTCHA', url
+    } as const),
+    setSubUsers: (users: userItemType[]) => ({
+        type: 'SET_SUB_USERS', users
+    } as const),
+    updateSubUsers: (id: number) => ({
+        type: 'UPDATE_SUB_USERS', id
     } as const)
 }
-export type AuthActionTypes = InferActionsTypes<typeof actions>
+export type AuthActionTypes = InferActionsTypes<typeof authActions>
 
 type initialStateType = {
     id: null | number,
@@ -50,7 +56,8 @@ type initialStateType = {
             large: null | string
         }
     },
-    likedPosts: string[]
+    likedPosts: string[],
+    subUsers: userItemType[]
 }
 
 let initialState: initialStateType = {
@@ -82,7 +89,8 @@ let initialState: initialStateType = {
             large: null
         }
     },
-    likedPosts: []
+    likedPosts: [],
+    subUsers: []
 }
 
 const authReducer = (state = initialState, action: AuthActionTypes): initialStateType => {
@@ -109,6 +117,16 @@ const authReducer = (state = initialState, action: AuthActionTypes): initialStat
                 ...state, captchaUrl: action.url
             }
         }
+        case 'SET_SUB_USERS': {
+            return {
+                ...state, subUsers: action.users
+            }
+        }
+        case 'UPDATE_SUB_USERS': {
+            return {
+                ...state, subUsers: state.subUsers.filter(user => user.id != action.id)
+            }
+        }
         default: return state;
     }
 }
@@ -116,18 +134,19 @@ const authReducer = (state = initialState, action: AuthActionTypes): initialStat
 const authtorize = (): thunkType => async (dispatch) => {
     const data = await authAPI.auth();
     if (data.resultCode === ResultCodes.Success) {
-        dispatch(actions.setAuthInfo(data.data.id, data.data.login, data.data.email, true));
+        dispatch(authActions.setAuthInfo(data.data.id, data.data.login, data.data.email, true));
         dispatch(changeAuthInfo(data.data.id))
+        dispatch(getSubUsers())
     }
 }
 const login = (email: string, password: string, checkbox: boolean, captcha: string): thunkType => async (dispatch) => {
     const resultCode = await authAPI.login(email, password, checkbox, captcha);
     if (resultCode === ResultCodes.Success) {
-        dispatch(actions.setAuthError(false));
+        dispatch(authActions.setAuthError(false));
         const data = await authAPI.auth()
         if (data.resultCode === ResultCodes.Success) {
-            dispatch(actions.setAuthInfo(data.data.id, data.data.login, data.data.email, true));
-            dispatch(actions.setCaptchaUrl(null))
+            dispatch(authActions.setAuthInfo(data.data.id, data.data.login, data.data.email, true));
+            dispatch(authActions.setCaptchaUrl(null))
             dispatch(changeAuthInfo(data.data.id))
         }
     }
@@ -135,31 +154,36 @@ const login = (email: string, password: string, checkbox: boolean, captcha: stri
         if (resultCode === ResultCodes.NeedCaptcha) {
             dispatch(getCaptcha())
         }
-        dispatch(actions.setAuthError(true));
+        dispatch(authActions.setAuthError(true));
     }
 }
 const getCaptcha = (): thunkType => async (dispatch) => {
     const result = await securityAPI.captcha();
-    dispatch(actions.setCaptchaUrl(result.data.url))
+    dispatch(authActions.setCaptchaUrl(result.data.url))
 }
 const logout = (): thunkType => async (dispatch) => {
     const resultCode = await authAPI.logout();
     if (resultCode === ResultCodes.Success) {
-        dispatch(actions.setAuthInfo(null, null, null, false));
-        dispatch(actions.setUserData(null, null));
+        dispatch(authActions.setAuthInfo(null, null, null, false));
+        dispatch(authActions.setUserData(null, null));
     }
 }
 const changeAuthPhoto = (id: number): thunkType => async (dispatch) => {
     let data = await profileAPI.getUserProfile(id)
-    dispatch(actions.setAuthPhoto(data.photos.large))
+    dispatch(authActions.setAuthPhoto(data.photos.large))
 }
 const changeAuthInfo = (id: number): thunkType => async (dispatch) => {
     let data = await profileAPI.getUserProfile(id)
-    dispatch(actions.setUserData(data, data.photos.large));
+    dispatch(authActions.setUserData(data, data.photos.large));
 }
 const addToLikeList = (id: string): thunkType => async (dispatch) => {
-    dispatch(actions.addToLikeList(id))
+    dispatch(authActions.addToLikeList(id))
 }
+const getSubUsers = (): thunkType => async (dispatch) => {
+    let data = await userAPI.getSubUsers()
+    dispatch(authActions.setSubUsers(data.items))
+}
+
 export {
     authReducer,
     authtorize,
@@ -168,7 +192,8 @@ export {
     addToLikeList,
     changeAuthPhoto,
     changeAuthInfo,
-    getCaptcha
+    getCaptcha,
+    getSubUsers
 }
 
 

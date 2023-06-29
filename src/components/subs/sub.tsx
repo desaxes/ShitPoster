@@ -3,7 +3,9 @@ import s from './subs.module.css'
 import avatar from './../../img/shit_icon.png'
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-
+import { following } from '../../redux/subs-reducer'
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/redux-store';
 type propsType = {
     key: number
     id: number
@@ -12,12 +14,12 @@ type propsType = {
     followed: boolean
     avatar: string
     subscribeProgress: number[]
-    following: (followed: boolean, id: number) => void
 }
 const Sub: React.FC<propsType> = (props) => {
+    const dispatch:AppDispatch = useDispatch()
     let onSubClick = (e: any) => {
         e.preventDefault();
-        props.following(props.followed, props.id)
+        dispatch(following(props.followed, props.id))
     }
     let setProfileInfo = (e: any) => {
         axios.get("https://social-network.samuraijs.com/api/1.0/follow/" + props.id, { withCredentials: true }).then(response => {

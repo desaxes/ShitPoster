@@ -23,11 +23,9 @@ const appReducer = (state = initialState, action: AppActionTypes): initialStateT
     }
 }
 //@ts-ignore
-const initialize = (): thunkType => (dispatch) => {
-    let promise = dispatch(authtorize())
-    promise.then(() => {
-        dispatch(actions.setInitialized())
-    })
+const initialize = (): thunkType => async (dispatch) => {
+    let promise = await dispatch(authtorize())
+    dispatch(actions.setInitialized())
 }
 
 export { initialize, appReducer }

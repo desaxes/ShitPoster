@@ -143,12 +143,7 @@ const login = (email: string, password: string, checkbox: boolean, captcha: stri
     const resultCode = await authAPI.login(email, password, checkbox, captcha);
     if (resultCode === ResultCodes.Success) {
         dispatch(authActions.setAuthError(false));
-        const data = await authAPI.auth()
-        if (data.resultCode === ResultCodes.Success) {
-            dispatch(authActions.setAuthInfo(data.data.id, data.data.login, data.data.email, true));
-            dispatch(authActions.setCaptchaUrl(null))
-            dispatch(changeAuthInfo(data.data.id))
-        }
+        dispatch(authtorize())
     }
     else {
         if (resultCode === ResultCodes.NeedCaptcha) {

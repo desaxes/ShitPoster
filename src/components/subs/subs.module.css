@@ -63,6 +63,10 @@
     font-weight: 300;
     margin-bottom: 25px;
     max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 35px;
 }
 
 .desc {
@@ -73,6 +77,9 @@
     text-decoration: underline;
     text-decoration-color: rgb(0, 0, 0);
     max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .btn_box {

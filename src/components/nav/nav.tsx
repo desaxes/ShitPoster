@@ -60,7 +60,7 @@ const Nav: React.FC<props> = (props) => {
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/music'>Music</NavLink></button>
                 </li> */}
             </ul>}
-        <ScrollArea type='hover' h={400} className={s.sub_list}>{subs}</ScrollArea>
+        {props.isAuth && <ScrollArea type='hover' h={400} className={s.sub_list}>{subs}</ScrollArea>}
     </nav>)
 }
 const mapStateToProps = (state: appStateType) => {

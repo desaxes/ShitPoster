@@ -6,8 +6,8 @@ import ProfileSettingsContainer from '../profile/profile-settings'
 import ErrorPage from '../common_components/error-page'
 const MessagesContainer = React.lazy(() => import('../messages/messages-container'))
 const ProfileContainer = React.lazy(() => import('../profile/profile-container'))
-const SubsContainer = React.lazy(() => import('../subs/subs-container'))
-const LoginConatainer = React.lazy(() => import('../login/login-container'))
+const SubsPage = React.lazy(() => import('../subs/subs'))
+const LoginPage = React.lazy(() => import('../login/login'))
 const PostEditorContainer = React.lazy(() => import('../editor/editor'))
 const NewsfeedContainer = React.lazy(() => import('../newsfeed/newsfeed'))
 const PopularContainer = React.lazy(() => import('../popular/popular/popular'))
@@ -25,8 +25,8 @@ const Content = (props: ownPPProps) => {
                             <Route path='/popular' element={<PopularContainer />} />
                             <Route path='/newsfeed' element={<NewsfeedContainer />} />
                             <Route path='/messages' element={<MessagesContainer />} />
-                            <Route path='/subs/:page/:term?' element={<SubsContainer />} />
-                            <Route path='/login' element={<LoginConatainer />} />
+                            <Route path='/subs/:page/:term?' element={<SubsPage />} />
+                            <Route path='/login' element={<LoginPage />} />
                             <Route path='/post/:id' element={<PostPageContainer news={props.news} />} />
                             <Route path='/posteditor' element={<PostEditorContainer />} />
                             <Route path='/settings' element={<ProfileSettingsContainer />} />

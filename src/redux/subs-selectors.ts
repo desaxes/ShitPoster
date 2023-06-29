@@ -6,9 +6,6 @@ export const getUsersArray = (state: appStateType) => {
 export const getPageSize = (state: appStateType) => {
     return (state.subsPage.pageSize)
 }
-export const getPageNumber = (state: appStateType) => {
-    return (state.subsPage.pageNumber)
-}
 export const getTotalCount = (state: appStateType) => {
     return (state.subsPage.totalCount)
 }

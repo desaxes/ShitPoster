@@ -1,8 +1,7 @@
 // =============================================AUTHORIZATION-TYPES=================================================
 type loginProps = {
-    id: number
+    id: number | null
     isAuth: boolean
-    authId: number
     authError: boolean
     captchaUrl: string
     authtorize: () => void

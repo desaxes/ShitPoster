@@ -3,7 +3,7 @@ import { thunkType } from "../action-types";
 import { InferActionsTypes } from "./redux-store";
 import { authActions, getSubUsers } from "./auth-reducer";
 // ----------------------------------------------ACTIONS--------------------------------------------------
-const actions = {
+const subActions = {
     subscribe: (userid: number) => (
         { type: 'SUBSCRIBE', userid: userid } as const),
     setsubs: (subsData: userItemType[]) => (
@@ -20,14 +20,13 @@ const actions = {
     subscribeInProgress: (isFetching: boolean, userId: number) => (
         { type: 'SUBSCRIBE_IN_PROGRESS', isFetching: isFetching, userId: userId } as const)
 }
-export type SubsActionTypes = InferActionsTypes<typeof actions>
+export type SubsActionTypes = InferActionsTypes<typeof subActions>
 
 // ----------------------------------------------INIT STATE TYPES--------------------------------------------------
 export type initialStateType = {
     subsData: userItemType[],
     pageSize: number,
     totalCount: number,
-    pageNumber: number,
     isFetching: boolean,
     subscribeProgress: number[]
 }
@@ -36,7 +35,6 @@ let initialState: initialStateType = {
     subsData: [],
     pageSize: 8,
     totalCount: 0,
-    pageNumber: 1,
     isFetching: false,
     subscribeProgress: []
 }
@@ -92,11 +90,11 @@ const subsReducer = (state = initialState, action: SubsActionTypes): initialStat
 // type dispatchType = Dispatch<actionTypes>
 
 const getUsers = (pageSize: number, pageNumber: number, term: string): thunkType => async (dispatch) => {
-    dispatch(actions.setLoader(true))
+    dispatch(subActions.setLoader(true))
     const data = await userAPI.getUsers(pageSize, pageNumber, term)
-    dispatch(actions.setLoader(false))
-    dispatch(actions.setsubs(data.items))
-    dispatch(actions.setUsersNumber(data.totalCount))
+    dispatch(subActions.setLoader(false))
+    dispatch(subActions.setsubs(data.items))
+    dispatch(subActions.setUsersNumber(data.totalCount))
 }
 // const onPageChanged = (pageNumber: number): thunkType => async (dispatch) => {
 //     dispatch(actions.setPageNumber(pageNumber))
@@ -104,23 +102,23 @@ const getUsers = (pageSize: number, pageNumber: number, term: string): thunkType
 
 const following = (subscribeStatus: boolean, userId: number): thunkType => async (dispatch) => {
     if (subscribeStatus === false) {
-        dispatch(actions.subscribeInProgress(true, userId))
+        dispatch(subActions.subscribeInProgress(true, userId))
         const resultCode = await userAPI.subUser(userId)
         if (resultCode == 0) {
-            dispatch(actions.subscribe(userId));
+            dispatch(subActions.subscribe(userId));
             dispatch(getSubUsers())
         }
-        dispatch(actions.subscribeInProgress(false, userId))
+        dispatch(subActions.subscribeInProgress(false, userId))
     }
     else {
-        dispatch(actions.subscribeInProgress(true, userId))
+        dispatch(subActions.subscribeInProgress(true, userId))
         const resultCode = await userAPI.unsubUser(userId)
         if (resultCode == 0) {
-            dispatch(actions.subscribe(userId));
+            dispatch(subActions.subscribe(userId));
             dispatch(authActions.updateSubUsers(userId))
         }
-        dispatch(actions.subscribeInProgress(false, userId))
+        dispatch(subActions.subscribeInProgress(false, userId))
     }
 }
 
-export { subsReducer, getUsers, following, actions }
+export { subsReducer, getUsers, following, subActions }

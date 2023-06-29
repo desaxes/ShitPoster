@@ -9,9 +9,9 @@ import { SubsActionTypes } from "./redux/subs-reducer"
 export type Actions =
     SubsActionTypes |
     ProfileActionTypes |
-    NewsActionTypes|
+    NewsActionTypes |
     AuthActionTypes |
     AppActionTypes
 
 // export type actionTypes<T extends Actions> = T
-export type thunkType = ThunkAction<Promise<void>, appStateType, unknown, Actions>
+export type thunkType = ThunkAction<Promise<void> | void, appStateType, unknown, Actions>

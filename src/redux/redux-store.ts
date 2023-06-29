@@ -19,6 +19,7 @@ let rootReducer = combineReducers({
     news: newsReducer
 });
 type rootReducerType = typeof rootReducer
+export type AppDispatch = typeof store.dispatch
 export type appStateType = ReturnType<rootReducerType>
 
 //@ts-ignore

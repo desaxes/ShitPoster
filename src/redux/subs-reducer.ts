@@ -89,9 +89,9 @@ const subsReducer = (state = initialState, action: SubsActionTypes): initialStat
 // ----------------------------------------------THUNKS--------------------------------------------------
 // type dispatchType = Dispatch<actionTypes>
 
-const getUsers = (pageSize: number, pageNumber: number, term: string): thunkType => async (dispatch) => {
+const getUsers = (search: string): thunkType => async (dispatch) => {
     dispatch(subActions.setLoader(true))
-    const data = await userAPI.getUsers(pageSize, pageNumber, term)
+    const data = await userAPI.getUsers(search)
     dispatch(subActions.setLoader(false))
     dispatch(subActions.setsubs(data.items))
     dispatch(subActions.setUsersNumber(data.totalCount))

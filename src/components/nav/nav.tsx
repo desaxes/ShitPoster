@@ -36,7 +36,7 @@ const Nav: React.FC<props> = (props) => {
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/newsfeed'>News Feed</NavLink></button>
                 </li>
                 <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/subs/1'>Subs</NavLink></button>
+                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/subs?page=1'>Subs</NavLink></button>
                 </li>
                 <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/messages'>Messages</NavLink></button>

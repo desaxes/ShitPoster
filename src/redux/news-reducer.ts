@@ -15,11 +15,11 @@ import test from './../img/profile_head.png'
 import { InferActionsTypes } from './redux-store'
 // ----------------------------------------------ACTIONS---------------------------------------------------
 const actions = {
-    addPost: (userId: number, name: string, avatar: string, postimage: string, time: string, posttext: string, like_count: number) => (
+    addPost: (userId: number | null, name: string, avatar: string, postimage: string, time: string, posttext: string, like_count: number) => (
         {
             type: 'ADD_POST', userId, name, avatar, postimage, time, posttext, like_count
         } as const),
-    openPost: (id: string, userId: number, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType) => ({
+    openPost: (id: string, userId: number | null, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType) => ({
         type: 'OPEN_POST', id, userId, name, time, posttext, like_count, postimage, avatar, comments
     } as const),
     addComment: (id: string, avatar: string, name: string, text: string) => ({
@@ -34,7 +34,7 @@ export type NewsActionTypes = InferActionsTypes<typeof actions>
 
 type postArrayType = {
     id: string,
-    userId: number,
+    userId: number | null,
     name: string,
     time: string,
     posttext: string,
@@ -319,10 +319,10 @@ const newsReducer = (state = initialState, action: NewsActionTypes): initialStat
     }
 }
 
-const addPost = (userId: number, name: string, avatar: string, postimage: string, time: string, posttext: string, like_count: number) => (dispatch: any) => {
+const addPost = (userId: number | null, name: string, avatar: string, postimage: string, time: string, posttext: string, like_count: number) => (dispatch: any) => {
     dispatch(actions.addPost(userId, name, avatar, postimage, time, posttext, like_count))
 }
-const openPost = (id: string, userId: number, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType) => (dispatch: any) => {
+const openPost = (id: string, userId: number | null, name: string, time: string, posttext: string, like_count: number, postimage: string, avatar: string, comments: commentArrayType) => (dispatch: any) => {
     dispatch(actions.openPost(id, userId, name, time, posttext, like_count, postimage, avatar, comments))
 }
 const addComment = (id: string, avatar: string, name: string, text: string) => (dispatch: any) => {

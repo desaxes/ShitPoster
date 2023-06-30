@@ -1,4 +1,4 @@
-import React, { useDeferredValue } from 'react';
+import React, { useEffect } from 'react';
 import profile_head_img from './../../img/profile_head.png'
 import logo from './../../img/shit_icon.png'
 import s from './profile.module.css'
@@ -7,33 +7,41 @@ import ProfileStatus from './profile-status';
 import { useForm } from 'react-hook-form';
 import { Accordion, Button, FileButton, Tabs, Textarea } from '@mantine/core';
 import { following } from '../../redux/subs-reducer.ts';
-import { useDebouncedValue } from '@mantine/hooks';
+import { useDispatch, useSelector } from 'react-redux';
+import * as profileSelectors from '../../redux/profile-selectors.ts'
+import * as authSelectors from '../../redux/auth-selectors.ts'
+import { useNavigate, useParams } from 'react-router-dom';
+import { AppDispatch } from '../../redux/redux-store.ts';
+import { getUserProfile, setPhoto } from '../../redux/profile-reducer.ts';
+import { addPost } from '../../redux/news-reducer.ts';
+import { changeAuthPhoto } from '../../redux/auth-reducer.ts';
+import { AuthRedirect } from '../common_components/hoc-components.tsx';
+import { compose } from 'redux';
 
-type props = {
-    posts: postType[]
-    profileInfo: profileInfoType
-    userId: number
-    subscribeProgress: number[]
-    status: string
-    authId: number
-    authPhoto: string
-    login: string
-    addPost: (id: number, login: string, photo: string, image: string, time: string, text: string, likes: number) => void
-    getUserProfile: (userId: number | string) => void
-    following: (followed: boolean, id: number) => void
-    getFollowedInfo: (userid: number) => void
-    setStatus: () => void
-    setPhoto: (photo: string) => void
-    changeAuthPhoto: (id: number) => void
-    followed: boolean
-}
 type FormValues = {
     postText: string
 }
+const ProfilePage: React.FC = (props) => {
+    const userid = useParams()
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (!userid.id) {
+            navigate('/profile/' + authId)
+        } else {
+            dispatch(getUserProfile(parseInt(userid.id)));
+        }
+    }, [userid.id])
+    const postData = useSelector(profileSelectors.getPosts)
+    const status = useSelector(profileSelectors.getStatus)
+    const profileInfo = useSelector(profileSelectors.getProfileInfo)
+    const authId = useSelector(authSelectors.getAuthId)
+    const authPhoto = useSelector(authSelectors.getAuthPhoto)
+    const login = useSelector(authSelectors.getLogin)
+    const followed = useSelector(profileSelectors.getFollowedInfo)
+    const dispatch: AppDispatch = useDispatch()
 
-const Profile: React.FC<props> = (props) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({ mode: 'onSubmit' });
-    let sortedPosts = [...props.posts].reverse().filter(e => e.userId === props.profileInfo.userId)
+    let sortedPosts = [...postData].reverse().filter(e => e.userId === profileInfo.userId)
 
     let posts = sortedPosts.map(p => <Post postId={p.userId} key={p.id} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments} />)
@@ -43,17 +51,17 @@ const Profile: React.FC<props> = (props) => {
         rait = rait + element.props.like_count
     }
     let onSubmit = (e: any) => {
-        props.addPost(props.authId, props.login, props.authPhoto, '', 'Now', e.postText, 0)
+        dispatch(addPost(authId, login === null ? '' : login, authPhoto === null ? logo : authPhoto, '', 'Now', e.postText, 0))
         reset()
     }
-    const setPhoto = (e: any) => {
+    const setUserPhoto = (e: any) => {
         // props.setPhoto(e.target.files[0])
-        props.setPhoto(e)
-        props.changeAuthPhoto(props.authId)
+        dispatch(setPhoto(e))
+        dispatch(changeAuthPhoto(authId === null ? 0 : authId))
     }
     const followUser = () => {
-        props.following(props.followed, props.profileInfo.userId)
-        props.getUserProfile(props.profileInfo.userId)
+        dispatch(following(followed, profileInfo.userId))
+        dispatch(getUserProfile(profileInfo.userId))
     }
     return (
         <div className={s.profile}>
@@ -68,19 +76,19 @@ const Profile: React.FC<props> = (props) => {
                         <Tabs.Panel pt={30} value='Profile'>
                             <div className={s.info_block}>
                                 <div className={s.avatar_box}>
-                                    <img className={s.avatar} src={props.profileInfo.photos.large === null ? logo : props.profileInfo.photos.large} alt='avatar'></img>
-                                    {props.profileInfo.userId === props.authId &&
+                                    <img className={s.avatar} src={profileInfo.photos.large === null ? logo : profileInfo.photos.large} alt='avatar'></img>
+                                    {profileInfo.userId === authId &&
                                         <div className={s.photo_btn}>
-                                            <FileButton onChange={setPhoto} accept="image/png,image/jpeg">
+                                            <FileButton onChange={setUserPhoto} accept="image/png,image/jpeg">
                                                 {(props) => <Button color='red' variant="subtle" size='s' compact {...props}>💾</Button>}
                                             </FileButton>
                                         </div>
                                     }
                                 </div>
                                 <div className={s.info_inf}>
-                                    <div className={s.name}>{props.profileInfo.fullName}</div>
-                                    {<ProfileStatus setStatus={props.setStatus} profileId={props.profileInfo.userId}
-                                        authId={props.authId} status={props.status} />}
+                                    <div className={s.name}>{profileInfo.fullName}</div>
+                                    {<ProfileStatus profileId={profileInfo.userId}
+                                        authId={authId} status={status} />}
                                     <div className={s.desc_block}>
                                         <p className={s.question}>Rating:</p>
                                         <p className={s.answer}>{rait}</p>
@@ -90,58 +98,58 @@ const Profile: React.FC<props> = (props) => {
                                         <p className={s.answer}>{posts.length}</p>
                                     </div>
                                 </div>
-                                {props.profileInfo.userId != props.authId && <div className={s.btn_block}>
+                                {profileInfo.userId != authId && <div className={s.btn_block}>
                                     <div className='quick-posting-btnbox'>
                                         <button className='quick-posting__btn'>Send Message</button>
                                     </div>
                                     <div className='quick-posting-btnbox'>
                                         <button onClick={followUser}
-                                            className={`${'quick-posting__btn'} ${props.followed && s.f_color}`}>
-                                            {props.followed ? 'Unsubscribe' : 'Subscribe'}</button>
+                                            className={`${'quick-posting__btn'} ${followed && s.f_color}`}>
+                                            {followed ? 'Unsubscribe' : 'Subscribe'}</button>
                                     </div>
                                 </div>}
                             </div>
                         </Tabs.Panel>
                         <Tabs.Panel pt={30} value='About'>
-                            <p className={s.about}>Full Name - {props.profileInfo.fullName === null ? '' : props.profileInfo.fullName}</p>
-                            {props.profileInfo.aboutMe === null ? <p className={s.about}>"There could be a description of me here"</p> : <p className={s.about}> {props.profileInfo.aboutMe}</p>}
-                            <p className={s.about}>Looking For A Job - {props.profileInfo.lookingForAJob === true ? 'Yes' : 'No'}</p>
-                            {props.profileInfo.lookingForAJobDescription != null && <p className={s.about}>{props.profileInfo.lookingForAJobDescription}</p>}
+                            <p className={s.about}>Full Name - {profileInfo.fullName === null ? '' : profileInfo.fullName}</p>
+                            {profileInfo.aboutMe === null ? <p className={s.about}>"There could be a description of me here"</p> : <p className={s.about}> {profileInfo.aboutMe}</p>}
+                            <p className={s.about}>Looking For A Job - {profileInfo.lookingForAJob === true ? 'Yes' : 'No'}</p>
+                            {profileInfo.lookingForAJobDescription != null && <p className={s.about}>{profileInfo.lookingForAJobDescription}</p>}
                             <div className={s.accordion}>
                                 <h1 className={s.accordion_header}>Socials</h1>
                                 <div className={s.accordion_box}>
                                     <Accordion defaultValue="GitHub">
                                         <Accordion.Item value="GitHub">
                                             <Accordion.Control>GitHub</Accordion.Control>
-                                            <Accordion.Panel>{props.profileInfo.contacts.github}</Accordion.Panel>
+                                            <Accordion.Panel>{profileInfo.contacts.github}</Accordion.Panel>
                                         </Accordion.Item>
                                         <Accordion.Item value="VK">
                                             <Accordion.Control>VK</Accordion.Control>
-                                            <Accordion.Panel>{props.profileInfo.contacts.vk}</Accordion.Panel>
+                                            <Accordion.Panel>{profileInfo.contacts.vk}</Accordion.Panel>
                                         </Accordion.Item>
                                         <Accordion.Item value="Facebook">
                                             <Accordion.Control>Facebook</Accordion.Control>
-                                            <Accordion.Panel>{props.profileInfo.contacts.facebook}</Accordion.Panel>
+                                            <Accordion.Panel>{profileInfo.contacts.facebook}</Accordion.Panel>
                                         </Accordion.Item>
                                         <Accordion.Item value="Instagram">
                                             <Accordion.Control>Instagram</Accordion.Control>
-                                            <Accordion.Panel>{props.profileInfo.contacts.instagram}</Accordion.Panel>
+                                            <Accordion.Panel>{profileInfo.contacts.instagram}</Accordion.Panel>
                                         </Accordion.Item>
                                         <Accordion.Item value="Twitter">
                                             <Accordion.Control>Twitter</Accordion.Control>
-                                            <Accordion.Panel>{props.profileInfo.contacts.twitter}</Accordion.Panel>
+                                            <Accordion.Panel>{profileInfo.contacts.twitter}</Accordion.Panel>
                                         </Accordion.Item>
                                         <Accordion.Item value="Website">
                                             <Accordion.Control>Website</Accordion.Control>
-                                            <Accordion.Panel>{props.profileInfo.contacts.website}</Accordion.Panel>
+                                            <Accordion.Panel>{profileInfo.contacts.website}</Accordion.Panel>
                                         </Accordion.Item>
                                         <Accordion.Item value="Youtube">
                                             <Accordion.Control>Youtube</Accordion.Control>
-                                            <Accordion.Panel>{props.profileInfo.contacts.youtube}</Accordion.Panel>
+                                            <Accordion.Panel>{profileInfo.contacts.youtube}</Accordion.Panel>
                                         </Accordion.Item>
                                         <Accordion.Item value="MainLink">
                                             <Accordion.Control>MainLink</Accordion.Control>
-                                            <Accordion.Panel>{props.profileInfo.contacts.mainLink}</Accordion.Panel>
+                                            <Accordion.Panel>{profileInfo.contacts.mainLink}</Accordion.Panel>
                                         </Accordion.Item>
                                     </Accordion>
                                 </div>
@@ -150,7 +158,7 @@ const Profile: React.FC<props> = (props) => {
                     </Tabs>
                 </div>
             </div>
-            {props.profileInfo.userId === props.authId &&
+            {profileInfo.userId === authId &&
                 <form onSubmit={handleSubmit(onSubmit)} className='quick-posting page-block'>
                     {
                         <Textarea error={errors?.postText?.message} label='Quick Post' size='xl' {...register("postText", { required: "✎ You must enter the text ⇒", minLength: { value: 10, message: "Min length is 10 symbols" } })} placeholder='Enter Text'
@@ -165,16 +173,7 @@ const Profile: React.FC<props> = (props) => {
         </div>
     )
 }
-export default Profile;
-
-
-// const ProfilePage = (props) => {
-//     const userid = useParams()
-//     useEffect(() => {
-//         // if (!userid.id) {
-//         //     userid.id = props.userId;
-//         // }
-//         props.getUserProfile(userid.id);
-//     })
-//     return (<Profile {...props} />)
-// }
+// export default Profile;
+export default compose<React.FC>(
+    AuthRedirect,
+)(ProfilePage);

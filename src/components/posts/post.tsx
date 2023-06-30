@@ -8,8 +8,6 @@ import { addToLikeList } from '../../redux/auth-reducer.ts';
 import { appStateType } from '../../redux/redux-store.ts';
 import { compose } from 'redux';
 
-
-
 type props = postsStateProps & postsOwnProps & postsDispatchProps
 const Post: React.FC<props> = (props) => {
     const navigate = useNavigate()

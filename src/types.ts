@@ -44,7 +44,7 @@ type profileInfoType = {
     }
 }
 type profileType = {
-    userId: number,
+    userId: number | null,
     aboutMe: string,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
@@ -54,7 +54,7 @@ type profileType = {
 // =============================================POST-TYPES=================================================
 type postType = {
     id: string,
-    userId: number,
+    userId: number | null,
     name: string,
     time: string,
     posttext: string,
@@ -64,7 +64,7 @@ type postType = {
     comments: commentArrayType
 }
 type postsOwnProps = {
-    postId: number
+    postId: number | null
     key: string
     id: string
     name: string
@@ -104,7 +104,7 @@ type statePPProps = {
     authPhoto: string
 }
 type dispatchPPProps = {
-    openPost: (id: string, userId: number, name: string, time: string, text: string, likes: number, image: string,
+    openPost: (id: string, userId: number | null, name: string, time: string, text: string, likes: number, image: string,
         avatar: string, comments: commentArrayType) => void
     addComment: (postId: string | undefined, photo: string, login: string, comment: string) => void
     addToLikeList: (postId: string) => void

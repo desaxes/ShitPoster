@@ -21,3 +21,9 @@ export const getAuthError = (state: appStateType) => {
 export const getCaptchaUrl = (state: appStateType) => {
     return (state.auth.captchaUrl)
 }
+export const getAuthPhoto = (state: appStateType) => {
+    return (state.auth.photo)
+}
+export const getAuthProfileInfo = (state: appStateType) => {
+    return (state.auth.profileInfo)
+}

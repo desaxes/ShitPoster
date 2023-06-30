@@ -3,14 +3,16 @@ import pencil from './../../img/pencil.png'
 import pencilColor from './../../img/pencil_color.png'
 import s from './profile.module.css'
 import { useForm } from 'react-hook-form'
+import { AppDispatch } from '../../redux/redux-store'
+import { useDispatch } from 'react-redux'
+import { setStatus } from '../../redux/profile-reducer'
 type props = {
-    setStatus: (id: number, status: string) => void
     profileId: number
-    authId: number
-    status: string
+    authId: number | null
+    status: string | null
 }
 const ProfileStatus: React.FC<props> = (props) => {
-
+    const dispatch: AppDispatch = useDispatch()
     const { register, reset } = useForm()
     const [editMode, setEditMode] = useState(false)
     const [pencilMode, setPencilMode] = useState(false)
@@ -25,7 +27,7 @@ const ProfileStatus: React.FC<props> = (props) => {
     }
     const deactivateEditMode = (e: any) => {
         setEditMode(false)
-        props.setStatus(props.authId, e.currentTarget.value)
+        dispatch(setStatus(props.authId === null ? 0 : props.authId, e.currentTarget.value))
         reset()
     }
     return (
@@ -35,7 +37,8 @@ const ProfileStatus: React.FC<props> = (props) => {
                     <q>{props.status}</q>
                 </div> :
                 <form>
-                    <input {...register('status')} autoFocus onBlur={deactivateEditMode} maxLength={25} className={s.status_input} placeholder={props.status}></input>
+                    <input {...register('status')} autoFocus onBlur={deactivateEditMode} maxLength={25} className={s.status_input}
+                        placeholder={props.status === null ? '' : props.status}></input>
                 </form>
             }
             {props.profileId === props.authId && <div className={s.pencil_box}>

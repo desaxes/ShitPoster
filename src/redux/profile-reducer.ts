@@ -121,14 +121,14 @@ const getStatusFromServer = (userid: number): thunkType => async (dispatch) => {
     dispatch(ProfileActions.setProfileStatus(response))
 
 }
-const setPhoto = (img: string) => async (dispatch: any) => {
+const setPhoto = (img: string):thunkType => async (dispatch: any) => {
     let data = await authAPI.setUserPhoto(img)
     if (data.resultCode === 0) {
         dispatch(ProfileActions.setUserPhoto(data.data.photos.small, data.data.photos.large))
     }
 }
 const changeProfileInfo = (id: number, about: string, job: boolean, desc: string, fname: string,
-    git: string, vk: string, fb: string, inst: string, twit: string, web: string, yt: string, ml: string) => async (dispatch: any) => {
+    git: string, vk: string, fb: string, inst: string, twit: string, web: string, yt: string, ml: string):thunkType => async (dispatch: any) => {
         let data = await authAPI.setUserInfo({
             userId: id,
             aboutMe: about,

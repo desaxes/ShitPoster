@@ -8,9 +8,8 @@ const instance = axios.create({
     headers: { "API-KEY": "568f7a3f-f1e5-4bdb-af65-e3569e78f4b7" }
 })
 const userAPI = {
-    getUsers(pageSize = 5, pageNumber = 1, term = '') {
-        return (instance.get<APITypes.userAPITypes.getUsersType>("users?count=" +
-            pageSize + "&page=" + pageNumber + '&term=' + term).then(response => response.data))
+    getUsers(search: string) {
+        return (instance.get<APITypes.userAPITypes.getUsersType>("users" + search).then(response => response.data))
     },
     getSubUsers() {
         return (instance.get<APITypes.userAPITypes.getUsersType>("users?friend=" + true + "&count=100").then(response => response.data))

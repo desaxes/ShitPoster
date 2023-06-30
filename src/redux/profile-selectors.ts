@@ -12,3 +12,6 @@ export const getUserId = (state: appStateType) => {
 export const getStatus = (state: appStateType) => {
     return (state.profilePage.status)
 }
+export const getFollowedInfo = (state: appStateType) => {
+    return (state.profilePage.followed)
+}

@@ -32,18 +32,6 @@ const actions = {
 export type NewsActionTypes = InferActionsTypes<typeof actions>
 // ----------------------------------------------INIT STATE TYPES-----------------------------------------
 
-type postArrayType = {
-    id: string,
-    userId: number | null,
-    name: string,
-    time: string,
-    posttext: string,
-    like_count: number,
-    postimage: string | null,
-    avatar: string | null,
-    comments: commentArrayType
-}[]
-
 type initialStateType = {
     postData: Array<postType>,
     currentPost: postType

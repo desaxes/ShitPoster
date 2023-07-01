@@ -1,25 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import s from './newsfeed.module.css'
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Post from '../posts/post';
-import { appStateType } from '../../redux/redux-store';
+import { getPosts } from '../../redux/profile-selectors';
+import { NativeSelect } from '@mantine/core';
 
-const Newsfeed: React.FC<postPageProps> = (props) => {
-    let posts = [...props.posts].reverse().map(p => <Post key={p.id} postId={p.userId} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
+const Newsfeed: React.FC = () => {
+    const [value, setValue] = useState('0');
+    useEffect(() => {
+
+    }, [value])
+    const postData = useSelector(getPosts)
+    const postDataFilter = [...postData].filter(p => p.like_count > parseInt(value))
+    let posts = [...postDataFilter].reverse().map(p => <Post key={p.id} postId={p.userId} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments} />
     )
     return <>
         <div className={s.newsfeed}>
-            {/* <div className="page-block"> */}
+            <div className={s.select}>
+                <NativeSelect
+                    data={['0', '+10', '+25', '+50']}
+                    label="Sort Posts"
+                    size='xs'
+                    variant="filled"
+                    value={value}
+                    onChange={(event) => setValue(event.currentTarget.value)}
+                />
+            </div>
             {posts}
-            {/* </div> */}
         </div>
     </>
 }
-const mapStateToProps = (state: appStateType) => {
-    return {
-        posts: state.news.postData
-    }
-}
-const NewsfeedContainer = connect(mapStateToProps, {})(Newsfeed)
-export default NewsfeedContainer
+
+
+export default Newsfeed

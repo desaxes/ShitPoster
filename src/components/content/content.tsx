@@ -9,8 +9,8 @@ const ProfilePage = React.lazy(() => import('../profile/profile'))
 const SubsPage = React.lazy(() => import('../subs/subs'))
 const LoginPage = React.lazy(() => import('../login/login'))
 const PostEditorContainer = React.lazy(() => import('../editor/editor'))
-const NewsfeedContainer = React.lazy(() => import('../newsfeed/newsfeed'))
-const PopularContainer = React.lazy(() => import('../popular/popular/popular'))
+const Newsfeed = React.lazy(() => import('../newsfeed/newsfeed'))
+const PopularPage = React.lazy(() => import('../popular/popular/popular'))
 const PostPageContainer = React.lazy(() => import('../posts/post-page'))
 
 const Content = (props: ownPPProps) => {
@@ -22,8 +22,8 @@ const Content = (props: ownPPProps) => {
                         <Routes>
                             <Route path='/ShitPoster' element={<Navigate to='/newsfeed' />} />
                             <Route path='/profile/:id?' element={<ProfilePage />} />
-                            <Route path='/popular' element={<PopularContainer />} />
-                            <Route path='/newsfeed' element={<NewsfeedContainer />} />
+                            <Route path='/popular' element={<PopularPage />} />
+                            <Route path='/newsfeed' element={<Newsfeed />} />
                             <Route path='/messages' element={<MessagesContainer />} />
                             <Route path='/subs' element={<SubsPage />} />
                             <Route path='/login' element={<LoginPage />} />

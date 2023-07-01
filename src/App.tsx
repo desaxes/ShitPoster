@@ -1,11 +1,13 @@
 import './App.css';
 import Main from './components/main/main';
-import HeaderContainer from './components/header/header-container';
+import Header from './components/header/header';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { initialize } from "./redux/app-reducer";
 import { Preloader } from './components/common_components/preloader';
 import { appStateType } from './redux/redux-store';
+import { useDisclosure } from '@mantine/hooks';
+import { Dialog, Group, Button, TextInput, Text } from '@mantine/core';
 type props = {
   initialized: boolean
   initialize: () => void
@@ -18,7 +20,7 @@ const App: React.FC<props> = (props) => {
     return (
       <div className="App">
         <div className='wrapper'>
-          <HeaderContainer />
+          <Header />
           <Main />
         </div>
       </div>

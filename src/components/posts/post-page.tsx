@@ -1,7 +1,7 @@
 import s from './post.module.css'
 import React from 'react'
 import comment from './../../img/com_item.png'
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { openPost, addComment, like } from '../../redux/news-reducer.ts';
@@ -9,56 +9,66 @@ import { addToLikeList } from '../../redux/auth-reducer.ts';
 import { useForm } from 'react-hook-form';
 import { Textarea } from '@mantine/core'
 import avatar from './../../img/shit_icon.png'
-import { appStateType } from '../../redux/redux-store.ts';
+import { AppDispatch, appStateType } from '../../redux/redux-store.ts';
 import { compose } from 'redux';
+import * as authSelectors from '../../redux/auth-selectors.ts'
+import * as newsSelectors from '../../redux/news-selectors.ts'
+import { getCurrentPost } from './../../redux/news-selectors';
 
-type props = ownPPProps & statePPProps & dispatchPPProps
+type props = ownPPProps
 const PostPage: React.FC<props> = (props) => {
+
+    const post = useSelector(newsSelectors.getCurrentPost)
+    const login = useSelector(authSelectors.getLogin)
+    const likeList = useSelector(authSelectors.getLikedPosts)
+    const isAuth = useSelector(authSelectors.getIsAuth)
+    const authPhoto = useSelector(authSelectors.getAuthPhoto)
+    const dispatch: AppDispatch = useDispatch()
     const { register, handleSubmit, reset } = useForm()
     let postId = useParams()
     const navigate = useNavigate()
     useEffect(() => {
         props.news.filter(post => {
             if (post.id === postId.id) {
-                props.openPost(post.id, post.userId,
+                dispatch(openPost(post.id, post.userId,
                     post.name, post.time, post.posttext,
-                    post.like_count, post.postimage, post.avatar, post.comments)
+                    post.like_count, post.postimage, post.avatar, post.comments))
             }
         })
     }, [postId, props.news])
-    const comments = props.post.comments.map(c => <Comment key={c.id} ava={c.avatar} name={c.name} text={c.text} />)
+    const comments = post.comments.map(c => <Comment key={c.id} ava={c.avatar} name={c.name} text={c.text} />)
     const sendComment = (e: any) => {
-        props.addComment(postId.id, props.authPhoto, props.login, e.com)
+        dispatch(addComment(postId.id as string, authPhoto as string, login as string, e.com))
         reset()
     }
     const likePost = () => {
-        if (props.isAuth === true) {
-            props.like(props.post.id)
-            props.addToLikeList(props.post.id)
+        if (isAuth === true) {
+            dispatch(like(post.id))
+            dispatch(addToLikeList(post.id))
         }
     }
     const toProfile = () => {
-        navigate('/profile/' + props.post.userId)
+        navigate('/profile/' + post.userId)
     }
     return (
         <div className={s.post}>
             <div className={s.inner}>
                 <div onClick={toProfile} className={s.header}>
                     <div className={s.avatar}>
-                        <img src={props.post.avatar} alt="" />
+                        <img src={post.avatar} alt="" />
                     </div>
                     <div className={s.name}>
-                        {props.post.name}
+                        {post.name}
                     </div>
                     <div className={s.date}>
-                        {props.post.time}
+                        {post.time}
                     </div>
                 </div>
                 <div className={s.post_image}>
-                    <img src={props.post.postimage} alt="" />
+                    <img src={post.postimage} alt="" />
                 </div>
                 <div className={s.text_block}>
-                    <p>{props.post.posttext}</p>
+                    <p>{post.posttext}</p>
                 </div>
                 <div className={s.footer}>
                     <div className={s.left_block}>
@@ -66,21 +76,21 @@ const PostPage: React.FC<props> = (props) => {
                             <img src={comment} alt="" />
                         </button>
                         <div className={s.comments_counter}>
-                            {props.post.comments.length}
+                            {post.comments.length}
                         </div>
                     </div>
                     <div className={s.right_block}>
                         <div className={s.likes_dislikes__counter}>
-                            {props.post.like_count}
+                            {post.like_count}
                         </div>
                         <div className={s.like}>
-                            <button disabled={props.likeList.some(id => id === props.post.id)}
-                                onClick={likePost} type="button" className={`${s.like_btn} ${props.likeList.some(id => id === props.post.id) && props.isAuth && s.liked}`}>❤</button>
+                            <button disabled={likeList.some(id => id === post.id)}
+                                onClick={likePost} type="button" className={`${s.like_btn} ${likeList.some(id => id === post.id) && isAuth && s.liked}`}>❤</button>
                         </div>
                     </div>
                 </div>
                 <div className={s.comments_box}>
-                    {props.isAuth && <form onSubmit={handleSubmit(sendComment)} className={s.form}>
+                    {isAuth && <form onSubmit={handleSubmit(sendComment)} className={s.form}>
                         <div className={s.textbox}><Textarea required {...register('com')} placeholder='Comment' /></div>
                         <div className={s.btn_box}><input value={'Comment'} className='quick-posting__btn' type="submit" /></div>
                     </form>}
@@ -108,23 +118,4 @@ const Comment: React.FC<commentType> = (props) => {
         </div>
     )
 }
-
-const mapStateToProps = (state: appStateType) => {
-    return {
-        post: state.news.currentPost,
-        login: state.auth.login,
-        likeList: state.auth.likedPosts,
-        isAuth: state.auth.isAuth,
-        authPhoto: state.auth.photo,
-    }
-}
-// const PostPageContainer = connect(mapStateToProps, { openPost, addComment, addToLikeList, like })(PostPage)
-export default compose<React.FC<ownPPProps>>(
-    connect(mapStateToProps,
-        {
-            openPost,
-            addComment,
-            addToLikeList,
-            like
-        })
-)(PostPage);
+export default PostPage;

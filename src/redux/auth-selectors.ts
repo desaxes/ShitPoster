@@ -27,3 +27,4 @@ export const getAuthPhoto = (state: appStateType) => {
 export const getAuthProfileInfo = (state: appStateType) => {
     return (state.auth.profileInfo)
 }
+

@@ -76,17 +76,6 @@ type postsOwnProps = {
     comments: commentArrayType
 }
 
-type postsStateProps = {
-    likeList: string[]
-    isAuth: boolean
-}
-
-type postsDispatchProps = {
-    openPost: () => void
-    addToLikeList: (postId: string) => void
-    like: (postId: string) => void
-}
-
 type postPageProps = {
     posts: postType[]
 }
@@ -95,20 +84,6 @@ type postPageProps = {
 
 type ownPPProps = {
     news: postType[]
-}
-type statePPProps = {
-    post: postType
-    login: string
-    likeList: string[]
-    isAuth: boolean
-    authPhoto: string
-}
-type dispatchPPProps = {
-    openPost: (id: string, userId: number | null, name: string, time: string, text: string, likes: number, image: string,
-        avatar: string, comments: commentArrayType) => void
-    addComment: (postId: string | undefined, photo: string, login: string, comment: string) => void
-    addToLikeList: (postId: string) => void
-    like: (postId: string) => void
 }
 type commentArrayType =
     {

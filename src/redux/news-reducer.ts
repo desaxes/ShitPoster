@@ -11,6 +11,7 @@ import week6 from './../img/react-6week.png'
 import week7 from './../img/react-7week.png'
 import week8 from './../img/react-8week.png'
 import week9 from './../img/react-9week.png'
+import week10 from './../img/react-10week.png'
 import test from './../img/profile_head.png'
 import { InferActionsTypes } from './redux-store'
 // ----------------------------------------------ACTIONS---------------------------------------------------
@@ -219,7 +220,7 @@ const initialState: initialStateType = {
             userId: 29179,
             name: 'desaxe',
             time: '24 June 2023',
-            posttext: "ninth Week",
+            posttext: "Ninth Week",
             like_count: 69,
             postimage: week9,
             avatar: avatar,
@@ -229,6 +230,24 @@ const initialState: initialStateType = {
                     avatar: avatar2,
                     name: "Kyle",
                     text: "Typescript is so COOL!!!"
+                }
+            ]
+        },
+        {
+            id: "10",
+            userId: 29179,
+            name: 'desaxe',
+            time: '2 Jule 2023',
+            posttext: "Tenth Week",
+            like_count: 17,
+            postimage: week10,
+            avatar: avatar,
+            comments: [
+                {
+                    id: '13',
+                    avatar: avatar2,
+                    name: "Kyle",
+                    text: "Comment"
                 }
             ]
         }

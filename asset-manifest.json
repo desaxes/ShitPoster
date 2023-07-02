@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ShitPoster/static/css/main.bec63892.css",
-    "main.js": "/ShitPoster/static/js/main.10e00f62.js",
+    "main.js": "/ShitPoster/static/js/main.24e7d54f.js",
     "static/css/310.6c768c27.chunk.css": "/ShitPoster/static/css/310.6c768c27.chunk.css",
     "static/js/310.dcbd53f8.chunk.js": "/ShitPoster/static/js/310.dcbd53f8.chunk.js",
     "static/js/203.986702d5.chunk.js": "/ShitPoster/static/js/203.986702d5.chunk.js",
@@ -47,7 +47,7 @@
     "static/media/Spin.svg": "/ShitPoster/static/media/Spin.2a1e2afd20769ed7d2400020207653c9.svg",
     "index.html": "/ShitPoster/index.html",
     "main.bec63892.css.map": "/ShitPoster/static/css/main.bec63892.css.map",
-    "main.10e00f62.js.map": "/ShitPoster/static/js/main.10e00f62.js.map",
+    "main.24e7d54f.js.map": "/ShitPoster/static/js/main.24e7d54f.js.map",
     "310.6c768c27.chunk.css.map": "/ShitPoster/static/css/310.6c768c27.chunk.css.map",
     "310.dcbd53f8.chunk.js.map": "/ShitPoster/static/js/310.dcbd53f8.chunk.js.map",
     "203.986702d5.chunk.js.map": "/ShitPoster/static/js/203.986702d5.chunk.js.map",
@@ -68,6 +68,6 @@
   },
   "entrypoints": [
     "static/css/main.bec63892.css",
-    "static/js/main.10e00f62.js"
+    "static/js/main.24e7d54f.js"
   ]
 }

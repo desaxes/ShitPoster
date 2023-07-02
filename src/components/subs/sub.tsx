@@ -27,7 +27,7 @@ const Sub: React.FC<propsType> = (props) => {
     }
     return (
         <li className={s.sub}>
-            <NavLink onClick={setProfileInfo} to={'/profile/' + props.id} className={s.link_box}>
+            <NavLink onClick={setProfileInfo} to={'/ShitPoster/profile/' + props.id} className={s.link_box}>
                 <img className={s.avatar} src={props.avatar === null ? avatar : props.avatar} alt="" />
                 <div className={s.text}>
                     <p className={s.title}>{props.name}</p>

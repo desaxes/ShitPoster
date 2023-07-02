@@ -26,7 +26,7 @@ const ProfilePage: React.FC = (props) => {
     const navigate = useNavigate()
     useEffect(() => {
         if (!userid.id) {
-            navigate('/profile/' + authId)
+            navigate('/ShitPoster/profile/' + authId)
         } else {
             dispatch(getUserProfile(parseInt(userid.id)));
         }

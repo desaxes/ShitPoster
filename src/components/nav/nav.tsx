@@ -19,7 +19,7 @@ const Nav: React.FC<props> = (props) => {
     }
     const navigate = useNavigate()
     const toProfile = (id: number) => {
-        navigate('profile/' + id)
+        navigate('/ShitPoster/profile/' + id)
     }
     let subs = props.subs.map(p =>
         <div onClick={() => { toProfile(p.id) }} className={s.sub_box}><img className={s.sub_avatar} src={p.photos.small === null ? logo : p.photos.small} alt="" /> <p className={s.name}>{p.name}</p></div>)
@@ -27,22 +27,22 @@ const Nav: React.FC<props> = (props) => {
         {props.isAuth ?
             <ul className={s.ul}>
                 <li className={s.item}>
-                    <button onClick={toMyProfile} className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to={'/profile/' + props.id}>Profile</NavLink></button>
+                    <button onClick={toMyProfile} className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to={'/ShitPoster/profile/' + props.id}>Profile</NavLink></button>
                 </li>
                 <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/popular'>Popular</NavLink></button>
+                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/ShitPoster/popular'>Popular</NavLink></button>
                 </li>
                 <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/newsfeed'>News Feed</NavLink></button>
+                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/ShitPoster/newsfeed'>News Feed</NavLink></button>
                 </li>
                 <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/subs?page=1'>Subs</NavLink></button>
+                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/ShitPoster/subs?page=1'>Subs</NavLink></button>
                 </li>
                 <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/messages'>Messages</NavLink></button>
+                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/ShitPoster/messages'>Messages</NavLink></button>
                 </li>
                 <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/posteditor'>Post Editor</NavLink></button>
+                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/ShitPoster/posteditor'>Post Editor</NavLink></button>
                 </li>
                 {/* <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/music'>Music</NavLink></button>
@@ -51,10 +51,10 @@ const Nav: React.FC<props> = (props) => {
             :
             <ul className={s.ul}>
                 <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/popular'>Popular</NavLink></button>
+                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/ShitPoster/popular'>Popular</NavLink></button>
                 </li>
                 <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/newsfeed'>News Feed</NavLink></button>
+                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/ShitPoster/newsfeed'>News Feed</NavLink></button>
                 </li>
                 {/* <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/music'>Music</NavLink></button>

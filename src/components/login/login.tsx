@@ -90,7 +90,7 @@ const LoginPage: React.FC = () => {
     }
     else {
         return (
-            <Navigate to={"/profile/" + id} />
+            <Navigate to={"/ShitPoster/profile/" + id} />
         )
     }
 }

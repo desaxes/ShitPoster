@@ -20,16 +20,16 @@ const Content = (props: ownPPProps) => {
                 <div className='content__inner'>
                     <Suspense fallback={<Preloader />}>
                         <Routes>
-                            <Route path='/ShitPoster' element={<Navigate to='/newsfeed' />} />
-                            <Route path='/profile/:id?' element={<ProfilePage />} />
-                            <Route path='/popular' element={<PopularPage />} />
-                            <Route path='/newsfeed' element={<Newsfeed />} />
-                            <Route path='/messages' element={<MessagesContainer />} />
-                            <Route path='/subs' element={<SubsPage />} />
-                            <Route path='/login' element={<LoginPage />} />
-                            <Route path='/post/:id' element={<PostPageContainer news={props.news} />} />
-                            <Route path='/posteditor' element={<PostEditorContainer />} />
-                            <Route path='/settings' element={<ProfileSettings />} />
+                            <Route path='/ShitPoster' element={<Navigate to='/ShitPoster/newsfeed' />} />
+                            <Route path='/ShitPoster/profile/:id?' element={<ProfilePage />} />
+                            <Route path='/ShitPoster/popular' element={<PopularPage />} />
+                            <Route path='/ShitPoster/newsfeed' element={<Newsfeed />} />
+                            <Route path='/ShitPoster/messages' element={<MessagesContainer />} />
+                            <Route path='/ShitPoster/subs' element={<SubsPage />} />
+                            <Route path='/ShitPoster/login' element={<LoginPage />} />
+                            <Route path='/ShitPoster/post/:id' element={<PostPageContainer news={props.news} />} />
+                            <Route path='/ShitPoster/posteditor' element={<PostEditorContainer />} />
+                            <Route path='/ShitPoster/settings' element={<ProfileSettings />} />
                             <Route path='*' element={<ErrorPage />} />
                         </Routes>
                     </Suspense>

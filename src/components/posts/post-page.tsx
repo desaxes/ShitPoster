@@ -48,7 +48,7 @@ const PostPage: React.FC<props> = (props) => {
         }
     }
     const toProfile = () => {
-        navigate('/profile/' + post.userId)
+        navigate('/ShitPoster/profile/' + post.userId)
     }
     return (
         <div className={s.post}>

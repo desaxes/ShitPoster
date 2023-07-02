@@ -6,7 +6,10 @@
         "moduleResolution": "node",
         "lib": [
             "dom",
-            "esnext"
+            "esnext",
+            "es5", 
+            "es6", 
+            "dom.iterable"
         ],
         "strict": true,
         "sourceMap": true,
@@ -18,4 +21,5 @@
     "exclude": [
         "node_modules"
     ]
+    
 }

@@ -14,7 +14,7 @@ type props = {
 const AuthRedirect = (Component: React.ComponentType<props>) => {
     return connect(mapStateToProps)(function (props: props) {
         if (props.isAuth === false) {
-            return <Navigate to='/login' />
+            return <Navigate to='/ShitPoster/login' />
         }
         else { return <Component {...props} /> }
     }

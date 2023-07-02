@@ -1,5 +1,5 @@
 import s from './header.module.css'
-import React from 'react'
+import React, { FC, useEffect } from 'react'
 import logo from './../../img/shit_icon.png'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -10,7 +10,24 @@ import { logout } from '../../redux/auth-reducer.ts';
 import { useDisclosure } from '@mantine/hooks';
 import { Dialog, Group, Button, TextInput, Text, Flex, Avatar, Textarea, ScrollArea } from '@mantine/core';
 
-const Header: React.FC = () => {
+const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+type chatData = {
+    message: string,
+    photo: string,
+    userId: number,
+    userName: string
+}
+const Header: React.FC = React.memo(() => {
+
+    const [chatData, setChatData] = useState<chatData[]>([])
+    const [messageText, setMessageText] = useState('')
+    useEffect(() => {
+        ws.addEventListener('message', (e) => {
+            let newMessages = JSON.parse(e.data)
+            setChatData((prevMessages) => ([...prevMessages, ...newMessages]))
+        })
+    }, [])
+    const messages = chatData?.map((m, index) => <ChatMessage key={index} message={m.message} photo={m.photo} userId={m.userId} userName={m.userName} />)
     const id = useSelector(authSelectors.getAuthId)
     const isAuth = useSelector(authSelectors.getIsAuth)
     const login = useSelector(authSelectors.getLogin)
@@ -27,15 +44,21 @@ const Header: React.FC = () => {
         }
     }
     const toProfile = () => {
-        navigate("/profile/" + id)
+        navigate("/ShitPoster/profile/" + id)
     }
     const toSettings = () => {
-        navigate("/settings")
+        navigate("/ShitPoster/settings")
     }
     const exitProfile = () => {
         dispatch(logout());
-        navigate("/login")
+        navigate("/ShitPoster/login")
         рunchSwitch(false)
+    }
+    const sendMessage = (data: string) => {
+        if (data != '') {
+            ws.send(data)
+        }
+        setMessageText('')
     }
     const [opened, { toggle, close }] = useDisclosure(false);
     return (
@@ -44,14 +67,14 @@ const Header: React.FC = () => {
                 <div>
                     <img className={s.logo} src={logo} alt='logotip'></img>
                 </div>
-                <NavLink to="/newsfeed" className={s.title}>
+                <NavLink to="/ShitPoster/newsfeed" className={s.title}>
                     ShitPoster
                 </NavLink>
                 {isAuth === true ? <Group position="center">
                     <button onClick={toggle} className='quick-posting__btn'>Open Chat</button>
                 </Group> : undefined}
                 <div className={s.flex}>{isAuth === false ?
-                    <NavLink to="/login" className={s.login}>Login</NavLink> : <div className={s.authorize}>
+                    <NavLink to="/ShitPoster/login" className={s.login}>Login</NavLink> : <div className={s.authorize}>
                         <div className={s.flex}>
                             <div className={s.header__avatar}>
                                 <img className={s.avatar}
@@ -82,52 +105,29 @@ const Header: React.FC = () => {
                     <Text size="sm" mb="xs" weight={500}>
                         CHAT
                     </Text>
-                    <Flex direction='column'>
-                        <ScrollArea h={300}>
-                            <Flex align={'center'}>
-                                <Avatar></Avatar>
-                                <Text>Message</Text>
-                            </Flex>
-                            <Flex align={'center'}>
-                                <Avatar></Avatar>
-                                <Text>Message</Text>
-                            </Flex>
-                            <Flex align={'center'}>
-                                <Avatar></Avatar>
-                                <Text>Message</Text>
-                            </Flex>
-                            <Flex align={'center'}>
-                                <Avatar></Avatar>
-                                <Text>Message</Text>
-                            </Flex>
-                            <Flex align={'center'}>
-                                <Avatar></Avatar>
-                                <Text>Message</Text>
-                            </Flex>
-                            <Flex align={'center'}>
-                                <Avatar></Avatar>
-                                <Text>Message</Text>
-                            </Flex>
-                            <Flex align={'center'}>
-                                <Avatar></Avatar>
-                                <Text>Message</Text>
-                            </Flex>
-                            <Flex align={'center'}>
-                                <Avatar></Avatar>
-                                <Text>Message</Text>
-                            </Flex>
-                            <Flex align={'center'}>
-                                <Avatar></Avatar>
-                                <Text>Message</Text>
-                            </Flex>
+                    <Flex direction='column' p={10}>
+                        <ScrollArea h={300} pr={20}>
+                            {messages}
                         </ScrollArea>
                         <Flex justify={'space-between'} align={'center'} gap={40}>
-                            <Textarea placeholder="Enter message" sx={{ flex: 6 }} />
-                            <Button onClick={close} sx={{ flex: 1 }}>Send</Button>
+                            <Textarea onChange={(e) => setMessageText(e.currentTarget.value)} value={messageText} placeholder="Enter message" sx={{ flex: 6 }} />
+                            <Button onClick={(e) => sendMessage(messageText)} sx={{ flex: 1 }}>Send</Button>
                         </Flex>
                     </Flex>
                 </Dialog> : undefined}
             </div>
         </header>)
+}
+)
+const ChatMessage: React.FC<chatData> = (props) => {
+    return (
+        <Flex direction='column' align={'start'} mb={20}>
+            <Flex gap={10} align={'center'}>
+                <Avatar radius={'xl'} src={props.photo === null ? logo : props.photo}></Avatar>
+                <Text fw={700}>{props.userName}</Text>
+            </Flex>
+            <Text maw={200} ml={50}>{props.message}</Text>
+        </Flex>
+    )
 }
 export default Header;

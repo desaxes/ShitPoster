@@ -10,7 +10,7 @@ type loginProps = {
 // =============================================USER-INFO-TYPES=================================================
 type userItemType = {
     name: string,
-    id: number,
+    id: number ,
     uniqueUrlName: null | string,
     photos: {
         small: string,
@@ -59,18 +59,19 @@ type postType = {
     time: string,
     posttext: string,
     like_count: number,
-    postimage: string,
+    postimage: any,
     avatar: string,
     comments: commentArrayType
 }
 type postsOwnProps = {
     postId: number | null
+    userId: number | null
     key: string
     id: string
     name: string
     avatar: string
     time: string
-    postimage: string
+    postimage: any
     posttext: string
     like_count: number
     comments: commentArrayType
@@ -96,6 +97,8 @@ type commentArrayType =
 type DialogType = {
     id: string
     name: string
+    avatar: string
+    messages: Array<{ id: string, inout: string, text: string }>
 }
 type MessagesType = {
     id: string;

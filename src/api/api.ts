@@ -7,6 +7,10 @@ const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
     headers: { "API-KEY": "568f7a3f-f1e5-4bdb-af65-e3569e78f4b7" }
 })
+const newInstance = axios.create({
+    withCredentials: true,
+    baseURL: "https://api.unsplash.com/photos/"
+})
 const userAPI = {
     getUsers(search: string) {
         return (instance.get<APITypes.userAPITypes.getUsersType>("users" + search).then(response => response.data))
@@ -65,4 +69,5 @@ const profileAPI = {
         return (instance.put<APITypes.CommonAPITypes.onlyResultAPIType>("profile/status", { status: status }).then(response => response.data))
     }
 }
+
 export { userAPI, authAPI, profileAPI, securityAPI }

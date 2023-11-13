@@ -1,13 +1,18 @@
-.chat_block{
+.chat_block {
     width: 1200px;
-    position: fixed;
+    /* position: fixed;
     top: 7%;
+    left: 5%; */
+    max-height: 90%;
 }
-.chat_window{
+
+.chat_window {
     padding: 10px;
-    height: 900px;
+    /* min-height: 90px; */
+    width: 800px;
 }
-.text_box{
+
+.text_box {
     /* position: fixed; */
     /* bottom: 10px; */
     display: flex;
@@ -17,7 +22,8 @@
     padding: 0 20px;
     position: relative;
 }
-.text_box textarea{
+
+.text_box textarea {
     width: 750px;
     height: 150px;
     max-width: 800px;
@@ -27,8 +33,48 @@
     padding: 40px;
     font-size: 24px;
     font-weight: 300;
-    background-color: #000000;
+    background: linear-gradient(45deg, #bf6bff9f 0%, #1c05309b 50%);
     color: aquamarine;
     margin-right: 15px;
     resize: none;
+}
+
+.post_button {
+    height: 50px;
+    font-size: 19px;
+}
+
+.contacts {
+    width: 300px;
+    height: 50px;
+    margin-top: 10px;
+}
+
+.contacts:hover .contact_list {
+    display: block;
+}
+
+.contact_list {
+    display: none;
+    border: #fff solid 2px;
+    border-radius: 10px;
+    overflow: scroll;
+    max-height: 700px;
+    overflow-x: hidden;
+    width: 300px;
+    background: linear-gradient(45deg, #6b77ff9f 0%, #1c05309b 50%);
+    text-align: center;
+    
+}
+
+.list_btn {
+    width: 100%;
+    height: 50px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 24px;
+}
+.m_block{
+    display: flex;
 }

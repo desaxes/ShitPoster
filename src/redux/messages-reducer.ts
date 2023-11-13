@@ -1,61 +1,69 @@
+import { randomInt } from 'crypto';
 import mes_style from './../components/chat/messagebox/messagebox.module.css';
+import { InferActionsTypes } from "./redux-store";
+import ff1 from '../img/ff1.png'
+import ff2 from '../img/ff2.png'
+import ff3 from '../img/ff3.png'
+import ken from '../img/Ken.png'
 
-const SEND_MESSAGE = 'SEND-MESSAGE';
+export const dialogActions = {
+    sendMessage: (userId: string, newMessageText: string, inout: string) =>
+        ({ type: 'SEND_MESSAGE', userId, newMessageText, inout } as const),
+    createDialog: (userId: string, name: string, avatar: string) =>
+        ({ type: 'CREATE-DIALOG', userId, name, avatar } as const),
+    currentDialog: (userId: string) =>
+        ({ type: 'CURRENT-DIALOG', userId } as const),
 
-type sendMessageActionType = {
-    type: typeof SEND_MESSAGE,
-    newMessageText: string,
-    id: string
 }
-
-const sendMessage = (newMessageText: string, id: string): sendMessageActionType =>
-    ({ type: SEND_MESSAGE, newMessageText, id })
+export type diologActionTypes = InferActionsTypes<typeof dialogActions>
 
 type initialStateType = {
     dialogsData: Array<{
         id: string;
         name: string;
-    }>;
-    messagesData: {
-        id: string;
-        inout: string;
-        text: string;
-    }[];
+        avatar: string
+        messages: Array<{ id: string, inout: string, text: string }>
+    }>
+    currentDialog: string
 }
 
 let initialState: initialStateType = {
     dialogsData: [
-        { id: '1', name: 'James' },
-        { id: '2', name: 'John' },
-        { id: '3', name: 'Josie' },
-        { id: '4', name: 'Jamie' }
-    ],
 
-    messagesData: [
-        { id: '1', inout: `${mes_style.in}`, text: 'HI' },
-        { id: '2', inout: `${mes_style.out}`, text: 'Hi, John' },
-        { id: '3', inout: `${mes_style.in}`, text: 'How are you' },
-        { id: '4', inout: `${mes_style.out}`, text: 'Im fine' },
-        { id: '5', inout: `${mes_style.out}`, text: 'And You?' },
-        { id: '6', inout: `${mes_style.in}`, text: 'Im too. Sorry, but i should go. My wife come home. Talk later.' },
-        { id: '7', inout: `${mes_style.out}`, text: 'Ok. Bye!' },
-        { id: '8', inout: `${mes_style.in}`, text: 'Ok. Bye!' },
-    ]
+    ],
+    currentDialog: ''
 }
 
 const messagesReducer = (state = initialState, action: any): initialStateType => {
     switch (action.type) {
-        case SEND_MESSAGE: {
+        case 'SEND_MESSAGE': {
             if (action.newMessageText === '') { return state }
             else {
+
                 return {
-                    ...state, messagesData: [...state.messagesData,
-                    { id: action.id + action.newMessageText.substring(2, 7), inout: `${mes_style.out}`, text: action.newMessageText }],
+                    ...state, dialogsData: state.dialogsData.map(e => {
+                        if (e.id === action.userId) {
+                            return { ...e, messages: [...e.messages, { id: Math.random() + action.newMessageText.substring(2, 7), inout: action.inout, text: action.newMessageText }] }
+                        }
+                        else {
+                            return e
+                        }
+                    })
                 }
+            }
+        }
+        case 'CREATE-DIALOG': {
+            return {
+                ...state, dialogsData: [...state.dialogsData, { id: action.userId, name: action.name, avatar: action.avatar, messages: [] }]
+            }
+        }
+        case 'CURRENT-DIALOG': {
+            return {
+                ...state, currentDialog: action.userId
             }
         }
         default: return state;
     }
 }
 
-export { sendMessage, messagesReducer }
+export { messagesReducer }

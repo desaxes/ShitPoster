@@ -1,4 +1,4 @@
-.dialog_name{
+.dialog_name {
     border: 2px solid #100c3ac9;
     height: 40px;
     border-radius: 10px;
@@ -9,37 +9,55 @@
     font-weight: 700;
     position: sticky;
     top: 0;
-    background-color: #fff;
+    background: linear-gradient(45deg, #bf6bffcc 0%, #1c0530c9 100%);
     font-style: italic;
+    color: white;
+    cursor: pointer;
 }
-.dialog_name span{
+
+.dialog_name span {
     color: rgb(98, 161, 4);
 }
-.messages{
+
+.messages {
     display: flex;
     flex-direction: column;
     gap: 10px 0;
     margin-top: 20px;
-    height: 600px;
+    height: 500px;
 }
-.message_box{
+
+.message_box {
     overflow: scroll;
     overflow-x: hidden;
 }
-.message{
-    max-width: 400px;
+
+.message {
+    max-width: 350px;
     border: #100c3ac9 solid 2px;
     border-radius: 6px;
     color: #fff;
     padding: 10px 10px;
+    font-size: 18px;
 }
-.in{
+
+.in {
     align-self: flex-start;
-    background-color: #100c3a6e;
+    background: linear-gradient(45deg, #1c0530c9 0%, #bf6bffcc 50%);
     margin-left: 5%;
 }
-.out{
+
+.out {
     align-self: flex-end;
-    background-color: #040219c9;
+    background: linear-gradient(45deg, #bf6bffcc 0%, #1c0530c9 50%);
     margin-right: 5%;
+    word-wrap: break-word;
+}
+
+.dialog_avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin: 0 15px;
+    cursor: pointer;
 }

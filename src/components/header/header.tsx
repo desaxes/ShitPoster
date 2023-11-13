@@ -111,7 +111,7 @@ const Header: React.FC = React.memo(() => {
                         </ScrollArea>
                         <Flex justify={'space-between'} align={'center'} gap={40}>
                             <Textarea onChange={(e) => setMessageText(e.currentTarget.value)} value={messageText} placeholder="Enter message" sx={{ flex: 6 }} />
-                            <Button onClick={(e) => sendMessage(messageText)} sx={{ flex: 1 }}>Send</Button>
+                            <Button disabled={ws.readyState !== WebSocket.OPEN} onClick={(e) => sendMessage(messageText)} sx={{ flex: 1 }}>Send</Button>
                         </Flex>
                     </Flex>
                 </Dialog> : undefined}

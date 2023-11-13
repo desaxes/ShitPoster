@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import profile_head_img from './../../img/profile_head.png'
 import logo from './../../img/shit_icon.png'
 import s from './profile.module.css'
 import Post from '../posts/post.tsx'
 import ProfileStatus from './profile-status';
 import { useForm } from 'react-hook-form';
-import { Accordion, Button, FileButton, Tabs, Textarea } from '@mantine/core';
+import { Accordion, Button, FileButton, Flex, Tabs, Textarea, Text } from '@mantine/core';
 import { following } from '../../redux/subs-reducer.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import * as profileSelectors from '../../redux/profile-selectors.ts'
 import * as authSelectors from '../../redux/auth-selectors.ts'
+import * as dialogSelectors from '../../redux/messages-selectors.ts'
+import { dialogActions } from '../../redux/messages-reducer';
+import * as newsSelectors from '../../redux/news-selectors.ts'
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppDispatch } from '../../redux/redux-store.ts';
 import { getUserProfile, setPhoto } from '../../redux/profile-reducer.ts';
@@ -17,6 +20,7 @@ import { addPost } from '../../redux/news-reducer.ts';
 import { changeAuthPhoto } from '../../redux/auth-reducer.ts';
 import { AuthRedirect } from '../common_components/hoc-components.tsx';
 import { compose } from 'redux';
+import { scrollUp } from '../common_components/functions.ts';
 
 type FormValues = {
     postText: string
@@ -25,12 +29,17 @@ const ProfilePage: React.FC = (props) => {
     const userid = useParams()
     const navigate = useNavigate()
     useEffect(() => {
+        scrollUp()
+    }, [])
+    useEffect(() => {
         if (!userid.id) {
             navigate('/ShitPoster/profile/' + authId)
         } else {
             dispatch(getUserProfile(parseInt(userid.id)));
         }
     }, [userid.id])
+    useEffect(() => { localStorage.postImage = '' }, [])
+    const [loadImage, setLoadImage] = useState<boolean>(false)
     const postData = useSelector(profileSelectors.getPosts)
     const status = useSelector(profileSelectors.getStatus)
     const profileInfo = useSelector(profileSelectors.getProfileInfo)
@@ -39,11 +48,10 @@ const ProfilePage: React.FC = (props) => {
     const login = useSelector(authSelectors.getLogin)
     const followed = useSelector(profileSelectors.getFollowedInfo)
     const dispatch: AppDispatch = useDispatch()
-
     const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({ mode: 'onSubmit' });
     let sortedPosts = [...postData].reverse().filter(e => e.userId === profileInfo.userId)
 
-    let posts = sortedPosts.map(p => <Post postId={p.userId} key={p.id} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
+    let posts = sortedPosts.map(p => <Post postId={p.userId} key={p.id} userId={p.userId} id={p.id} name={p.name} avatar={p.avatar} time={p.time}
         postimage={p.postimage} posttext={p.posttext} like_count={p.like_count} comments={p.comments} />)
     let rait = 0
     for (let i = 0; i < posts.length; i++) {
@@ -51,8 +59,10 @@ const ProfilePage: React.FC = (props) => {
         rait = rait + element.props.like_count
     }
     let onSubmit = (e: any) => {
-        dispatch(addPost(authId, login === null ? '' : login, authPhoto === null ? logo : authPhoto, '', 'Now', e.postText, 0))
+        dispatch(addPost(authId, login === null ? '' : login, authPhoto === null ? logo : authPhoto, localStorage.getItem('postImage'), 'Now', e.postText, 0))
         reset()
+        localStorage.postImage = ''
+        setLoadImage(false)
     }
     const setUserPhoto = (e: any) => {
         // props.setPhoto(e.target.files[0])
@@ -63,6 +73,26 @@ const ProfilePage: React.FC = (props) => {
         dispatch(following(followed, profileInfo.userId))
         dispatch(getUserProfile(profileInfo.userId))
     }
+    const setPostImage = (e: any) => {
+        const image = URL.createObjectURL(e)
+        // localStorage.setItem('postImage', image)
+        localStorage.postImage = image
+        setLoadImage(true)
+        console.log(localStorage.postImage)
+    }
+
+    const dialogs = useSelector(dialogSelectors.getDialogsData)
+    const openDialog = () => {
+        if (dialogs.some(e => e.id === profileInfo.userId.toString())) {
+            navigate('/ShitPoster/messages/' + profileInfo.userId)
+        }
+        else {
+            dispatch(dialogActions.createDialog(profileInfo.userId.toString(), profileInfo.fullName != null ? profileInfo.fullName : 'Unknown', profileInfo.photos.small != null ? profileInfo.photos.small : ''))
+            navigate('/ShitPoster/messages/' + profileInfo.userId)
+        }
+    }
+
+    console.log(localStorage.postImage)
     return (
         <div className={s.profile}>
             <div className={s.head}>
@@ -100,7 +130,7 @@ const ProfilePage: React.FC = (props) => {
                                 </div>
                                 {profileInfo.userId != authId && <div className={s.btn_block}>
                                     <div className='quick-posting-btnbox'>
-                                        <button className='quick-posting__btn'>Send Message</button>
+                                        <button onClick={openDialog} className='quick-posting__btn'>Message</button>
                                     </div>
                                     <div className='quick-posting-btnbox'>
                                         <button onClick={followUser}
@@ -162,9 +192,15 @@ const ProfilePage: React.FC = (props) => {
                 <form onSubmit={handleSubmit(onSubmit)} className='quick-posting page-block'>
                     {
                         <Textarea error={errors?.postText?.message} label='Quick Post' size='xl' {...register("postText", { required: "✎ You must enter the text ⇒", minLength: { value: 10, message: "Min length is 10 symbols" } })} placeholder='Enter Text'
-                            className='quick-posting-field' />}
+                            className='quick-posting-field' />
+                    }
+                    <Flex>
+                        <FileButton disabled={loadImage === true} onChange={setPostImage} accept="image/png,image/jpeg">
+                            {(props) => <Button disabled={loadImage === true} color='green' variant="subtle" size='s' compact {...props}>💾 {loadImage === true && <div>Image Loaded</div>}</Button>}
+                        </FileButton>
+                    </Flex>
                     <div className='quick-posting-btnbox'>
-                        <input value={'Post'} type='submit' className='quick-posting__btn' />
+                        <input value={'Post'} type='submit' className={`${'quick-posting__btn'} ${s.post_button}`} />
                     </div>
                 </form>}
             {posts.length != 0 && <div className="page-block">

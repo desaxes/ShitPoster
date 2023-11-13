@@ -12,6 +12,8 @@ export const authActions = {
         ({ type: 'SET_AUTH_ERROR', errorState: errorState } as const),
     addToLikeList: (id: string) =>
         ({ type: 'ADD_TO_LIKE_LIST', id } as const),
+    removeFromLikeList: (likeList: Array<string>) =>
+        ({ type: 'REMOVE_FROME_LL', likeList } as const),
     setAuthPhoto: (large: string) => ({
         type: 'SET_AUTH_PHOTO', large
     } as const),
@@ -107,6 +109,11 @@ const authReducer = (state = initialState, action: AuthActionTypes): initialStat
         case 'ADD_TO_LIKE_LIST': {
             return { ...state, likedPosts: [...state.likedPosts, action.id] };
         }
+        case 'REMOVE_FROME_LL': {
+            return {
+                ...state, likedPosts: action.likeList
+            }
+        }
         case 'SET_AUTH_PHOTO': {
             return {
                 ...state, photo: action.large
@@ -178,7 +185,9 @@ const getSubUsers = (): thunkType => async (dispatch) => {
     let data = await userAPI.getSubUsers()
     dispatch(authActions.setSubUsers(data.items))
 }
-
+const removeFromLikeList = (likeList: Array<string>): thunkType => async (dispatch) => {
+    dispatch(authActions.removeFromLikeList(likeList))
+}
 export {
     authReducer,
     authtorize,
@@ -188,7 +197,8 @@ export {
     changeAuthPhoto,
     changeAuthInfo,
     getCaptcha,
-    getSubUsers
+    getSubUsers,
+    removeFromLikeList
 }
 
 

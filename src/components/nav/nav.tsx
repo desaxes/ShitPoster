@@ -41,9 +41,6 @@ const Nav: React.FC<props> = (props) => {
                 <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/ShitPoster/messages'>Messages</NavLink></button>
                 </li>
-                <li className={s.item}>
-                    <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/ShitPoster/posteditor'>Post Editor</NavLink></button>
-                </li>
                 {/* <li className={s.item}>
                     <button className={s.link}><NavLink className={navData => navData.isActive ? s.active : s.link} to='/music'>Music</NavLink></button>
                 </li> */}

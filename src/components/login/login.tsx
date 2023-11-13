@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
     const authError = useSelector(authSelectors.getAuthError)
     const captchaUrl = useSelector(authSelectors.getCaptchaUrl)
     const dispatch: AppDispatch = useDispatch()
-
+    
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ mode: 'onBlur' });
     let onSubmit = (e: any) => {
         dispatch(login(e.email, e.password, e.checkbox, e.captcha))

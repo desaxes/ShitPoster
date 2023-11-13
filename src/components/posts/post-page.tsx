@@ -4,8 +4,8 @@ import comment from './../../img/com_item.png'
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { openPost, addComment, like } from '../../redux/news-reducer.ts';
-import { addToLikeList } from '../../redux/auth-reducer.ts';
+import { openPost, addComment, like, dislike } from '../../redux/news-reducer.ts';
+import { addToLikeList, removeFromLikeList } from '../../redux/auth-reducer.ts';
 import { useForm } from 'react-hook-form';
 import { Textarea } from '@mantine/core'
 import avatar from './../../img/shit_icon.png'
@@ -14,11 +14,15 @@ import { compose } from 'redux';
 import * as authSelectors from '../../redux/auth-selectors.ts'
 import * as newsSelectors from '../../redux/news-selectors.ts'
 import { getCurrentPost } from './../../redux/news-selectors';
+import { scrollUp } from '../common_components/functions.ts';
 
 type props = ownPPProps
 const PostPage: React.FC<props> = (props) => {
-
+    useEffect(() => {
+        scrollUp()
+    }, [])
     const post = useSelector(newsSelectors.getCurrentPost)
+    const authId = useSelector(authSelectors.getAuthId)
     const login = useSelector(authSelectors.getLogin)
     const likeList = useSelector(authSelectors.getLikedPosts)
     const isAuth = useSelector(authSelectors.getIsAuth)
@@ -42,9 +46,16 @@ const PostPage: React.FC<props> = (props) => {
         reset()
     }
     const likePost = () => {
-        if (isAuth === true) {
-            dispatch(like(post.id))
-            dispatch(addToLikeList(post.id))
+        if (likeList.some((e) => e === post.id)) {
+            let newLikeList = likeList.filter(e => e != post.id)
+            dispatch(dislike(post.id))
+            dispatch(removeFromLikeList(newLikeList))
+        }
+        else {
+            if (isAuth === true && post.userId != authId) {
+                dispatch(like(post.id))
+                dispatch(addToLikeList(post.id))
+            }
         }
     }
     const toProfile = () => {
@@ -64,9 +75,9 @@ const PostPage: React.FC<props> = (props) => {
                         {post.time}
                     </div>
                 </div>
-                <div className={s.post_image}>
+                {post.postimage != '' && <div className={s.post_image}>
                     <img src={post.postimage} alt="" />
-                </div>
+                </div>}
                 <div className={s.text_block}>
                     <p>{post.posttext}</p>
                 </div>
@@ -84,7 +95,7 @@ const PostPage: React.FC<props> = (props) => {
                             {post.like_count}
                         </div>
                         <div className={s.like}>
-                            <button disabled={likeList.some(id => id === post.id)}
+                            <button
                                 onClick={likePost} type="button" className={`${s.like_btn} ${likeList.some(id => id === post.id) && isAuth && s.liked}`}>❤</button>
                         </div>
                     </div>
@@ -92,7 +103,7 @@ const PostPage: React.FC<props> = (props) => {
                 <div className={s.comments_box}>
                     {isAuth && <form onSubmit={handleSubmit(sendComment)} className={s.form}>
                         <div className={s.textbox}><Textarea required {...register('com')} placeholder='Comment' /></div>
-                        <div className={s.btn_box}><input value={'Comment'} className='quick-posting__btn' type="submit" /></div>
+                        <div className={s.btn_box}><input value={'Comment'} className={`${'quick-posting__btn'} ${s.post_button}`} type="submit" /></div>
                     </form>}
                     {comments}
                 </div>

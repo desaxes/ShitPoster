@@ -23,6 +23,9 @@
     opacity: 0;
     transition: 2s;
     padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .right_panel:hover .rp_inner {
@@ -39,5 +42,5 @@
 
 .right_panel:hover {
     transform: translateX(0%);
-    width: 18%;
+    width: 31%;
 }

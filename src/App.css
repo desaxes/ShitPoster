@@ -1,60 +1,85 @@
 @font-face {
   font-family: 'Pacifico-Regular';
   src: url("fonts/Pacifico-Regular.woff2") format('woff2'),
-  url("fonts/Pacifico-Regular.woff") format('woff'),
-  url("fonts/Pacifico-Regular.eot") format('eot');
+    url("fonts/Pacifico-Regular.woff") format('woff'),
+    url("fonts/Pacifico-Regular.eot") format('eot');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Lato';
   font-weight: 900;
   font-style: normal;
   src: local("Lato"),
-  url("fonts/Lato-Black.woff") format('woff'),
-  url("fonts/Lato-Black.eot") format('eot');
+    url("fonts/Lato-Black.woff") format('woff'),
+    url("fonts/Lato-Black.eot") format('eot');
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Lato';
   font-weight: 700;
   font-style: normal;
   src: local("Lato"),
-  url("fonts/Lato-Bold.woff") format('woff'),
-  url("fonts/Lato-Bold.eot") format('eot');
+    url("fonts/Lato-Bold.woff") format('woff'),
+    url("fonts/Lato-Bold.eot") format('eot');
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Lato';
   font-weight: 400;
   font-style: normal;
   src: local("Lato"),
-  url("fonts/Lato-Regular.woff") format('woff'),
-  url("fonts/Lato-Regular.eot") format('eot');
+    url("fonts/Lato-Regular.woff") format('woff'),
+    url("fonts/Lato-Regular.eot") format('eot');
   font-display: swap;
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  background-color: #bdbdbd;
+}
+
+::-webkit-scrollbar-track {
+  margin: 10px 0;
+  background-color: #cacaca;
+}
+
 .App {
   font-family: 'Pacifico-Regular';
   font-weight: 400;
   color: #fff;
 }
-.wrapper{
+
+.wrapper {
   width: 100%;
   background: linear-gradient(180.95deg, #000000cc 0%, #100c3ac9 100%);
-}   
-.container{
+}
+
+.container {
   width: 1200px;
-  max-width: 1200px;
+
 }
-.page-block{
-margin: 30px 30px;
-background: #ffffff;
-padding-top: 20px;
-padding-bottom: 20px;
-border-radius: 6px;
+
+.page-block {
+  margin: 30px 20px;
+  background: #ffffff;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.quick-posting{
+
+.quick-posting {
   text-align: center;
   height: 300px;
   display: flex;
@@ -63,16 +88,18 @@ border-radius: 6px;
   flex-direction: column;
   position: relative;
 }
-.quick-posting-btnbox{
-  width: 180px;
+
+.quick-posting-btnbox {
+  max-width: 180px;
   height: 40px;
 }
-.quick-posting__btn{
+
+.quick-posting__btn {
   font-size: 20px;
   /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
   border: #000000 solid 2px;
   width: 100%;
-  height: 100%;
+  /* height: 70%; */
   padding: 0 15px;
   background: linear-gradient(45deg, #bf6bffcc 0%, #1c0530c9 100%);
   color: #fff;
@@ -84,11 +111,13 @@ border-radius: 6px;
   justify-content: center;
   cursor: pointer;
 }
-.quick-posting__btn:hover{
+
+.quick-posting__btn:hover {
   box-shadow: 4px 6px 20px #000;
   color: rgb(255, 221, 0);
 }
-.quick-posting-field{
+
+.quick-posting-field {
   width: 95%;
   max-width: 95%;
   max-height: 60%;
@@ -104,6 +133,7 @@ border-radius: 6px;
   resize: none;
   text-align: start;
 }
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -129,6 +159,7 @@ border-radius: 6px;
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

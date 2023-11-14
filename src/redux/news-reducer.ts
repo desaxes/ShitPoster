@@ -48,478 +48,124 @@ type initialStateType = {
     postData: Array<postType>,
     currentPost: postType,
 }
-
+const com = (id: string, avatar: string, name: string, text: string) => {
+    return {
+        id,
+        avatar,
+        name,
+        text
+    }
+}
+const post = (
+    id: string, userId: number | null, name: string, time: string, posttext: string, like_count: number,
+    postimage: string | null, avatar: string, comments: commentArrayType) => {
+    return {
+        id,
+        userId,
+        name,
+        time,
+        posttext,
+        like_count,
+        postimage,
+        avatar,
+        comments
+    }
+}
 // ----------------------------------------------INIT STATE -----------------------------------------
 const initialState: initialStateType = {
     postData: [
-        {
-            id: "1",
-            userId: 29179,
-            name: 'desaxe',
-            time: '29 April 2023',
-            posttext: 'First Week',
-            like_count: 10,
-            postimage: week1,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '1',
-                    avatar: avatar,
-                    name: "desaxe",
-                    text: "Comment"
-                },
-                {
-                    id: '2',
-                    avatar: avatar,
-                    name: "desaxe",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "b1",
-            userId: 29897,
-            name: 'Axim',
-            time: '30 April 2023',
-            posttext: "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Sed ut perspiciatis, quia voluptas sit, aspernatur aut odit aut fugit",
-            like_count: 8,
-            postimage: '',
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'b1',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "2",
-            userId: 29179,
-            name: 'desaxe',
-            time: '6 May 2023',
-            posttext: 'Second Week',
-            like_count: 54,
-            postimage: week2,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '3',
-                    avatar: avatar,
-                    name: "desaxe",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "3",
-            userId: 29179,
-            name: 'desaxe',
-            time: '13 May 2023',
-            posttext: "Third Week",
-            like_count: 86,
-            postimage: week3,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '4',
-                    avatar: avatar,
-                    name: "desaxe",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "a1",
-            userId: 24741,
-            name: 'soulshon',
-            time: '16 May 2023',
-            posttext: "Sed ut perspiciatis, quia voluptas sit, aspernatur aut...",
-            like_count: 18,
-            postimage: ff1,
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'a1',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "4",
-            userId: 29179,
-            name: 'desaxe',
-            time: '20 May 2023',
-            posttext: "Fourth Week",
-            like_count: 15,
-            postimage: week4,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '5',
-                    avatar: avatar,
-                    name: "desaxe",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "b2",
-            userId: 22185,
-            name: 'Delerion',
-            time: '24 May 2023',
-            posttext: "Excepteur sint occaecat cupidatat non proident, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, qui dolorem eum fugiat, quo voluptas nulla pariatur. Et harum quidem rerum facilis est et expedita",
-            like_count: 41,
-            postimage: '',
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'b2',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                },
-                {
-                    id: 'b22',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                },
-                {
-                    id: 'b23',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "5",
-            userId: 29179,
-            name: 'desaxe',
-            time: '27 May 2023',
-            posttext: "Fifth Week",
-            like_count: 124,
-            postimage: week5,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '6',
-                    avatar: avatar,
-                    name: "desaxe",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "a2",
-            userId: 22185,
-            name: 'Delerion',
-            time: '1 June 2023',
-            posttext: "",
-            like_count: 111,
-            postimage: ff2,
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'a2',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "6",
-            userId: 29179,
-            name: 'desaxe',
-            time: '3 June 2023',
-            posttext: "Sixth Week",
-            like_count: 50,
-            postimage: week6,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '7',
-                    avatar: avatar,
-                    name: "desaxe",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "b3",
-            userId: 21453,
-            name: 'Rintik',
-            time: '6 June 2023',
-            posttext: "Lorem ipsum dolor sit amet, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, qui dolorem eum fugiat, quo voluptas nulla pariatur? Duis aute irure dolor in reprehenderit in voluptate, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, qui dolorem eum fugiat, quo voluptas nulla pariatur? Excepteur sint occaecat cupidatat non proident, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem eum fugiat, quo voluptas nulla pariatur. Lorem ipsum dolor sit...",
-            like_count: 2,
-            postimage: '',
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'b3',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "a3",
-            userId: 23232,
-            name: 'Poptyuoq',
-            time: '9 May 2023',
-            posttext: "Duis aute irure dolor",
-            like_count: 19,
-            postimage: ff3,
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'a3',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "7",
-            userId: 29179,
-            name: 'desaxe',
-            time: '10 June 2023',
-            posttext: "Seventh Week",
-            like_count: 51,
-            postimage: week7,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '8',
-                    avatar: avatar,
-                    name: "desaxe",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "a4",
-            userId: 26002,
-            name: 'Chonay',
-            time: '12 June 2023',
-            posttext: "",
-            like_count: 45,
-            postimage: jsg,
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'a4',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "b4",
-            userId: 14259,
-            name: 'Kulio',
-            time: '27 May 2023',
-            posttext: "Quis autem vel eum iure reprehenderit, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, ut et voluptates repudiandae sint et molestiae non recusandae. Sed ut perspiciatis, quis nostrum exercitationem ullam corporis suscipit laboriosam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat? At vero eos et accusamus et iusto odio dignissimos ducimus, quis nostrum exercitationem ullam corporis suscipit laboriosam, obcaecati cupiditate non provident, similique sunt in culpa",
-            like_count: 1,
-            postimage: '',
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'b4',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "0",
-            userId: 1079,
-            name: 'Test',
-            time: '16 June 2023',
-            posttext: 'Test Account',
-            like_count: 77,
-            postimage: test,
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: '9',
-                    avatar: defaultAvatar,
-                    name: "Ummma",
-                    text: "Test?"
-                },
-                {
-                    id: '10',
-                    avatar: defaultAvatar,
-                    name: "Test",
-                    text: "Test!"
-                }
-            ]
-        },
-        {
-            id: "8",
-            userId: 29179,
-            name: 'desaxe',
-            time: '18 June 2023',
-            posttext: "Eighth Week",
-            like_count: 34,
-            postimage: week8,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '11',
-                    avatar: avatar,
-                    name: "desaxe",
-                    text: "Eeeeeeeeeee"
-                }
-            ]
-        },
-        {
-            id: "a5",
-            userId: 18875,
-            name: 'Svyatoslav',
-            time: '19 June 2023',
-            posttext: "Et harum quidem rerum facilis",
-            like_count: 77,
-            postimage: k1,
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'a5',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "9",
-            userId: 29179,
-            name: 'desaxe',
-            time: '24 June 2023',
-            posttext: "Ninth Week",
-            like_count: 69,
-            postimage: week9,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '12',
-                    avatar: avatar2,
-                    name: "Kyle",
-                    text: "Typescript is so COOL!!!"
-                }
-            ]
-        },
-        {
-            id: "10",
-            userId: 29179,
-            name: 'desaxe',
-            time: '2 Jule 2023',
-            posttext: "Tenth Week",
-            like_count: 17,
-            postimage: week10,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '13',
-                    avatar: avatar2,
-                    name: "Kyle",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "11",
-            userId: 1079,
-            name: 'Test',
-            time: '10 November 2023',
-            posttext: 'At vero eos et accusamus et iusto odio dignissimos ducimus, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat? Ut enim ad minima veniam, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, ut et voluptates repudiandae sint et molestiae non recusandae? Duis aute irure dolor in reprehenderit in voluptate, quis nostrum exercitationem ullam corporis suscipit laboriosam, velit esse cillum dolore eu fugiat nulla pariatur. At vero eos et accusamus et iusto odio dignissimos ducimus, consectetur adipiscing elit, ut et voluptates repudiandae sint et molestiae non recusandae. At vero eos et accusamus et iusto odio dignissimos ducimus, quis nostrum exercitationem ullam corporis suscipit laboriosam, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus? Nemo enim ipsam voluptatem, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minima veniam, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, sunt in culpa qui officia deserunt mollit anim id est laborum. Quis autem vel eum...',
-            like_count: 112,
-            postimage: '',
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: '14',
-                    avatar: defaultAvatar,
-                    name: "Ummma",
-                    text: "???"
-                },
-                {
-                    id: '15',
-                    avatar: defaultAvatar,
-                    name: "Test",
-                    text: "What?"
-                }
-            ]
-        },
-        {
-            id: "a6",
-            userId: 29689,
-            name: 'Malina',
-            time: '12 November 2023',
-            posttext: "Duis aute irure dolor in...",
-            like_count: 201,
-            postimage: effy,
-            avatar: defaultAvatar,
-            comments: [
-                {
-                    id: 'a6',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                },
-                {
-                    id: 'a61',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                },
-                {
-                    id: 'a62',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                },
-                {
-                    id: 'a63',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                },
-                {
-                    id: 'a64',
-                    avatar: defaultAvatar,
-                    name: "test",
-                    text: "Comment"
-                }
-            ]
-        },
-        {
-            id: "12",
-            userId: 29179,
-            name: 'desaxe',
-            time: '13 November 2023',
-            posttext: "Eleventh Week",
-            like_count: 27,
-            postimage: week11,
-            avatar: avatar,
-            comments: [
-                {
-                    id: '16',
-                    avatar: avatar2,
-                    name: "Kyle",
-                    text: "Complete"
-                }
-            ]
-        },
+        post('1', 29179, 'desaxe', '29 April 2023', 'First Week', 10, week1, avatar, [
+            com('1', avatar, 'desaxe', 'Comment'),
+            com('2', avatar, 'desaxe', 'Comment'),
+        ]),
+        post('b1', 29897, 'Axim', '30 April 2023',
+            'Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Sed ut perspiciatis, quia voluptas sit, aspernatur aut odit aut fugit',
+            8, '', defaultAvatar, [
+            com('b1', defaultAvatar, 'test', 'Comment')
+        ]),
+        post('2', 29179, 'desaxe', '6 May 2023', 'Second Week', 54, week2, avatar, [
+            com('3', avatar, 'desaxe', 'Comment'),
+        ]),
+        post('3', 29179, 'desaxe', '13 May 2023', 'Third Week', 86, week3, avatar, [
+            com('4', avatar, 'desaxe', 'Comment'),
+        ]),
+        post('a1', 24741, 'soulshon', '16 May 2023', 'Sed ut perspiciatis, quia voluptas sit, aspernatur aut...',
+            18, ff1, defaultAvatar, [
+            com('a1', defaultAvatar, 'test', 'Comment')
+        ]),
+        post('4', 29179, 'desaxe', '20 May 2023', 'Fourth Week', 15, week4, avatar, [
+            com('5', avatar, 'desaxe', 'Comment'),
+        ]),
+        post('b2', 22185, 'Delerion', '24 May 2023',
+            'Excepteur sint occaecat cupidatat non proident, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, qui dolorem eum fugiat, quo voluptas nulla pariatur. Et harum quidem rerum facilis est et expedita',
+            41, '', defaultAvatar, [
+            com('b2', defaultAvatar, 'test', 'Comment')
+        ]),
+        post('5', 29179, 'desaxe', '27 May 2023', 'Fifth Week', 124, week5, avatar, [
+            com('6', avatar, 'desaxe', 'Comment'),
+        ]),
+        post('a2', 22185, 'Delerion', '1 June 2023', '',
+            11, ff2, defaultAvatar, [
+            com('a2', defaultAvatar, 'test', 'Comment')
+        ]),
+        post('6', 29179, 'desaxe', '3 June 2023', 'Sixth Week', 50, week6, avatar, [
+            com('7', avatar, 'desaxe', 'Comment'),
+        ]),
+        post('b3', 21453, 'Rintik', '6 June 2023',
+            'Lorem ipsum dolor sit amet, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, qui dolorem eum fugiat, quo voluptas nulla pariatur? Duis aute irure dolor in reprehenderit in voluptate, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, qui dolorem eum fugiat, quo voluptas nulla pariatur? Excepteur sint occaecat cupidatat non proident, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem eum fugiat, quo voluptas nulla pariatur. Lorem ipsum dolor sit...',
+            2, '', defaultAvatar, [
+            com('b3', defaultAvatar, 'test', 'Comment')
+        ]),
+        post('a3', 23232, 'Poptyuoq', '9 May 2023', 'Duis aute irure dolor',
+            19, ff3, defaultAvatar, [
+            com('a3', defaultAvatar, 'test', 'Comment')
+        ]),
+        post('7', 29179, 'desaxe', '10 June 2023', 'Seventh Week', 51, week7, avatar, [
+            com('8', avatar, 'desaxe', 'Comment'),
+        ]),
+        post('a4', 26002, 'Chonay', '12 June 2023', '',
+            45, jsg, defaultAvatar, [
+            com('a4', defaultAvatar, 'test', 'Comment')
+        ]),
+        post('b4', 14259, 'Kulio', '27 May 2023',
+            'Quis autem vel eum iure reprehenderit, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, ut et voluptates repudiandae sint et molestiae non recusandae. Sed ut perspiciatis, quis nostrum exercitationem ullam corporis suscipit laboriosam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat? At vero eos et accusamus et iusto odio dignissimos ducimus, quis nostrum exercitationem ullam corporis suscipit laboriosam, obcaecati cupiditate non provident, similique sunt in culpa',
+            1, '', defaultAvatar, [
+            com('b4', defaultAvatar, 'test', 'Comment')
+        ]),
+        post('0', 1079, 'Test', '16 June 2023', 'Test Account', 112, '', defaultAvatar, [
+            com('9', defaultAvatar, 'Ummma', "Test?"),
+            com('10', defaultAvatar, 'Test', "Test!")
+        ]),
+        post('8', 29179, 'desaxe', '18 June 2023', 'Eighth Week', 34, week8, avatar, [
+            com('11', avatar, 'desaxe', 'Eeeeeeeeeee'),
+        ]),
+        post('a5', 18875, 'Svyatoslav', '19 June 2023', 'Et harum quidem rerum facilis',
+            77, k1, defaultAvatar, [
+            com('a5', defaultAvatar, 'test', 'Comment')
+        ]),
+        post('9', 29179, 'desaxe', '24 June 2023', 'Ninth Week', 69, week9, avatar, [
+            com('12', avatar2, 'Kyle', 'Typescript is so COOL!!!'),
+        ]),
+        post('10', 29179, 'desaxe', '2 Jule 2023', 'Tenth Week', 17, week10, avatar, [
+            com('13', avatar2, 'Kyle', 'Comment'),
+        ]),
+        post('11', 1079, 'Test', '10 November 2023',
+            'At vero eos et accusamus et iusto odio dignissimos ducimus, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat? Ut enim ad minima veniam, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, ut et voluptates repudiandae sint et molestiae non recusandae? Duis aute irure dolor in reprehenderit in voluptate, quis nostrum exercitationem ullam corporis suscipit laboriosam, velit esse cillum dolore eu fugiat nulla pariatur. At vero eos et accusamus et iusto odio dignissimos ducimus, consectetur adipiscing elit, ut et voluptates repudiandae sint et molestiae non recusandae. At vero eos et accusamus et iusto odio dignissimos ducimus, quis nostrum exercitationem ullam corporis suscipit laboriosam, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus? Nemo enim ipsam voluptatem, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, sunt in culpa qui officia deserunt mollit anim id est laborum. Ut enim ad minima veniam, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, sunt in culpa qui officia deserunt mollit anim id est laborum. Quis autem vel eum...',
+            112, '', defaultAvatar, [
+            com('14', defaultAvatar, 'Ummma', "???"),
+            com('15', defaultAvatar, 'Ummma', "What?")
+        ]),
+        post('a6', 29689, 'Malina', '12 November 2023', 'Duis aute irure dolor in...',
+            201, effy, defaultAvatar, [
+            com('a6', avatar2, 'test', 'Comment'),
+            com('a61', avatar2, 'test', 'Comment'),
+            com('a62', avatar2, 'test', 'Comment'),
+            com('a63', avatar2, 'test', 'Comment'),
+            com('a64', avatar2, 'test', 'Comment'),
+        ]),
+        post('12', 29179, 'desaxe', '13 November 2023', 'Eleventh Week', 27, week11, avatar, [
+            com('16', avatar2, 'Kyle', 'Complete'),
+        ])
     ],
     currentPost: {
         id: "",
@@ -543,17 +189,10 @@ const newsReducer = (state = initialState, action: NewsActionTypes): initialStat
                 return {
                     ...state,
                     postData: [...state.postData,
-                    {
-                        id: action.name + '-' + action.posttext.substring(1, 9) + '-' + action.userId,
-                        userId: action.userId,
-                        name: action.name,
-                        avatar: action.avatar,
-                        postimage: action.postimage,
-                        time: action.time,
-                        posttext: action.posttext,
-                        like_count: action.like_count,
-                        comments: []
-                    }]
+                    post(action.name + '-' + action.posttext.substring(1, 9) + '-' + action.userId,
+                        action.userId, action.name, action.time, action.posttext, action.like_count,
+                        action.postimage, action.avatar, [])
+                    ]
                 };
             }
         }
@@ -571,7 +210,10 @@ const newsReducer = (state = initialState, action: NewsActionTypes): initialStat
             return {
                 ...state, postData: state.postData.map(p => {
                     if (p.id === action.id) {
-                        return { ...p, comments: [...p.comments, { id: action.id + '-' + action.text.substring(0, 7), avatar: action.avatar, name: action.name, text: action.text }] }
+                        return {
+                            ...p, comments: [...p.comments,
+                            com(action.id + '-' + action.text.substring(0, 7), action.avatar, action.name, action.text)]
+                        }
                     }
                     else {
                         return p
